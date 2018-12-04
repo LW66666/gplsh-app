@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>发现</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <style>
+        body{
+            background: rgba(255,255,255,1);
+            overflow-x: hidden;
+            font-size:1rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .aui-grid{
+            padding: 32.5px 24px 0;
+        }
+        .aui-grid img {
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+        }
+        .aui-grid-label{
+            font-size: 0.6875rem !important;
+        }
+        section:nth-child(2) {
+            padding-top: 57px;
+        }
+        section:nth-child(2) .title{
+            font-size: 0.75rem;
+            padding-left: 10px;
+        }
+        section:nth-child(2) .aui-slide-node img{
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<section class="aui-grid">
+    <div class="aui-row">
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/repair.png" alt="">
+            <div class="aui-grid-label">报事保修</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/kit.png" alt="">
+            <div class="aui-grid-label">业务办理</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/hospital.png" alt="">
+            <div class="aui-grid-label">社区门诊</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/lock.png" alt="">
+            <div class="aui-grid-label">开锁换锁</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/book.png" alt="">
+            <div class="aui-grid-label">生活黄页</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/car.png" alt="">
+            <div class="aui-grid-label">送水到家</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/telephone.png" alt="">
+            <div class="aui-grid-label">社区电话</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode>
+            <img src="../image/discover/help.png" alt="">
+            <div class="aui-grid-label">呼叫帮助</div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="title">
+        精选活动
+    </div>
+</section>
+</body>
+<script src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui-slide.js"></script>
+<script>
+    apiready=function () {
+        var slideY=document.querySelector("section:nth-child(1)").clientHeight+document.querySelector("section:nth-child(2)").clientHeight;
+        var slideH= api.winHeight-slideY;
+        api.parseTapmode();
+        var UIScrollPicture = api.require('UIScrollPicture');
+        UIScrollPicture.open({
+            rect: {
+                x: 0,
+                y: slideY,
+                w: api.winWidth,
+                h: slideH/1.8
+            },
+            data: {
+                paths: [
+                    'widget://image/discover/img.png',
+                    'widget://image/discover/img.png',
+                    'widget://image/discover/img.png',
+                    'widget://image/discover/img.png',
+                ],
+            },
+            styles: {
+                indicator: {
+                    dot:{
+                        w:10,
+                        h:5,
+                        r:1,
+                        margin:5
+                    },
+                    align: 'center',
+                    color: '#FFFFFF',
+                    activeColor: '#000000'
+                }
+            },
+            placeholderImg: 'widget://image/discover/loading.gif',
+            contentMode: 'scaleAspectFit',
+            interval: 5,
+            fixedOn: api.frameName,
+            loop: true,
+            fixed: false
+        }, function(ret, err) {
+            if (ret) {
+            } else {
+            }
+        });
+    }
+</script>
+</html>
