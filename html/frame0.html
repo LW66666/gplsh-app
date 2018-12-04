@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>通行</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+    <style>
+        section {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        section img{
+            display: inline-block;
+        }
+
+        .boxTop,.boxBottom{
+            padding:0 18px;
+        }
+
+        .boxTop {
+            width: 100%;
+            height: 345px;
+            background: url("../image/traffic/bg.png") no-repeat;
+            background-size: 100% 100%;
+            color: #fff;
+        }
+
+        .boxTop .aui-row:nth-child(1){
+            padding-top: 32px;
+            padding-left: 7px;
+            font-size: 13px;
+        }
+
+        .boxTop .aui-row:nth-child(2){
+            padding-left: 7px;
+            font-size: 16px;
+        }
+
+        .boxTop .aui-row:nth-child(3) .aui-col-xs-6{
+            vertical-align:bottom;
+        }
+
+        .boxTop .aui-row:nth-child(3) h1 {
+            font-size: 40px;
+        }
+
+        .boxTop .aui-row:nth-child(3) h2 {
+            font-size: 12px;
+        }
+
+        .boxTop .aui-row:nth-child(3) h1 small {
+            color: #fff;
+            font-size: 50%;
+        }
+
+        .boxTop .aui-row:nth-child(4){
+            padding-top: 58px;
+        }
+
+        .boxTop .aui-row:nth-child(4) img{
+            width: 28.5px;
+            height: 28.5px;
+            display: inline-block;
+        }
+
+        .boxTop .aui-dot {
+            position: relative;
+            top: 0%;
+            right: 0;
+            background: #fff;
+            width:5px;
+            height:5px;
+            margin:3px 9.5px 3px 7px;
+        }
+
+        .boxBottom {
+            width: 100%;
+            flex: 1;
+            padding-top: 25px;
+        }
+
+        .boxBottom .aui-row:nth-child(1){
+            width: 100%;
+            height: 117.5px;
+        }
+
+        .boxBottom .aui-row:nth-child(1) .key {
+            position: absolute;
+            width: 117.5px;
+            height: 117.5px;
+            border-radius: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background: rgba(3,183,248,1);
+            box-shadow: 0px 0px 6.5px 0px rgba(3,183,248,1);
+        }
+
+        .boxBottom .aui-row:nth-child(1) .key:active{
+            box-shadow: 0px 0px 20px 0px rgba(3,183,248,1);
+        }
+
+        .boxBottom .aui-row:nth-child(1) .key img{
+            display: inline-block;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        #robot{
+            position: absolute;
+            width: 39px;
+            height: 41px;
+            -webkit-transform: translateX(295.5px);
+            -moz-transform: translateX(295.5px);
+            -ms-transform: translateX(295.5px);
+            -o-transform: translateX(295.5px);
+            transform: translateX(295.5px);
+            top: 432px;
+        }
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0);">
+<section class="aui-content">
+    <div class="boxTop" id="topBox">
+        <div class="aui-row">
+            <div class="aui-col-xs-6">
+                <span tapmode>
+                    <i class="aui-iconfont aui-icon-location"></i>
+                    <span>南昌</span>-<span>心家泊</span>
+                </span>
+            </div>
+            <div class="aui-col-xs-6 aui-text-right">
+                <span tapmode id="remind">
+                    <img src="../image/traffic/news.png" width="18.66px" height="22.66px" alt="">
+                </span>
+            </div>
+        </div>
+        <div class="aui-row">
+            <span>李霞</span>,<span>女士</span><span>下午好！</span>
+        </div>
+        <div class=" aui-row">
+            <div class="aui-col-xs-6 aui-text-left">
+                <h1>
+                    20
+                    <small>℃</small>
+                </h1>
+                <h2>
+                    <img src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt="" style="display: inline-block;">
+                    <span style="padding-right: 15px;">阴</span>
+                    <span>空气优</span>
+                </h2>
+            </div>
+            <div class="aui-col-xs-6 aui-text-right" style="padding-top: 45px">
+                <h2>2018年11月26日</h2>
+                <h2>
+                    星期一
+                    <span class="aui-dot"></span>
+                    限行2和4
+                </h2>
+            </div>
+        </div>
+        <div class="aui-row">
+            <div class="aui-col-xs-4 aui-text-center">
+                <span tapmode>
+                    <img src="../image/traffic/invite.png" alt="">
+                    <div>访客邀请</div>
+                </span>
+            </div>
+            <div class="aui-col-xs-4 aui-text-center">
+                <span tapmode>
+                    <img src="../image/traffic/shock.png" alt="">
+                    <div>远程对讲</div>
+                </span>
+            </div>
+            <div class="aui-col-xs-4 aui-text-center">
+                <span tapmode>
+                    <img src="../image/traffic/help.png" alt="">
+                    <div>呼叫帮助</div>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="boxBottom">
+        <div class="aui-row">
+            <div class="key" tapmode>
+                <img src="../image/traffic/key.png" width="25px" height="58.5px" alt="">
+            </div>
+        </div>
+        <div class="aui-row aui-text-center" style="color: rgba(180,180,180,1);font-size: 11px;padding-top: 18px;">
+            点击钥匙开门
+        </div>
+        <img src="../image/traffic/robot.png" id="robot" alt="" tapmode>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    var remindStatus=true;
+    apiready=function () {
+        api.parseTapmode();
+        var systemType=api.systemType;
+        if (systemType=="android"){
+            document.getElementById("topBox").setAttribute("style", "padding-top:20px");
+        }else if (systemType=="ios"){
+            document.getElementById("topBox").setAttribute("style", "padding-top:20px");
+        }
+    }
+    document.getElementById("remind").onclick=function () {
+        remindStatus=!remindStatus;
+        if (remindStatus){
+            document.querySelector("#remind img").setAttribute("src","../image/traffic/news.png")
+        }else {
+            document.querySelector("#remind img").setAttribute("src","../image/traffic/mute.png")
+        }
+    }
+</script>
+</html>

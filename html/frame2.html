@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>消息模块</title>
+</head>
+<body>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    apiready = function () {
+        var systemType = api.systemType;
+        var y = 73;
+        var h = api.winHeight - 71;
+        if (systemType === 'ios') y = y - 5;
+        var inner = api.getGlobalData({
+            key: 'newsServiceInner'
+        });
+        inner = inner || 0;
+        api.openFrameGroup({
+            name: 'newsFrameGroup',
+            index:inner,
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: h - 57
+            },
+            frames: [{
+                name: 'informationFrame',
+                url: './newsFrame/information_frame.html',
+                bounces: true,
+                bgColor: '#ffffff'
+            }, {
+                name: 'serviceFrame',
+                url: './newsFrame/service_frame.html',
+                bounces: true,
+                bgColor: '#ffffff'
+            }]
+        }, function (ret, err) {
+            var index = ret.index;
+            api.setGlobalData({
+                key: 'newsServiceInner',
+                value: index
+            });
+            setNavClass(index);
+        });
+    };
+
+    function setNavClass(index) {
+        api.sendEvent({
+            name: 'setNewsNavClass',
+            extra: index
+        });
+    }
+</script>
