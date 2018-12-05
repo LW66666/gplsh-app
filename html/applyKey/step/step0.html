@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>第零步选择方法</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        .way {
+            position: relative;
+            width: 94.44%;
+            height: 40%;
+            min-height: 257px;
+            /*margin: 12px auto 0 auto;*/
+            margin: 0 auto 0 auto;
+            padding-top: 12px;
+        }
+
+        .way .way-num {
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: calc(6.81% + 12px);
+            background: url("../../../image/applyKey/way_num_bg.png") no-repeat;
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+            width: 22.79%;
+            height: 22.5px;
+            line-height: 22.5px;
+            max-width: 77.5px;
+            text-align: center;
+            font-size: 0.625rem;
+            color: #ffffff;
+        }
+
+        .way .way-inner {
+            position: relative;
+            z-index: 0;
+            width: 97.06%;
+            height: 100%;
+            background-color: #ffffff;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-shadow: 3px 0 .4em #f8f8f8, -3px 0 .4em #f8f8f8;
+            -moz-box-shadow: 3px 0 .4em #f8f8f8, -3px 0 .4em #f8f8f8;
+            box-shadow: 3px 0 .4em #f8f8f8, -3px 0 .4em #f8f8f8;
+            margin: 0 auto;
+        }
+
+        .way-inner .inner-title {
+            position: absolute;
+            top: 20.233%;
+            left: 11.52%;
+            font-size: 0.875rem;
+            letter-spacing: .2rem;
+        }
+
+        .way-inner .inner-flow {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            position: absolute;
+            top: 33.657%;
+            left: 50%;
+            width: 79.7%;
+            transform: translateX(-50%);
+        }
+
+        .inner-flow .way-img-item {
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+            -webkit-box-flex: 2;
+            -webkit-flex: 2;
+            flex: 2;
+            position: relative;
+            text-align: center;
+            max-width: 180px;
+        }
+
+        .inner-flow .way-arrow {
+            position: relative;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            text-align: center;
+            padding: 10.5% 0;
+        }
+
+        .inner-flow .way-arrow > img {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .way-img-item > div {
+            position: relative;
+            height: 0;
+            padding: 50% 50% 50% 0;
+            background: #bddbfe;
+            border-radius: 50%;
+        }
+
+        .way-img-item div > img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+        }
+
+        .way-img-item > span {
+            padding-top: 15px;
+            font-size: 0.625rem;
+        }
+
+        .way-inner .way-btn {
+            color: #ffffff;
+            background-color: #4298fd;
+            border-radius: 4rem;
+        }
+
+        .way-btn:active {
+            background-color: #2779c4;
+        }
+
+        .way-btn-position {
+            position: absolute;
+            top: 78%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 76.07%;
+            height: 40px;
+            max-width: 210px;
+            max-height: 40px;
+            line-height: 40px;
+            font-size: 0.75rem;
+        }
+
+        .way-2 {
+            height: 25%;
+            min-height: 185px;
+            /*min-height: unset;*/
+        }
+
+        .way-2 .inner-title {
+            top: 32.66%;
+        }
+
+        .way-2 .inner-flow {
+            top: 48.74%;
+        }
+
+        .font-way-size {
+            font-size: 0.652rem;
+        }
+
+        .way-2-img {
+            position: absolute;
+            right: 3.03%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 方法一 -->
+<div class="way">
+    <div class="way-num">方法一</div>
+    <div class="way-inner">
+        <div class="inner-title">在线申请</div>
+        <div class="inner-flow">
+            <div class="way-img-item">
+                <div>
+                    <img src="../../../image/applyKey/material.png" alt="">
+                </div>
+                <span>提交资料</span>
+            </div>
+            <div class="way-arrow">
+                <img src="../../../image/applyKey/arrow.png">
+            </div>
+            <div class="way-img-item">
+                <div class="way-step-img">
+                    <img src="../../../image/applyKey/audit.png" alt="">
+                </div>
+                <span>物业审核</span>
+            </div>
+            <div class="way-arrow">
+                <img src="../../../image/applyKey/arrow.png">
+            </div>
+            <div class="way-img-item">
+                <div class="way-step-img">
+                    <img src="../../../image/applyKey/gain.png" alt="">
+                </div>
+                <span>获取钥匙</span>
+            </div>
+        </div>
+        <div class="aui-btn way-btn way-btn-position" tapmode onclick="clickNextStep(1)">
+            立即申请
+        </div>
+    </div>
+</div>
+
+<!-- 方法二 -->
+<div class="way way-2">
+    <div class="way-num">方法二</div>
+    <div class="way-inner">
+        <div class="inner-title">物业置办</div>
+        <div class="inner-flow font-way-size" style="padding-top: 7px">
+            请至所在物业核实个人信息<br/>
+            即可拥有电子钥匙
+        </div>
+        <img class="way-2-img" src="../../../image/applyKey/sum.png"/>
+    </div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    function clickNextStep(index){
+        api.sendEvent({
+            name: 'applyKeyNextStep',
+            extra: index
+        });
+    }
+</script>

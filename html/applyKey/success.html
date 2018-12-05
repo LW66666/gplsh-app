@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>申请成功</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        header {
+            padding-top: 22px;
+            width: 100%;
+            text-align: center;
+            font-size: .9375rem;
+            color: black;
+        }
+
+        .time-item {
+            padding-top: 22px;
+            text-align: center;
+        }
+
+        .time-item > span {
+            width: 26px;
+            height: 27.24px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: .875rem;
+            line-height: 27px;
+            color: #ffffff;
+            background-color: #bfbfbf;
+        }
+
+        .time-item > label {
+            color: #bfbfbf;
+        }
+
+        .clock {
+            width: 82px;
+            height: 80px;
+            margin: 15px auto 0 auto;
+        }
+
+        .inner-result {
+            text-align: center;
+            position: relative;
+            padding-top: 34.5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: .625rem;
+        }
+
+        .inner-result > span:first-child {
+            color: #000000;
+        }
+
+        .inner-result > span:last-child {
+            color: #d0d0d0;
+        }
+
+        .btn-next {
+            color: #ffffff;
+            background-color: #4298fd;
+            border-radius: 4rem;
+        }
+
+        .btn-next:active {
+            background-color: #2779c4;
+            color: #dddddd;
+        }
+
+        .btn-next-position {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 61.5px;
+            width: 76.07%;
+            height: 40px;
+            max-width: 210px;
+            max-height: 40px;
+            line-height: 40px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+
+<body>
+<header>
+    申请完成
+</header>
+<div class="time-item">
+    <span id="hour">08</span>
+    <label>:</label>
+    <span id="minute">59</span>
+    <label>:</label>
+    <span id="second">59</span>
+</div>
+<img class="clock" src="../../image/applyKey/clock.png"/>
+<div class="inner-result">
+    <span>申请成功，请耐心等待！</span>
+    <br/>
+    <br/>
+    <span>审核需3-5个工作日，请耐心等待</span>
+</div>
+<div class="aui-btn btn-next btn-next-position" tapmode onclick="clickApplySuccess()">
+    我知道了
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        timeGroupBeat(function () {
+            console.log('time over 666666666666');
+        })
+    };
+
+    function clickApplySuccess() {
+        api.closeWin();
+        api.closeFrameGroup({
+            name: 'applyFrameGroup'
+        });
+    }
+
+    /**
+     * 时间慢慢走动事件
+     *
+     * @param callBack 当时间走完的回调
+     */
+    function timeGroupBeat(callBack) {
+        setInterval(function () {
+            var $hour = document.getElementById('hour');
+            var $minute = document.getElementById('minute');
+            var $second = document.getElementById('second');
+            var hour = Number($api.text($hour));
+            var minute = Number($api.text($minute));
+            var second = Number($api.text($second));
+            var allSecond = hour * 60 * 60 + minute * 60 + second;
+            allSecond--;
+            if (allSecond <= 0) {
+                callBack && callBack();
+            }
+            hour = parseInt((allSecond / (60 * 60)));
+            minute = parseInt((allSecond - (hour * 60 * 60)) / 60);
+            second = parseInt(allSecond - (hour * 3600 + minute * 60));
+            hour = hour > 10 ? hour : '0' + hour;
+            minute = minute > 10 ? minute : '0' + minute;
+            second = second > 10 ? second : '0' + second;
+            $api.text($hour, hour);
+            $api.text($minute, minute);
+            $api.text($second, second);
+        }, 1000)
+    }
+</script>

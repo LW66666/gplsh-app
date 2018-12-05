@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>申请钥匙的方法</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+
+    <style>
+        header {
+            background: #ffffff;
+            background-image: none !important;
+            border-bottom: 1px #f9f7f7 solid;
+        }
+
+        header, header > div {
+            height: 48px !important;
+        }
+
+        header .aui-pull-left .aui-iconfont {
+            color: black !important;
+        }
+
+        header .aui-title {
+            color: black;
+            font-size: 0.875rem;
+            line-height: 48px !important;
+        }
+
+        header .aui-pull-right {
+            font-size: 0.75rem !important;
+            line-height: 48px !important;
+            padding: 0 18.5px 0 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+<header class="aui-bar aui-bar-nav aui-bar-light">
+    <div class="aui-pull-left aui-btn">
+        <span class="aui-iconfont aui-icon-left" id="back-btn" index="-1" tapmode onclick="goBack(this)"></span>
+    </div>
+    <div id="headerTitle" class="aui-title">申请钥匙</div>
+    <div id="btnRecord" class="aui-pull-right aui-btn aui-hide">
+        申请记录
+    </div>
+</header>
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initLayout();
+        initFrameGroup();
+        initAPIEvent();
+    };
+
+    /**
+     * 初始化布局
+     */
+    function initLayout() {
+        api.parseTapmode();
+        //自适应沉浸式状态栏
+        $api.fixStatusBar($api.dom('header'));
+        api.setStatusBarStyle({
+            style: 'dark'
+        });
+    }
+
+    /**
+     * 初始化frameGroup
+     */
+    function initFrameGroup() {
+        var statusBarHeight = 25;
+        var systemType = api.systemType;
+        if (systemType === 'ios') {
+            statusBarHeight = 20;
+        }
+        api.openFrameGroup({
+                name: 'applyFrameGroup',
+                rect: {
+                    x: 0,
+                    y: 48 + statusBarHeight,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                scrollEnabled: false,
+                frames: [{
+                    name: 'applyStep0',
+                    url: './step/step0.html',
+                    bounces: true,
+                    bgColor: '#ffffff'
+                },
+                    {
+                        name: 'applyStep1',
+                        url: './step/step1.html',
+                        bounces: true,
+                        bgColor: '#ffffff'
+                    },
+                    {
+                        name: 'applyStep2',
+                        url: './step/step2.html',
+                        bounces: true,
+                        bgColor: '#ffffff'
+                    }],
+                animation: {
+                    type: "reveal",
+                    subType: "from_left",
+                    duration: 300
+                }
+            },
+            function (ret, err) {
+                var index = ret.index;
+                var $title = document.getElementById('headerTitle');
+                var $btn = document.getElementById('btnRecord');
+                if (index === 0) {
+                    $api.text($title, '申请记录');
+                    if ($api.hasCls($btn, 'aui-hide')) return;
+                    $api.addCls($btn, 'aui-hide');
+                    return;
+                }
+                $api.text($title, '申请');
+                $api.removeCls($btn, 'aui-hide');
+            });
+    }
+
+    /**
+     * 初始化API的事件接收
+     */
+    function initAPIEvent() {
+        //监听手机的返回按钮的点击
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            goBack(document.getElementById('back-btn'));
+        });
+        //接收到点击下一步的操作
+        api.addEventListener({
+            name: 'applyKeyNextStep'
+        }, function (ret, err) {
+            var index = ret.value;
+            $api.attr(document.getElementById('back-btn'), 'index', index);
+            if (index > 0) {
+                api.setFrameGroupIndex({
+                    name: 'applyFrameGroup',
+                    index: index
+                });
+            } else {
+                api.closeFrameGroup({
+                    name: 'applyFrameGroup'
+                });
+            }
+        });
+    }
+
+    /**
+     * 点击返回事件
+     * 根据标签内携带自定义index属性
+     *
+     * @param $this dom元素
+     */
+    function goBack($this) {
+        var index = (Number($api.attr($this, 'index')) - 1) || 0;
+        if (index < 0) {
+            api.closeWin({
+                name: 'applyKeyWin'
+            });
+            api.closeFrameGroup({
+                name: 'applyFrameGroup'
+            });
+            return;
+        }
+        $api.attr(document.getElementById('back-btn'), 'index', index);
+        api.setFrameGroupIndex({
+            name: 'applyFrameGroup',
+            index: index
+        });
+    }
+</script>
