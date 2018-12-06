@@ -87,16 +87,17 @@
             width: 100%;
             flex: 1;
             padding-top: 25px;
+            position: relative;
         }
 
         .boxBottom .aui-row:nth-child(1){
-            position: relative;
             width: 100%;
             height: 100%;
         }
 
         .boxBottom .aui-row:nth-child(1) .keyBox {
-            position: relative;/*貌似这里除了问题*/
+            position: absolute;/*貌似这里除了问题*/
+            float: left;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
@@ -137,7 +138,7 @@
             -ms-transform: translate(295.5px,0px);
             -o-transform: translate(295.5px,0px);
             transform: translate(295.5px,0px);
-            top: 75%;
+            top: 40%;
         }
     </style>
 </head>
@@ -158,7 +159,7 @@
             </div>
         </div>
         <div class="aui-row">
-            <span>李霞</span>，<span>女士</span><span>下午好！</span>
+            <span>李霞</span><span>女士</span>，<span>下午好！</span>
         </div>
         <div class=" aui-row">
             <div class="aui-col-xs-6 aui-text-left">
@@ -183,7 +184,7 @@
         </div>
         <div class="aui-row">
             <div class="aui-col-xs-4 aui-text-center">
-                <span tapmode>
+                <span tapmode onclick="inviteGuests()">
                     <img src="../image/traffic/invite.png" alt="">
                     <div>访客邀请</div>
                 </span>
@@ -205,7 +206,7 @@
     <div class="boxBottom">
         <div class="aui-row">
             <div class="keyBox">
-                <div class="key" tapmode>
+                <div class="key" tapmode onclick="keyOpens()">
                     <img src="../image/traffic/key.png" width="25px" height="58.5px" alt="">
                 </div>
                 <div class="aui-row aui-text-center" style="color: rgba(180,180,180,1);font-size: 0.6875rem;padding-top: 18px;position:relative;">
@@ -224,7 +225,7 @@
         api.parseTapmode();
         var systemType=api.systemType;
         if (systemType=="android"){
-            document.getElementById("topBox").setAttribute("style", "padding-top:20px");
+            document.getElementById("topBox").setAttribute("style", "padding-top:25px");
         }else if (systemType=="ios"){
             document.getElementById("topBox").setAttribute("style", "padding-top:20px");
         }
@@ -236,6 +237,40 @@
         }else {
             document.querySelector("#remind img").setAttribute("src","../image/traffic/mute.png")
         }
+    }
+
+    /**
+     * 打开钥匙界面
+     */
+    function keyOpens() {
+        api.openWin({
+            name: 'open_door_win',
+            url: 'traffic/onpen_door_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            animation:{
+                type:"push",                //动画类型（详见动画类型常量）
+                subType:"from_right",       //动画子类型（详见动画子类型常量）
+                duration:300                //动画过渡时间，默认300毫秒
+            }
+        });
+    }
+
+    /**
+     * 打开钥匙界面
+     */
+    function inviteGuests() {
+        api.openWin({
+            name: 'invite_guests_win',
+            url: 'traffic/invite_guests_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            animation:{
+                type:"push",                //动画类型（详见动画类型常量）
+                subType:"from_right",       //动画子类型（详见动画子类型常量）
+                duration:300                //动画过渡时间，默认300毫秒
+            }
+        });
     }
 </script>
 </html>
