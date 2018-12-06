@@ -222,7 +222,8 @@
             <input type="radio" class="aui-radio" checked="checked"/>
         </label>
     </div>
-    <div class="aui-btn btn-next btn-next-position  btn-next-disable" tapmode onclick="clickNextStep(2)">
+    <div id="btnNext" class="aui-btn btn-next btn-next-position  btn-next-disable" tapmode
+         onclick="clickNextStep(2,this)">
         下一步
     </div>
 </div>
@@ -279,6 +280,7 @@
         console.log(info);
         var cityName = info.city;
         $api.text(document.getElementById('cityInfo'), cityName);
+        checkSelectAll();
     }
 
     /**
@@ -288,6 +290,7 @@
         console.log(info);
         var villageName = info.village;
         $api.text(document.getElementById('villageInfo'), villageName);
+        checkSelectAll();
     }
 
     /**
@@ -297,6 +300,7 @@
         console.log(info);
         var roomName = info.roomNum;
         $api.text(document.getElementById('roomInfo'), roomName);
+        checkSelectAll();
     }
 
     /**
@@ -316,6 +320,14 @@
      * 点击选择小区
      */
     function clickSelectVillage() {
+        if (!cityInfo) {
+            api.toast({
+                msg: '请先选择城市',
+                duration: 500,
+                location: 'bottom'
+            });
+            return;
+        }
         api.openWin({
             name: 'selectWin',
             url: './selectWin/main_select.html',
@@ -331,6 +343,14 @@
      * 点击选择房号
      */
     function clickSelectRoom() {
+        if (!villageInfo) {
+            api.toast({
+                msg: '请先选择小区',
+                duration: 500,
+                location: 'bottom'
+            });
+            return;
+        }
         api.openWin({
             name: 'selectWin',
             url: './selectWin/main_select.html',
@@ -365,20 +385,36 @@
                 $api.removeCls($api.closest($img, 'button'), 'btn_upImg_inner');
                 isSelectImg = false;
                 $api.addCls($isSelectImg, 'aui-hide');
-                return;
+            } else {
+                $api.attr($img, 'src', ret.data);
+                $api.addCls($api.closest($img, 'button'), 'btn_upImg_inner');
+                isSelectImg = true;
+                $api.removeCls($isSelectImg, 'aui-hide');
             }
-            $api.attr($img, 'src', ret.data);
-            $api.addCls($api.closest($img, 'button'), 'btn_upImg_inner');
-            isSelectImg = true;
-            $api.removeCls($isSelectImg, 'aui-hide');
+            checkSelectAll();
         });
+    }
+
+    /**
+     * 检查是不是全部都有值
+     * 有值就改变按钮样式
+     */
+    function checkSelectAll() {
+        if (cityInfo && villageInfo && roomInfo && isSelectImg) {
+            $api.removeCls(document.getElementById('btnNext'), 'btn-next-disable');
+            $api.addCls(document.getElementById('btnNext'), 'btn-next-active');
+        } else {
+            $api.removeCls(document.getElementById('btnNext'), 'btn-next-active');
+            $api.addCls(document.getElementById('btnNext'), 'btn-next-disable');
+        }
     }
 
     /**
      * 点击下一步
      * @param index
      */
-    function clickNextStep(index) {
+    function clickNextStep(index, $this) {
+        if ($api.hasCls($this, 'btn-next-disable')) return;
         api.sendEvent({
             name: 'applyKeyNextStep',
             extra: index
