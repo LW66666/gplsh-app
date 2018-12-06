@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>申请记录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body, html {
+            background-color: #fff;
+        }
+
+        .his-ul {
+            width: 100%;
+        }
+
+        .his-ul li {
+            position: relative;
+            width: 100%;
+            height: 75px;
+            background-image: linear-gradient(0, #dddddd, #dddddd 50%, transparent 50%);
+            background-image: -webkit-linear-gradient(90deg, #dddddd, #dddddd 50%, transparent 50%);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 1px;
+            background-size: 100% 1px;
+            background-position: 0 bottom;
+        }
+
+        .his-ul .his-font {
+            padding-left: 15px;
+            font-size: .75rem;
+        }
+
+        .his-ul .his-title {
+            padding-top: 15px;
+        }
+
+        .his-ul .his-time {
+            padding-top: 2px;
+        }
+
+        .his-ul .audit {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.6875rem;
+            color: #f98282;
+        }
+
+        .his-ul .audit > img {
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+<ul class="his-ul">
+    <li>
+        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+        <span class="his-font his-time">2018-12-28 17:00:20</span>
+        <div class="audit">正在审核</div>
+    </li>
+    <li>
+        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+        <span class="his-font his-time">2018-12-28 17:00:20</span>
+        <div class="audit">
+            <img src="../../image/applyKey/applyFail.png">
+        </div>
+    </li>
+    <li>
+        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+        <span class="his-font his-time">2018-12-28 17:00:20</span>
+        <div class="audit">
+            <img src="../../image/applyKey/applySuccess.png">
+        </div>
+    </li>
+</ul>
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>

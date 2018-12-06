@@ -52,10 +52,7 @@
 
 <body>
 <header class="aui-bar aui-bar-nav aui-bar-light">
-    <div class="aui-pull-left aui-btn">
-        <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
-    </div>
-    <div id="headerTitle" class="aui-title">申请钥匙</div>
+    <div id="headerTitle" class="aui-title">完成</div>
     <div id="btnRecord" class="aui-pull-right aui-btn"  tapmode onclick="clickApplyHis()">
         申请记录
     </div>
@@ -91,8 +88,8 @@
     function initFrame() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'applyStep2',
-            url: './step2_frame.html',
+            name: 'applyStepSuccess',
+            url: './success_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -104,12 +101,33 @@
             overScrollMode: "scrolls"
         });
     }
-
+    /**
+     * 关闭之前的win
+     */
+    function closeStepWin() {
+        //把之前的都关了
+        api.closeWin({
+            name:'applyKeyWin'
+        });
+        api.closeWin({
+            name:'stepWin1'
+        });
+        api.closeWin({
+            name:'stepWin2'
+        });
+        api.closeWin();
+    }
     /**
      * 初始化API的事件接收
      */
     function initAPIEvent() {
-
+        //监听返回的点击事件
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            closeStepWin();
+            return false;
+        });
     }
 
     /**
@@ -122,10 +140,4 @@
         })
     }
 
-    /**
-     * 点击返回事件
-     */
-    function goBack() {
-        api.closeWin();
-    }
 </script>

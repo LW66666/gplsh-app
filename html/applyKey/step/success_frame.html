@@ -6,18 +6,43 @@
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>申请成功</title>
-    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
     <style>
+        body,html{
+            background-color: #fff;
+        }
         header {
-            padding-top: 22px;
-            width: 100%;
-            text-align: center;
-            font-size: .9375rem;
-            color: black;
+            background: #ffffff;
+            background-image: none !important;
+            border-bottom: .5px #f9f7f7 solid !important;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
         }
 
+        header, header > div {
+            height: 48px !important;
+        }
+
+        header .aui-pull-left .aui-iconfont {
+            color: black !important;
+        }
+
+        header .aui-title {
+            color: black;
+            font-size: 0.875rem;
+            line-height: 48px !important;
+        }
+
+        header .aui-pull-right {
+            font-size: 0.75rem !important;
+            line-height: 48px !important;
+            padding: 0 18.5px 0 0 !important;
+        }
+    </style>
+    <style>
         .time-item {
             padding-top: 22px;
             text-align: center;
@@ -89,9 +114,7 @@
 
 
 <body>
-<header>
-    申请完成
-</header>
+
 <div class="time-item">
     <span id="hour">08</span>
     <label>:</label>
@@ -99,7 +122,7 @@
     <label>:</label>
     <span id="second">59</span>
 </div>
-<img class="clock" src="../../image/applyKey/clock.png"/>
+<img class="clock" src="../../../image/applyKey/clock.png"/>
 <div class="inner-result">
     <span>申请成功，请耐心等待！</span>
     <br/>
@@ -112,19 +135,33 @@
 </body>
 
 </html>
-<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/api.js"></script>
 <script>
     apiready = function () {
         timeGroupBeat(function () {
             console.log('time over 666666666666');
-        })
+        });
     };
 
-    function clickApplySuccess() {
-        api.closeWin();
-        api.closeFrameGroup({
-            name: 'applyFrameGroup'
+    /**
+     * 关闭所有
+     */
+    function closeStepWin() {
+        //把之前的都关了
+        api.closeWin({
+            name:'applyKeyWin'
         });
+        api.closeWin({
+            name:'stepWin1'
+        });
+        api.closeWin({
+            name:'stepWin2'
+        });
+        api.closeWin();
+    }
+
+    function clickApplySuccess() {
+        closeStepWin();
     }
 
     /**

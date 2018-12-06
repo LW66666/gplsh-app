@@ -5,10 +5,10 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>申请钥匙填写真实姓名</title>
-    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <title>申请记录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
 
     <style>
         header {
@@ -18,10 +18,6 @@
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
-        }
-
-        header {
-            border-bottom: solid .5px #f9f7f7;
         }
 
         header, header > div {
@@ -43,10 +39,6 @@
             line-height: 48px !important;
             padding: 0 18.5px 0 0 !important;
         }
-
-        header .aui-pull-right:active{
-            color: #0385c5;
-        }
     </style>
 </head>
 
@@ -55,21 +47,18 @@
     <div class="aui-pull-left aui-btn">
         <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
     </div>
-    <div id="headerTitle" class="aui-title">申请钥匙</div>
-    <div id="btnRecord" class="aui-pull-right aui-btn"  tapmode onclick="clickApplyHis()">
-        申请记录
-    </div>
+    <div id="headerTitle" class="aui-title">申请记录</div>
 </header>
 
 
 </body>
 
 </html>
-<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
 <script>
     apiready = function () {
         initLayout();
-        initFrame();
+        initFrameGroup();
         initAPIEvent();
     };
 
@@ -88,11 +77,11 @@
     /**
      * 初始化frameGroup
      */
-    function initFrame() {
+    function initFrameGroup() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'applyStep2',
-            url: './step2_frame.html',
+            name: 'applyHistory',
+            url: './apply_history_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -109,17 +98,12 @@
      * 初始化API的事件接收
      */
     function initAPIEvent() {
-
-    }
-
-    /**
-     * 查看申请记录
-     */
-    function clickApplyHis() {
-        api.openWin({
-            name: 'applyHistoryWin',
-            url: '../apply_history.html'
-        })
+        //监听返回的点击事件
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            goBack();
+        });
     }
 
     /**

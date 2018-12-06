@@ -211,7 +211,7 @@
                 <span>获取钥匙</span>
             </div>
         </div>
-        <div class="aui-btn way-btn way-btn-position" tapmode onclick="clickNextStep(1)">
+        <div class="aui-btn way-btn way-btn-position" tapmode onclick="clickNextStep()">
             立即申请
         </div>
     </div>
@@ -234,10 +234,10 @@
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
 <script>
-    function clickNextStep(index){
-        api.sendEvent({
-            name: 'applyKeyNextStep',
-            extra: index
+    function clickNextStep(){
+        api.openWin({
+            name:'stepWin1',
+            url:'./step1.html'
         });
     }
 </script>
