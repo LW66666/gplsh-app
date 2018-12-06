@@ -59,10 +59,17 @@
                 x: 0,
                 y: document.querySelector("header").offsetHeight+statusHeight,
                 w: api.winWidth,
-                h: api.winHeight-document.querySelector("header").offsetHeight
+                h: api.winHeight-document.querySelector("header").offsetHeight,
+                marginLeft: 0,    //相对父window左外边距的距离
+                marginTop: 0,    //相对父window上外边距的距离
+                marginBottom: 0,    //相对父window下外边距的距离
+                marginRight: 0    //相对父window右外边距的距离
             },
             pageParam: {name: 'pageparam'},
-            bounces: true
+            overScrollMode: "scrolls",
+            bounces: true,
+            scrollEnabled:true,
+            softInputMode:true,
         });
     }
     
