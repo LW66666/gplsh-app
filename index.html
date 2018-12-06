@@ -35,6 +35,10 @@
             background: rgba(38, 141, 226, 0);
         }
 
+        header ul li:nth-child(2) {
+            border-bottom: solid 0.5px #f9f7f7;
+        }
+
         header ul li:nth-child(3) {
             background: rgba(255, 255, 255, 0);
         }
@@ -162,13 +166,15 @@
 <script type="text/javascript" src="script/api.js"></script>
 <script type="text/javascript" src="script/aui-tab.js"></script>
 <script type="text/javascript">
+    var systemType;
     apiready = function () {
+        systemType= api.systemType;
         api.parseTapmode();
         $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         api.setStatusBarStyle({
             style: 'dark'
         });
-        var height = document.querySelector("#main").clientHeight + 21;
+        var height = api.winHeight-document.getElementById("footer").clientHeight;
         openFrame(0, "auto", height);
     };
 
@@ -204,7 +210,7 @@
         }
 
         var y = (index == 0 || index == 3) ? "auto" : $api.dom('header').offsetHeight;
-        var height = (index == 0 || index == 3) ? document.querySelector("#main").clientHeight + 21 : document.querySelector("#main").clientHeight;
+        var height = (index == 0 || index == 3) ? api.winHeight-document.getElementById("footer").clientHeight: document.querySelector("#main").clientHeight;
         openFrame(index, y, height);
     }
 
@@ -216,13 +222,13 @@
     function openFrame(index, y, h) {
         for (var i = 0; i < 4; i++) {
             api.closeFrame({
-                name: 'frame' + i
+                name: 'frame' + i,
             });
         }
         api.openFrame({
             name: 'frame' + index,
             url: './html/frame' + index + '.html',
-            bgColor: 'rgba(0,0,0,0)',
+            bgColor:(index ==3)?"#f6f6f6":'#fff',
             rect: {
                 x: 0,
                 y: y,
@@ -238,7 +244,7 @@
             overScrollMode: "scrolls",
             bounces: true,
             animation: {
-                type: "reveal",
+                type: "push",
                 subType: "from_left",
                 duration: 300
             },

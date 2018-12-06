@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>访客邀请frame</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0) !important;
+        }
+        body img{
+            display: inline-block;
+        }
+        section{
+            width: 100%;
+            height: 100%;
+        }
+        section .aui-row:nth-child(1){
+            padding: 16px  30.5px 16px 22.5px;
+            font-size: 0.625rem;
+            color: #4f4f4f;
+        }
+        section .aui-row:nth-child(1) img{
+            width: 15px;
+            height: 15px;
+        }
+
+        section .aui-row:nth-child(2){
+            padding: 5px 10px;
+        }
+        section .aui-row:nth-child(2) .box{
+            height: 141px;
+            box-shadow: 0px 0px 5px 0px #f0f0f0;
+            padding: 33.5px 26px 20px;
+            border-radius: 10px;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+        }
+        section .aui-row:nth-child(2) .box::after {
+            position: absolute;
+            content: "";
+            width: .5px;
+            height: 79.5px;
+            background: #e5e5e5;
+            left: 25%;
+            top: 29%;
+        }
+        section .aui-row:nth-child(2) .box .aui-col-xs-4 div:nth-child(2) {
+            padding-top: 42px;
+        }
+        section .aui-row:nth-child(2) .box .aui-col-xs-8 div:nth-child(2) {
+            padding-top: 42px;
+        }
+
+        section .aui-row:nth-child(3){
+            padding-top: 15.5px;
+        }
+
+        section .aui-row:nth-child(3) ul{
+            border-bottom: solid 0.5px #f3f3f3 ;
+        }
+        section .aui-row:nth-child(3) ul li{
+            padding: 20.5px 26px;
+            color: #4f4f4f;
+        }
+        section .aui-row:nth-child(3) ul li>div{
+            min-height: 1.2rem;
+        }
+
+        section .aui-row:nth-child(4){
+            padding: 40px 48px 0;
+        }
+        section .aui-row:nth-child(4) .aui-btn{
+            border-radius: 30px;
+            background: #4298fd;
+            transition: all 0.5s cubic-bezier(.12,.52,0,1.05);
+        }
+        section .aui-row:nth-child(4) .aui-btn:active {
+            color: #fff;
+            background-color: #4376dc;
+        }
+        .aui-dialog-body input{
+            width: 1.2rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            min-height: 1.2rem;
+            background-color: #ffffff;
+            border: solid 1px #dddddd;
+            -webkit-border-radius: 0.6rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            cursor: default;
+            -webkit-appearance: none;
+            background-size: 0% 1px, 1px 0%, 0% 0px, 0px 0%;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+<section class="aui-content">
+    <div class="aui-row">
+        <div class="aui-col-xs-6">选择开锁有效时间</div>
+        <div class="aui-col-xs-6 aui-text-right">
+            <img src="../../image/traffic/clock.png"tapmode alt="">
+        </div>
+    </div>
+    <div class="aui-row">
+        <div class="aui-col-xs-12 box">
+            <div class="aui-col-xs-4 aui-text-left">
+                <div class="aui-col-xs-12">时间</div>
+                <div class="aui-col-xs-12">次数</div>
+            </div>
+            <div class="aui-col-xs-8">
+                <div class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-input">
+                            <label tapmode><input class="aui-radio" type="radio" name="demo1" checked> 今天 &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <label tapmode><input class="aui-radio" type="radio" name="demo1"> 明天</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-list-item">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-input">
+                            <label tapmode><input class="aui-radio" type="radio" name="demo2" checked> 仅一次&nbsp;&nbsp;</label>
+                            <label tapmode><input class="aui-radio" type="radio" name="demo2"> 无限次数</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row">
+        <ul class="aui-list aui-list-in" >
+            <li class="aui-list-item" tapmode onclick="chooseKey()">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-col-xs-6">
+                        <div class="aui-list-item-title">选择门锁</div>
+                    </div>
+                    <div class="aui-col-xs-6 aui-text-right">
+                        <div class="aui-list-item-title" style="color: #8c8c8c;">公共钥匙</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="aui-row">
+        <div class="aui-btn aui-btn-primary aui-btn-block" tapmode>确认申请</div>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-dialog.js" ></script>
+<script>
+    var checkStatus=1;
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+    function chooseKey() {
+        var dialog = new auiDialog({});
+        var msg="";
+        if (checkStatus==1){
+            msg='<div class="aui-list-item">\n' +
+                '    <div class="aui-list-item-inner">\n' +
+                '        <div class="aui-list-item-input">\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(1)" checked> 公共钥匙 &nbsp;&nbsp;&nbsp;&nbsp;</label>\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(2)"> 单元钥匙</label>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>';
+        }else {
+            msg='<div class="aui-list-item">\n' +
+                '    <div class="aui-list-item-inner">\n' +
+                '        <div class="aui-list-item-input">\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(1)" > 公共钥匙 &nbsp;&nbsp;&nbsp;&nbsp;</label>\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(2)" checked> 单元钥匙</label>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>';
+
+        }
+        dialog.alert({
+            title:"访客邀请",
+            msg:msg,
+            buttons:['取消','确定']
+        },function(ret){
+            if(ret){
+                var index=ret.buttonIndex;
+            }
+        })
+    }
+
+    function alertKeyChange(num) {
+        checkStatus=num;
+    }
+</script>
+</html>
