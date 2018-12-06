@@ -131,7 +131,8 @@
             <li class="border-b" style="display: none;">心家泊</li>
             <li class="border-b">发现</li>
             <li class="border-b aui-bar aui-bar-nav">
-                <div class="aui-bar aui-bar-btn aui-bar-btn-round" id="news">
+                <div class="aui-bar aui-bar-btn aui-bar-btn-round" id="news" tapmode
+                     onclick="openFrameWithType(2,this);">
                     <div class="aui-bar-btn-item aui-active" type="0">消息提醒</div>
                     <div class="aui-bar-btn-item" type="1">生活服务</div>
                 </div>
@@ -169,30 +170,14 @@
         });
         var height = document.querySelector("#main").clientHeight + 21;
         openFrame(0, "auto", height);
-
-        /*
-        消息模块的导航样式回调函数
-         */
-        api.addEventListener({
-            name: 'setNewsNavClass'
-        }, function (ret, err) {
-            var index = ret.value;
-            var domAll = $api.domAll(document.getElementById('news'), 'div');
-            $api.addCls(domAll[index], 'aui-active');
-            $api.removeCls(domAll[1 - index], 'aui-active');
-        });
     };
 
     var tab = new auiTab({
         element: document.getElementById("news"),
         index: 1,
-        repeatClick: false
-    }, function (obj) {
-        var index = obj.index - 1;
-        api.setFrameGroupIndex({
-            name: 'newsFrameGroup',
-            index: index
-        });
+        repeatClick: true
+    }, function (ret) {
+
     });
 
     // 随意切换按钮
@@ -229,12 +214,6 @@
      * @param y y轴位置
      */
     function openFrame(index, y, h) {
-        // 关闭消息模块内部的frameGroup
-        if (index !== 2) {
-            api.closeFrameGroup({
-                name: 'newsFrameGroup'
-            });
-        }
         for (var i = 0; i < 4; i++) {
             api.closeFrame({
                 name: 'frame' + i
@@ -256,20 +235,48 @@
             },
             pageParam: {name: 'pageparam'},
             bounces: true,
-            overScrollMode: "scrolls"
-            // animation: {
-            //     type: "reveal",
-            //     subType: "from_left",
-            //     duration: 300
-            // },
-            // progress: {
-            //     type: "page",
-            //     title: "加载中",
-            //     text: "加载中",
-            //     color: "#000"
-            // }
+            overScrollMode: "scrolls",
+            bounces: true,
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            progress: {
+                type: "page",
+                title: "加载中",
+                text: "加载中",
+                color: "#000"
+            }
         });
+
+        if (index === 2) {
+            var domAll = $api.domAll(document.getElementById('news'), 'div');
+            var hasCls = $api.hasCls(domAll[0], 'aui-active');
+            if (hasCls) return;
+            $api.addCls(domAll[0], 'aui-active');
+            $api.removeCls(domAll[1], 'aui-active');
+        }
     }
 
-
+    /**
+     * 消息中的消息提醒和生活服务的页面打开
+     */
+    function openFrameWithType(index, that) {
+        var domArr = $api.domAll(that, 'div');
+        var dom;
+        var type;
+        for (var i = 0; i < domArr.length; i++) {
+            if ($api.hasCls(domArr[i], 'aui-active')) {
+                dom = domArr[i];
+                break;
+            }
+        }
+        type = $api.attr(dom, 'type') || 0;
+        var jsfun = 'initType(\'' + type + '\');';
+        api.execScript({
+            frameName: 'frame' + index,
+            script: jsfun
+        });
+    }
 </script>
