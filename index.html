@@ -35,6 +35,10 @@
             background: rgba(38, 141, 226, 0);
         }
 
+        header ul li:nth-child(2) {
+            border-bottom: solid 0.5px #f9f7f7;
+        }
+
         header ul li:nth-child(3) {
             background: rgba(255, 255, 255, 0);
         }
@@ -61,8 +65,15 @@
         }
 
         #footer {
-            border-top: solid 1px rgba(207, 207, 207, 1);
+            /*border-top: solid 1px rgba(207, 207, 207, 1);*/
             background-color: rgba(253, 253, 253, 1);
+
+            background-image: linear-gradient(0, #dddddd, #dddddd 50%, transparent 50%);
+            background-image: -webkit-linear-gradient(90deg, #dddddd, #dddddd 50%, transparent 50%);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 1px;
+            background-size: 100% 1px;
+            background-position: 0 top;
         }
 
         #footer ul li {
@@ -219,8 +230,9 @@
         }
 
         var y = (index == 0 || index == 3) ? "auto" : $api.dom('header').offsetHeight;
-        var height = (index == 0 || index == 3) ? api.winHeight-document.getElementById("footer").clientHeight: document.querySelector("#main").clientHeight;
-        openFrame(index, y, height-1);
+        var height = (index == 0 || index == 3) ? api.winHeight - document.getElementById("footer").clientHeight : document.querySelector("#main").clientHeight;
+        if (index === 3) height = ++height;
+        openFrame(index, y, height);
     }
 
     /**
@@ -245,7 +257,7 @@
         api.openFrame({
             name: 'frame' + index,
             url: './html/frame' + index + '.html',
-            bgColor: (index ==3)?"#f6f6f6":'#fff',
+            bgColor: (index == 3) ? "#f6f6f6" : '#fff',
             rect: {
                 x: 0,
                 y: y,
@@ -256,7 +268,7 @@
                 marginBottom: 0,    //相对父window下外边距的距离
                 marginRight: 0    //相对父window右外边距的距离
             },
-            pageParam: {y: y,h:h},
+            pageParam: {y: y, h: h},
             bounces: true,
             overScrollMode: "scrolls"
         });
