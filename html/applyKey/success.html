@@ -133,7 +133,7 @@
      * @param callBack 当时间走完的回调
      */
     function timeGroupBeat(callBack) {
-        setInterval(function () {
+        var timer = setInterval(function () {
             var $hour = document.getElementById('hour');
             var $minute = document.getElementById('minute');
             var $second = document.getElementById('second');
@@ -143,6 +143,7 @@
             var allSecond = hour * 60 * 60 + minute * 60 + second;
             allSecond--;
             if (allSecond <= 0) {
+                clearInterval(timer);
                 callBack && callBack();
             }
             hour = parseInt((allSecond / (60 * 60)));

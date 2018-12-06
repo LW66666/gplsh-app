@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择楼栋</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        li{
+            background-position: 0 bottom !important;
+        }
+    </style>
+</head>
+<body>
+<ul class="aui-list aui-list-in">
+    <li class="aui-list-item" tapmode onclick="clickItem(this)" params="{'room':'1栋','value':'huanggong'}">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-title">1栋</div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner" tapmode onclick="clickItem(this)" params="{'room':'2栋','value':'yuangmingyuan'}">
+            <div class="aui-list-item-title">2栋</div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner" tapmode onclick="clickItem(this)" params="{'room':'3栋','value':'baigong'}">
+            <div class="aui-list-item-title">3栋</div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner" tapmode onclick="clickItem(this)" params="{'room':'4栋','value':'shaolingshi'}">
+            <div class="aui-list-item-title">4栋</div>
+        </div>
+    </li>
+</ul>
+
+</body>
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initAPISet();
+        //获取选中的小区
+        var village = api.pageParam.village;
+        //这里可以请求楼栋
+    };
+    function initAPISet() {
+        api.parseTapmode();
+    }
+
+    function clickItem($this) {
+    //    获取选中的楼栋
+        var info =  eval("(" + $api.attr($this,'params')+ ")");
+        openRoomNumFrame(info)
+    }
+
+    /**
+     * 打开选择房间的列表
+     */
+    function openRoomNumFrame(roomInfo) {
+        var statusBarHeight = 25;
+        var systemType = api.systemType;
+        if (systemType === 'ios') {
+            statusBarHeight = 20;
+        }
+        api.openFrame({
+            name: 'selectRoomNum',
+            url: './select_room_num.html',
+            bgColor: '#ffffff',
+            rect: {
+                x: 0,
+                y: 48 + statusBarHeight,
+                w: 'auto',
+                h: 'auto',
+                marginLeft: 0,    //相对父window左外边距的距离
+                marginTop: 0,    //相对父window上外边距的距离
+                marginBottom: 0,    //相对父window下外边距的距离
+                marginRight: 0    //相对父window右外边距的距离
+            },
+            pageParam: {roomInfo: roomInfo},
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            bounces: false,
+            overScrollMode: "scrolls"
+        });
+        var jsfun = 'changeIndex(1);';
+        api.execScript({
+            name: 'selectWin',
+            // frameName: 'frmName',
+            script: jsfun
+        });
+        api.execScript({
+            name: 'selectWin',
+            // frameName: 'frmName',
+            script:"changeHeader('选择房号')"
+        });
+    }
+
+</script>

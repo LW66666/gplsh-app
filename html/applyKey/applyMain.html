@@ -158,6 +158,13 @@
                 });
             }
         });
+        //设置返回按钮的index
+        api.addEventListener({
+            name: 'applyKeySetIndex'
+        }, function (ret, err) {
+            var index = ret.value;
+            $api.attr(document.getElementById('back-btn'), 'index', index);
+        });
     }
 
     /**
