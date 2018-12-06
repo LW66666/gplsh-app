@@ -13,10 +13,6 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script>
     apiready = function () {
-        var systemType = api.systemType;
-        var y = 73;
-        var h = api.winHeight - 71;
-        if (systemType === 'ios') y = y - 5;
         var inner = api.getGlobalData({
             key: 'newsServiceInner'
         });
@@ -26,9 +22,9 @@
             index:inner,
             rect: {
                 x: 0,
-                y: y,
+                y: api.pageParam.y,
                 w: 'auto',
-                h: h - 57
+                h: api.pageParam.h
             },
             frames: [{
                 name: 'informationFrame',

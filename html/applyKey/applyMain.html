@@ -78,16 +78,12 @@
      * 初始化frameGroup
      */
     function initFrameGroup() {
-        var statusBarHeight = 25;
-        var systemType = api.systemType;
-        if (systemType === 'ios') {
-            statusBarHeight = 20;
-        }
+        var y = $api.dom('header').offsetHeight;
         api.openFrameGroup({
                 name: 'applyFrameGroup',
                 rect: {
                     x: 0,
-                    y: 48 + statusBarHeight,
+                    y: y,
                     w: 'auto',
                     h: 'auto'
                 },
