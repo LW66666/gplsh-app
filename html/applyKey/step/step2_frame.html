@@ -86,18 +86,20 @@
             background-position: 0 90%;
             font-size: 0.625rem;
         }
+
         .center-text .input-line > input {
             width: 3.5rem;
             font-size: .75rem;
             display: inline;
         }
+
         .btn-next {
             color: #ffffff;
             background-color: #4298fd;
             border-radius: 4rem;
         }
 
-        .btn-next:active{
+        .btn-next:active {
             background-color: #2779c4;
             color: #dddddd;
         }
@@ -129,24 +131,27 @@
         <span>南昌保利金香槟-1栋-1-0101</span>
 
         <div class="input-line">
-                申请人姓名：
-                <input type="text" placeholder="">
+            申请人姓名：
+            <input type="text" placeholder="">
+        </div>
+        <div class="input-line" style="width: 14rem">
+            身份证：
+            <input type="text" placeholder="" style="width: 11rem">
         </div>
         <div class="aui-btn btn-next btn-next-position" tapmode onclick="clickNextStep()">
             下一步
         </div>
     </div>
-
 </div>
 </body>
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
 <script>
-    function clickNextStep(){
+    function clickNextStep() {
         api.openWin({
-           name:'applySuccess',
-           url:'./success.html'
+            name: 'applySuccess',
+            url: './success.html'
         });
     }
 </script>

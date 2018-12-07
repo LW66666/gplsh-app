@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>服务评价的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+
+</head>
+<style>
+    body, html {
+        background-color: #fff;
+    }
+
+    .input-text-div {
+        position: relative;
+        width: 100%;
+        height: 120px;
+        -webkit-box-shadow: 0 10px #f2f2f2;
+        -moz-box-shadow: 0 10px #f2f2f2;
+        box-shadow: 0 10px #f2f2f2;
+    }
+
+    .input-text-div textarea {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        height: 100px;
+        font-size: 0.75rem;
+        outline: none;
+    }
+
+    .input-text-div .font-num {
+        display: block;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .input-text-div .font-num span {
+        font-size: 0.6875rem;
+        color: #9d9d9d;
+    }
+
+    .star-list {
+        padding-top: 30px;
+    }
+
+    .star-list .star-item {
+        padding-top: 15px;
+        padding-left: 4.5%;
+        font-size: 0.8rem;
+    }
+
+    .star-list .star-item span:first-of-type {
+        padding-right: 10px;
+    }
+
+    .star-item .star-group img {
+        position: relative;
+        top: 1px;
+        width: 13px;
+        margin: 0 5px;
+    }
+
+</style>
+
+<body>
+
+<div class="input-text-div">
+    <textarea id="textInfo" maxlength="200" rows="7" placeholder="对我们的服务满意吗？写下您的评价吧"></textarea>
+    <span class="font-num">
+        <span>
+            <label id="textLen">0</label>/200
+        </span>
+    </span>
+</div>
+<div class="star-list">
+    <div class="star-item">
+        <span>响应速度</span>
+        <span class="star-group" result="0">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+        </span>
+    </div>
+    <div class="star-item">
+        <span>服务态度</span>
+        <span class="star-group" result="0">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+        </span>
+    </div>
+    <div class="star-item">
+        <span>总体评价</span>
+        <span class="star-group" result="0">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+            <img src="../../../../image/find/repair/star_ash.png">
+        </span>
+    </div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    document.getElementById("textInfo").oninput = function () {
+        var text = this.value;
+        $api.text(document.getElementById('textLen'), text.length)
+    };
+
+    var starGroup = document.querySelectorAll('.star-group');
+    for (var i = 0; i < starGroup.length; i++) {
+        starGroup[i].onclick = function () {
+            var objLeft = this.offsetLeft;
+            var val = this.offsetParent;
+            while (val != null) {
+                objLeft += val.offsetLeft;
+                val = val.offsetParent;
+            }
+            //鼠标x位置
+            var mouseX = event.clientX + document.body.scrollLeft;
+            //计算点击的相对位置
+            var objX = mouseX - objLeft;
+
+            var imgWidth = this.clientWidth / 5;
+            var blueStar = parseInt(objX / imgWidth) + 1;
+            if (objX < (imgWidth / 2)) {
+                //    这是零星
+                blueStar = 0;
+            }
+            $api.attr(this, 'result', blueStar);
+            var imgList = $api.domAll(this, 'img');
+            for (var k = 0; k < imgList.length; k++) {
+                if (k<blueStar){
+                    //设置成蓝星
+                    $api.attr(imgList[k],'src','../../../../image/find/repair/star_blue.png');
+                }else {
+                    //设置成灰星
+                    $api.attr(imgList[k],'src','../../../../image/find/repair/star_ash.png');
+                }
+            }
+
+        };
+    }
+</script>
