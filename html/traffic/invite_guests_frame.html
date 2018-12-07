@@ -261,35 +261,6 @@
                     </div>
                 </div>
             </div>
-            <div class="box2">
-                <div class="aui-col-xs-12" style="padding-bottom: 8px;">
-                    选择日期（支持最长15天）
-                </div>
-                <div class="aui-col-xs-12 aui-text-center">
-                    <div class="aui-col-xs-4" style="color: #4298fd;"><span tapmode onclick="">◀</span></div>
-                    <div class="aui-col-xs-4" style="font-size: 0.75rem !important;">2018年11月</div>
-                    <div class="aui-col-xs-4" style="color: #4298fd;"><span tapmode onclick="">▶</span></div>
-                </div>
-                <div class="aui-col-xs-12" id="calendar">
-
-                </div>
-                <div class="aui-col-xs-12" style="padding-bottom: 10px;">
-                    选择时间段（支持多时间段）<i class="aui-iconfont aui-icon-plus" tapmode></i>
-                </div>
-                <div class="aui-col-xs-12">
-                    <div class="times aui-text-center">
-                        <div class="aui-col-xs-4" tapmode>12:00</div>
-                        <div class="aui-col-xs-4">至</div>
-                        <div class="aui-col-xs-4" tapmode>14:00</div>
-                    </div>
-                    <div class="times">
-                        <div class="aui-col-xs-4" tapmode>12:00</div>
-                        <div class="aui-col-xs-4">至</div>
-                        <div class="aui-col-xs-4" tapmode>14:00</div>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
     <div class="aui-row">
@@ -315,8 +286,6 @@
 <script type="text/javascript" src="../../script/aui-dialog.js" ></script>
 <script>
     var checkStatus=1;
-    var dateStatus=true;
-    var UICalendar;
     apiready = function () {
         api.parseTapmode();
     }
@@ -372,67 +341,22 @@
     }
 
     /**
-     * 点击事件进入高级模式选择日历时间
+     * 点击时间进入高级模式选择日历时间
      */
     function choseData() {
-        if (dateStatus){
-            document.querySelector("section .aui-row:nth-child(2)").setAttribute("style","height:443px");
-            document.querySelector("section .aui-row:nth-child(2) .box2").setAttribute("style","transform: translateX(0%);");
-            document.querySelector("section .aui-row:nth-child(2) .box").setAttribute("style","transform: translateX(-150%);");
-            document.querySelector(".aui-row:nth-child(1) img").setAttribute("src","../../image/traffic/clock.png");
-            openCalendar();
-        }else {
-            UICalendar.close();
-            document.querySelector("section .aui-row:nth-child(2)").setAttribute("style","height:147px");
-            document.querySelector("section .aui-row:nth-child(2) .box2").setAttribute("style","transform: translateX(150%);");
-            document.querySelector("section .aui-row:nth-child(2) .box").setAttribute("style","transform: translateX(0%);");
-            document.querySelector(".aui-row:nth-child(1) img").setAttribute("src","../../image/traffic/calendar.png");
-        }
-        dateStatus=!dateStatus;
-    }
-    
-    function openCalendar() {
-        var calDom=document.getElementById("calendar");
-        var cal=calDom.getBoundingClientRect();console.log(cal)
-        UICalendar = api.require('UICalendar');
-        UICalendar.open({
-            multipleSelect:true,
-            rect: {
-                x: 42,
-                y: cal.top,
-                w: cal.width,
-                h: cal.height
-            },
-            styles: {
-                bg: 'rgba(255,255,255,0)',
-                week: {
-                    weekdayColor: '#4f4f4f',
-                    weekendColor: '#4f4f4f',
-                    size: 12
-                },
-                date: {
-                    color: '#a7a7a7',
-                    selectedColor: '#95c5fe',
-                    selectedBg: '#e8f2ff',
-                    size: 12
-                },
-                today: {
-                    color: 'green',
-                    bg: ''
-                },
-                specialDate: {
-                    color: '#a8d500',
-                    bg: 'widget://image/a.png'
-                }
-            },
-            switchMode: 'horizontal',
-            fixedOn: api.frameName,
-            fixed: false
-        }, function(ret, err) {
-            if (ret) {
-                alert(JSON.stringify(ret));
-            } else {
-                alert(JSON.stringify(err));
+        api.openWin({
+            name: 'invite_guests_senior_win',
+            url: './invite_guests_senior_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+            animation:{
+                type:"push",                //动画类型（详见动画类型常量）
+                subType:"from_right",       //动画子类型（详见动画子类型常量）
+                duration:300                //动画过渡时间，默认300毫秒
             }
         });
     }

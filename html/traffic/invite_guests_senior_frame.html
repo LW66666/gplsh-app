@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>访客邀请高级frame</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0) !important;
+        }
+
+        body img {
+            display: inline-block;
+        }
+
+        section {
+            width: 100%;
+            height: 100%;
+        }
+
+        section .aui-row:nth-child(1) {
+            padding: 16px 30.5px 16px 22.5px;
+            font-size: 0.625rem;
+            color: #b1b1b1;
+        }
+
+        section .aui-row:nth-child(1) img {
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            left: 7px;
+            top: 7px;
+            right: 0;
+            bottom: 0;
+        }
+
+        section .aui-row:nth-child(1) #timeC {
+            content: "";
+            width: 30px;
+            height: 30px;
+            right: 0;
+            position: absolute;
+            top: 50%;
+            left: 96%;
+            transform: translate(-50%, -23%);
+        }
+
+        section .aui-row:nth-child(2) {
+            padding: 5px 10px;
+            position: relative;
+            height: 448.5px;
+            transition: all 0.2s;
+        }
+
+        section .aui-row:nth-child(2) .box {
+            height: 141px;
+            box-shadow: 0px 0px 5px 0px #f0f0f0;
+            padding: 33.5px 26px 20px;
+            border-radius: 10px;
+            transform: translateX(0%);
+        }
+
+        section .aui-row:nth-child(2) .box .aui-list-item-input label span {
+            color: #989898 !important;
+        }
+
+        section .aui-row:nth-child(2) .box input:checked + span {
+            color: #4298fd !important;
+        }
+
+        section .aui-row:nth-child(2) .box::after {
+            position: absolute;
+            content: "";
+            width: .5px;
+            height: 79.5px;
+            background: #e5e5e5;
+            left: 25%;
+            top: 29%;
+        }
+
+        section .aui-row:nth-child(2) .box .aui-col-xs-4 div:nth-child(2) {
+            padding-top: 42px;
+        }
+
+        section .aui-row:nth-child(2) .box .aui-col-xs-8 div:nth-child(2) {
+            padding-top: 42px;
+        }
+
+        #calendar {
+            width: 100%;
+            height: 235.5px;
+        }
+
+        section .aui-row:nth-child(2) .box2 {
+            width: 100%;
+            height: 441.5px;
+            box-shadow: 0px 0px 5px 0px #f0f0f0;
+            padding: 13px 32px 20px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(1), section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(4) {
+            font-size: 0.625rem;
+            text-align: center;
+            color: #b1b1b1;
+        }
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(2) {
+            font-size: 0.75rem;
+            text-align: center;
+            color: #4f4f4f;
+            line-height: 0.75rem;
+            height: 0.75rem;
+        }
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(4) {
+            font-size: 0.68725rem;
+        }
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(4) img {
+            width: 15.5px;
+            height: 15.5px
+        }
+
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(5) {
+            padding: 0 27px;
+        }
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(5) .times {
+            width: 90%;
+            height: 33.5px;
+            line-height: 34.5px;
+            margin-top: 17px;
+            background: #4298fd;
+            color: #fff;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            padding: 0 32px;
+        }
+
+        .timesBox {
+            position: relative;
+            width: 100%;
+        }
+
+        .timesBox > div:nth-child(2) {
+            position: absolute;
+            margin-top: -31px;
+            display: inline;
+            width: 25px;
+            right: -10px;
+            height: 25px;
+        }
+
+        .timesBox img {
+            width: 17.5px;
+            height: 17.5px;
+            position: absolute;
+            top: 5px;
+            left: 4px;
+            display: block;
+        }
+
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(5) .times > div:nth-child(1),
+        section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(5) .times > div:nth-child(3) {
+            text-decoration: underline !important;
+        }
+
+        section .aui-row:nth-child(3) {
+            padding-top: 15.5px;
+        }
+
+        section .aui-row:nth-child(3) ul {
+            border-bottom: solid 0.5px #f3f3f3;
+        }
+
+        section .aui-row:nth-child(3) ul li {
+            padding: 20.5px 26px;
+            color: #4f4f4f;
+        }
+
+        section .aui-row:nth-child(3) ul li > div {
+            min-height: 1.2rem;
+        }
+
+        section .aui-row:nth-child(4) {
+            padding: 40px 48px;
+        }
+
+        section .aui-row:nth-child(4) .aui-btn {
+            border-radius: 30px;
+            background: #4298fd;
+            transition: all 0.5s cubic-bezier(.12, .52, 0, 1.05);
+        }
+
+        section .aui-row:nth-child(4) .aui-btn:active {
+            color: #fff;
+            background-color: #4376dc;
+        }
+
+
+        .aui-dialog-body .aui-list-item-input label span {
+            color: #989898 !important;
+        }
+
+        .aui-dialog-body input:checked + span {
+            color: #4298fd !important;
+        }
+
+        .aui-dialog-body input {
+            width: 1.2rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
+            min-height: 1.2rem;
+            background-color: #ffffff;
+            border: solid 1px #dddddd;
+            -webkit-border-radius: 0.6rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 0.6rem;
+            font-size: 0.8rem;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            cursor: default;
+            -webkit-appearance: none;
+            background-size: 0% 1px, 1px 0%, 0% 0px, 0px 0%;
+            background-repeat: no-repeat;
+        }
+
+        .aui-list-item-arrow:before {
+            content: '';
+            width: 0.6rem;
+            height: 0.6rem;
+            position: absolute;
+            top: 50%;
+            right: 0.25rem;
+            margin-top: -0.3rem;
+            background: transparent;
+            border: 2px solid #dddddd;
+            border-top: none;
+            border-right: none;
+            z-index: 2;
+            -webkit-border-radius: 0;
+            border-radius: 0;
+            -webkit-transform: rotate(-135deg);
+            transform: rotate(-135deg);
+        }
+    </style>
+</head>
+<body>
+<section class="aui-content">
+    <div class="aui-row">
+        <div class="aui-col-xs-6">选择开锁有效时间</div>
+        <div class="aui-col-xs-6 aui-text-right">
+            <div id="timeC" onclick="choseData()">
+                <img src="../../image/traffic/clock.png" tapmode alt="">
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="aui-row">
+        <div class="box2">
+            <div class="aui-col-xs-12" style="padding-bottom: 8px;">
+                选择日期（支持最长15天）
+            </div>
+            <div class="aui-col-xs-12 aui-text-center">
+                <div class="aui-col-xs-4" style="color: #4298fd;"><span tapmode onclick="prevMonth()">◀</span></div>
+                <div class="aui-col-xs-4" style="font-size: 0.75rem !important;">2018年11月</div>
+                <div class="aui-col-xs-4" style="color: #4298fd;"><span tapmode onclick="nexMonth()">▶</span></div>
+            </div>
+            <div class="aui-col-xs-12" id="calendar">
+
+            </div>
+            <div class="aui-col-xs-12" style="padding-bottom: 10px;">
+                选择时间段（支持多时间段）
+                <div style="position:absolute;margin-top: 1px;display: inline;" tapmode>
+                    <img src="../../image/traffic/add.png" width="17.5px" height="17.5px" alt="">
+                </div>
+            </div>
+            <div class="aui-col-xs-12">
+                <div class="timesBox">
+                    <div class="times aui-text-center">
+                        <div class="aui-col-xs-4" tapmode>12:00</div>
+                        <div class="aui-col-xs-4">至</div>
+                        <div class="aui-col-xs-4" tapmode>14:00</div>
+                    </div>
+                    <div tapmode>
+                        <img src="../../image/traffic/reduce.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="aui-row">
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item" tapmode onclick="chooseKey()">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-col-xs-6">
+                        <div class="aui-list-item-title">选择门锁</div>
+                    </div>
+                    <div class="aui-col-xs-6 aui-text-right">
+                        <div class="aui-list-item-title" style="color: #8c8c8c;" id="selectKey">公共钥匙</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="aui-row">
+        <div class="aui-btn aui-btn-primary aui-btn-block" tapmode>确认申请</div>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-dialog.js"></script>
+<script>
+    var checkStatus = 1;//门锁状态吗，1：公共钥匙，2：单元门
+    var dateStatus = true;
+    var UICalendar;//日历组件
+    var timeArray = new Array();//时间数组
+    apiready = function () {
+        api.parseTapmode();
+        openCalendar();
+    }
+
+    /**
+     *选择钥匙
+     * */
+    function chooseKey() {
+        var dialog = new auiDialog({});
+        var msg = "";
+        if (checkStatus == 1) {
+            msg = '<div class="aui-list-item">\n' +
+                '    <div class="aui-list-item-inner">\n' +
+                '        <div class="aui-list-item-input">\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(1)" checked><span> 公共钥匙 &nbsp;&nbsp;&nbsp;&nbsp;</span></label>\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(2)"><span> 单元钥匙</span></label>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>';
+        } else {
+            msg = '<div class="aui-list-item">\n' +
+                '    <div class="aui-list-item-inner">\n' +
+                '        <div class="aui-list-item-input">\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(1)" ><span> 公共钥匙 &nbsp;&nbsp;&nbsp;&nbsp;</span></label>\n' +
+                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(2)" checked><span> 单元钥匙</span></label>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>';
+
+        }
+        dialog.alert({
+            title: "访客邀请",
+            msg: msg,
+            buttons: ['取消', '确定']
+        }, function (ret) {
+            if (ret) {
+                var index = ret.buttonIndex;
+            }
+        })
+    }
+
+    /**
+     * 弹出框改变事件
+     * @param num 当前选中的数值
+     */
+    function alertKeyChange(num) {
+        checkStatus = num;
+        if (num == 1) {
+            document.getElementById("selectKey").innerHTML = "公共钥匙";
+        } else {
+            document.getElementById("selectKey").innerHTML = "单元钥匙";
+        }
+    }
+
+    /**
+     * 点击事件进入普通模式
+     */
+    function choseData() {
+
+        api.closeFrame();
+        api.closeWin({
+            name: "invite_guests_senior_win",
+            animation: {
+                type: "push",                //动画类型（详见动画类型常量）
+                subType: "from_left",       //动画子类型（详见动画子类型常量）
+                duration: 300                //动画过渡时间，默认300毫秒
+            }
+        });
+    }
+
+    /**
+     * 打开日历
+     * */
+    function openCalendar() {
+        var calDom = document.getElementById("calendar");
+        var cal = calDom.getBoundingClientRect();
+        UICalendar = api.require('UICalendar');
+        UICalendar.open({
+            multipleSelect: true,
+            rect: {
+                x: cal.left,
+                y: cal.top,
+                w: cal.width,
+                h: cal.height
+            },
+            styles: {
+                bg: 'rgba(255,255,255,0)',
+                week: {
+                    weekdayColor: '#4f4f4f',
+                    weekendColor: '#4f4f4f',
+                    size: 12
+                },
+                date: {
+                    color: '#a7a7a7',
+                    selectedColor: '#95c5fe',
+                    selectedBg: 'widget://image/traffic/cir.png',
+                    size: 12
+                },
+                today: {
+                    color: 'green',
+                },
+                specialDate: {
+                    color: '#a8d500',
+                    bg: 'widget://image/a.png'
+                }
+            },
+            switchMode: 'horizontal',
+            fixedOn: api.frameName,
+            fixed: false
+        }, function (ret, err) {
+            if (ret) {
+                var time=ret.year+"-"+ret.month+"-"+ret.day;
+                if (timeArray.length<15){
+                    timeArray.push(time)
+                }else {
+                    // UICalendar.cancelSpecialDates({
+                    //     specialDates: [time]
+                    // });
+                    api.alert({
+                        title: '超过15天',
+                        msg: '本次选择将不生效',
+                        buttons: ["确定"]
+                    }, function (ret, err) {
+                        // UICalendar.cancelSpecialDates({
+                        //     specialDates: [time]
+                        // });
+                    });
+                }
+                console.log(timeArray.length)
+            } else {
+                console.log("日历暂无任何数据");
+            }
+        });
+    }
+
+    /**
+     * 下一个月
+     * */
+    function nexMonth() {
+        UICalendar.nextMonth(function(ret, err) {
+            if (ret) {
+                document.querySelector("section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(2) .aui-col-xs-4:nth-child(2)")
+                    .innerHTML=ret.year+"年"+ret.month+"月";
+            } else {
+
+            }
+        });
+    }
+
+    /**
+     * 下一个月
+     * */
+    function prevMonth() {
+        UICalendar.prevMonth(function(ret, err) {
+            if (ret) {
+                document.querySelector("section .aui-row:nth-child(2) .box2 .aui-col-xs-12:nth-child(2) .aui-col-xs-4:nth-child(2)")
+                    .innerHTML=ret.year+"年"+ret.month+"月";
+            } else {
+
+            }
+        });
+    }
+
+    /**
+     * 讯在数组在数组中的下标，如果没有返回-1
+     * @param data 数值
+     * @returns {number} 返回下标
+     */
+    function findDataInArray(data) {
+        for (var i = 0; i < timeArray.length; i++) {
+            if (data == timeArray[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    Array.prototype.remove = function (val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    };
+
+    /**
+     * 添加时间段
+     */
+    function addTimeSegment() {
+
+    }
+
+    /**
+     * 减少时间段
+     */
+    function reduceTimeSegment() {
+        
+    }
+
+
+</script>
+</html>
