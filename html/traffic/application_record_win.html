@@ -5,25 +5,50 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>访客邀请高级模式win</title>
+    <title>申请记录win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
         body{
-            background: #fff;
+            background: #fff !important;
         }
-        .aui-bar {
-            height: 48px ;
-            line-height: 48px ;
-            font-size: 0.9375rem ;
+        header {
+            height: 40px !important;
+            line-height: 40px !important;
+            font-size: 0.9375rem !important;
             color: #4f4f4f !important;
         }
         header a:nth-child(1) span{
             color: #565656 !important;
         }
-        header a:nth-child(3) span{
-            color: #4298fd !important;
-            font-size: .75rem !important;
+
+        #header {
+            position: relative;
+            height: 44.5px;
+            width: 100%;
+            font-size: 0.935rem;
+            box-shadow: 0px 1px 10px 0px #E2E0E0;
         }
+
+        #header .aui-col-xs-6 {
+            height: 100%;
+            line-height: 44.5px;
+        }
+
+        #header .activeLine {
+            position: absolute;
+            width: 10%;
+            height: 2px;
+            bottom: 0px;
+            background: #4298fd;
+            z-index: 2;
+            transition: all 0.6s;
+            -webkit-transform: translateX(200%);
+            -moz-transform: translateX(200%);
+            -ms-transform: translateX(200%);
+            -o-transform: translateX(200%);
+            transform: translateX(200%);
+        }
+
     </style>
 </head>
 <body>
@@ -31,10 +56,7 @@
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title">高级模式</div>
-        <a class="aui-pull-right" tapmode  onclick="openRecord()">
-            <span>申请记录</span>
-        </a>
+        <div class="aui-title">开门记录</div>
     </header>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -51,9 +73,11 @@
             closeThisWin();
         });
 
+
+
         api.openFrame({
-            name: "invite_guests_senior_frame",
-            url: "invite_guests_senior_frame.html",
+            name: "application_record_frame",
+            url: "application_record_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
@@ -77,37 +101,15 @@
             }
         });
     }
-    
+
     function closeThisWin() {
         api.closeFrame({
-            name: 'invite_guests_senior_frame'
+            name: 'application_record_frame'
         });
         api.closeWin({
             animation:{
                 type:"push",                //动画类型（详见动画类型常量）
                 subType:"from_left",       //动画子类型（详见动画子类型常量）
-                duration:300                //动画过渡时间，默认300毫秒
-            }
-        });
-    }
-
-
-    /**
-     * 打开申请记录win
-     */
-    function openRecord() {
-        api.openWin({
-            name: 'application_record_win',
-            url: 'application_record_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-            bounces: false,
-            vScrollBarEnabled: false,
-            hScrollBarEnabled: false,
-            slidBackEnabled: false,
-            animation:{
-                type:"push",                //动画类型（详见动画类型常量）
-                subType:"from_right",       //动画子类型（详见动画子类型常量）
                 duration:300                //动画过渡时间，默认300毫秒
             }
         });

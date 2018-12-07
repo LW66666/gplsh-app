@@ -70,6 +70,9 @@
         section .aui-row:nth-child(2) .box input:checked+span{
             color: #4298fd !important;
         }
+        section .aui-row:nth-child(2) .box .aui-list-item-input label span{
+            font-size: 0.625rem !important;
+        }
         section .aui-row:nth-child(2) .box::after {
             position: absolute;
             content: "";
@@ -221,6 +224,113 @@
             -webkit-transform: rotate(-135deg);
             transform: rotate(-135deg);
         }
+
+        .keyMsg {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            z-index: 555;
+            left: 0;
+            background: rgba(0,0,0,0);
+            transition: all 0.2s;
+            display: none;
+        }
+        .keyMsgBox{
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 220px;
+            background: #fff;
+            z-index: 6;
+            bottom: 0;
+            -webkit-transition: all 0.2s;
+            -moz-transition: all 0.2s;
+            -ms-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
+            transform: translateX(100%);
+        }
+        .keyMsgBox .aui-col-xs-12:nth-child(1){
+            height: 25px;
+        }
+        .keyMsgBox .aui-col-xs-12:nth-child(1) i{
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: 0px;
+        }
+        .keyMsgBox .aui-col-xs-12:nth-child(1) i::before {
+            position: absolute;
+            top: 50%;
+            height: 50%;
+            transform: translate(-40%,-75%);
+            font-size: 1em !important;
+            right: 0px;
+        }
+        .keyMsgBox .aui-col-xs-12:nth-child(2){
+            flex: 1;
+        }
+        .keyMsgBox .aui-col-xs-12:nth-child(3) .aui-btn{
+            width: 50%;
+            height: 33.5px;
+            left: 25%;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            height: 2rem;
+            line-height: 2rem;
+        }
+        #keyMsg>div:nth-child(1){
+            font-size: 0.875rem;
+            color: #4f4f4f;
+        }
+        #keyMsg>div:nth-child(2){
+            line-height: 2.1rem;
+            font-size: 2.5rem;
+            color: #4298fd;
+        }
+        #keyMsg>div:nth-child(3){
+            font-size: 0.625rem;
+            color: #7e7e7e;
+        }
+        .shareBox{
+            padding: 0 20px;
+            display: flex;
+            padding-top: 32.5px;
+        }
+        .shareBox>div{
+            flex: 1;
+        }
+        .shareBox>div i{
+            width: 32px;
+            height: 32px;
+            border: solid 1px #000;
+            border-radius: 50%;
+            font-size: 1rem;
+            display: -webkit-inline-box;
+            color: #fff;
+            position: relative;
+        }
+        .shareBox>div img {
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .shareBox>div i::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .shareBox>div>div {
+            font-size: 0.625rem;
+            color: #7e7e7e;
+        }
     </style>
 </head>
 <body>
@@ -278,7 +388,46 @@
         </ul>
     </div>
     <div class="aui-row">
-        <div class="aui-btn aui-btn-primary aui-btn-block" tapmode>确认申请</div>
+        <div class="aui-btn aui-btn-primary aui-btn-block" tapmode onclick="openKeyMsg()">确认申请</div>
+    </div>
+</section>
+
+<section class="keyMsg">
+    <div class="keyMsgBox">
+        <div class="aui-col-xs-12 aui-text-right">
+            <i class="aui-iconfont aui-icon-close" tapmode onclick="closeKeyMsg()"></i>
+        </div>
+        <div class="aui-col-xs-12" id="keyMsg">
+            <div class="aui-text-center">
+                <span>公共钥匙</span>
+            </div>
+            <div class="aui-text-center">
+                <span>1241</span>
+            </div>
+            <div class="aui-text-center">
+                <span>2018-12-04 10:46:12</span>
+            </div>
+            <div class="shareBox">
+                <div class="aui-text-center" tapmode>
+                    <i class="aui-iconfont aui-icon-qq" style="background: #4298fd;border: none;"></i>
+                    <div>QQ</div>
+                </div>
+                <div class="aui-text-center" tapmode>
+                    <i class="aui-iconfont aui-icon-wechat" style="border: #06b043 solid 1px;color: #06b043;"></i>
+                    <div>微信</div>
+                </div>
+                <div class="aui-text-center" tapmode>
+                    <i class="aui-iconfont aui-icon-comment" style="border: #069eb0 solid 1px;color: #069eb0;"></i>
+                    <div>短信</div>
+                </div>
+                <div class="aui-text-center" tapmode>
+                    <i style="border: #ed7c03 solid 1px;color: #ed7c03;">
+                        <img src="../../image/traffic/copy.png" alt="">
+                    </i>
+                    <div>复制</div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 </body>
@@ -359,6 +508,16 @@
                 duration:300                //动画过渡时间，默认300毫秒
             }
         });
+    }
+
+
+    function openKeyMsg() {console.log("open")
+        document.querySelector(".keyMsg").setAttribute("style","display: block;background: rgba(0,0,0,0.5);")
+        document.querySelector(".keyMsgBox").setAttribute("style","transform: translateX(0%)");
+    }
+    function closeKeyMsg() {
+        document.querySelector(".keyMsg").setAttribute("style","display: none;background: rgba(0,0,0,0);")
+        document.querySelector(".keyMsgBox").setAttribute("style","transform: translateX(100%)");
     }
 </script>
 </html>
