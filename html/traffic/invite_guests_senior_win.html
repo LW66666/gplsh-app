@@ -5,16 +5,16 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>访客邀请win</title>
+    <title>访客邀请高级模式win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
         body{
-            background: #fff !important;
+            background: #fff;
         }
-        header {
-            height: 48px !important;
-            line-height: 48px !important;
-            font-size: 0.9375rem !important;
+        .aui-bar {
+            height: 48px ;
+            line-height: 48px ;
+            font-size: 0.9375rem ;
             color: #4f4f4f !important;
         }
         header a:nth-child(1) span{
@@ -31,8 +31,8 @@
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title">访客邀请</div>
-        <a class="aui-pull-right" tapmode onclick="openRecord()">
+        <div class="aui-title">高级模式</div>
+        <a class="aui-pull-right" tapmode  onclick="openRecord()">
             <span>申请记录</span>
         </a>
     </header>
@@ -52,24 +52,18 @@
         });
 
         api.openFrame({
-            name: "invite_guests_frame",
-            url: "invite_guests_frame.html",
+            name: "invite_guests_senior_frame",
+            url: "invite_guests_senior_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
                 y: document.querySelector("header").offsetHeight+statusHeight,
                 w: api.winWidth,
-                h: api.winHeight-document.querySelector("header").offsetHeight,
-                marginLeft: 0,    //相对父window左外边距的距离
-                marginTop: 0,    //相对父window上外边距的距离
-                marginBottom: 0,    //相对父window下外边距的距离
-                marginRight: 0    //相对父window右外边距的距离
+                h: 'auto'
             },
             pageParam: {name: 'pageparam'},
             overScrollMode: "scrolls",
             bounces: true,
-            scrollEnabled:true,
-            softInputMode:true,
             progress: {
                 type: "page",
                 title: "加载中",
@@ -81,10 +75,11 @@
     
     function closeThisWin() {
         api.closeFrame({
-            name: 'invite_guests_frame'
+            name: 'invite_guests_senior_frame'
         });
         api.closeWin();
     }
+
 
     /**
      * 打开申请记录win
