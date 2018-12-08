@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>生活黄页详情frame</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body {
+            background: rgba(255, 255, 255, 1);
+            overflow-x: hidden;
+            font-size: 1rem;
+        }
+        img{
+            display: inline-block;
+        }
+        section{
+            width: 100%;
+            height: 100%;
+        }
+        section>.aui-row{
+            position: relative;
+            border-bottom: solid 8px #fafafa;
+            width: 100%;
+        }
+        .aui-row:nth-child(1) {
+            height: 78px;
+        }
+        .aui-row:nth-child(1)>div {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            padding-left: 15px;
+        }
+        .aui-row:nth-child(1)>div>div:nth-child(1) {
+            width: 61px;
+            height: 50px;
+        }
+        .aui-row:nth-child(1)>div img {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+        .aui-row:nth-child(1)>div #bankName {
+            position: relative;
+            float: left;
+            line-height: 50px;
+            height: 50px;
+            color: #343434;
+        }
+
+        .hotLine{
+            height: 70px;
+            padding:0 28px 0 25.5px;
+        }
+        .hotLine>div:nth-child(1){
+            padding-top: 12px;
+            font-size: 0.8125rem;
+            height: 62px;
+            line-height: 1rem;
+        }
+        .hotLine>div:nth-child(1)>div:nth-child(1){
+            color: #343434;
+        }
+        .hotLine>div:nth-child(1)>div:nth-child(2){
+            color: #8d8d8d;
+        }
+        .hotLine>div:nth-child(2){
+            height: 100%;
+        }
+        .hotLine>div:nth-child(2) img {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+<section >
+    <div class="aui-row">
+        <div>
+            <div class="aui-col-xs-2">
+                <img src="../../image/discover/AgriculturalBank.png" alt="">
+            </div>
+            <div id="bankName">
+                农业银行
+            </div>
+        </div>
+    </div>
+    <div class="aui-row hotLine">
+        <div class="aui-col-xs-10">
+            <div>95599</div>
+            <div>客服热线</div>
+        </div>
+        <div class="aui-col-xs-2">
+            <img src="../../image/discover/call.png" alt="">
+        </div>
+    </div>
+    <div class="aui-row hotLine">
+        <div class="aui-col-xs-10">
+            <div>4006695599</div>
+            <div>信用卡热线</div>
+        </div>
+        <div class="aui-col-xs-2">
+            <img src="../../image/discover/call.png" alt="">
+        </div>
+    </div>
+    <div class="aui-row hotLine">
+        <div class="aui-col-xs-10">
+            <div>4006195599</div>
+            <div>白金贵宾服务热线</div>
+        </div>
+        <div class="aui-col-xs-2">
+            <img src="../../image/discover/call.png" alt="">
+        </div>
+    </div>
+    <div class="aui-row hotLine">
+        <div class="aui-col-xs-10">
+            <div>1069095599</div>
+            <div>农业银行</div>
+        </div>
+        <div class="aui-col-xs-2">
+            <img src="../../image/discover/call.png" alt="">
+        </div>
+    </div>
+</section>
+</body>
+<script src="../script/api.js"></script>
+<script>
+    var headerName;
+    apiready=function () {
+        api.parseTapmode();
+
+        headerName=api.pageParam.headerName;
+
+        document.getElementById("bankName").innerText=headerName;
+    }
+</script>
+</html>

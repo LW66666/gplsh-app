@@ -86,7 +86,7 @@
             <img src="../image/discover/kit.png" alt="">
             <div class="aui-grid-label">业务办理</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="openCommunityClinicWin();">
             <img src="../image/discover/hospital.png" alt="">
             <div class="aui-grid-label">社区门诊</div>
         </div>
@@ -94,7 +94,7 @@
             <img src="../image/discover/lock.png" alt="">
             <div class="aui-grid-label">开锁换锁</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="openPhoneBookWin()">
             <img src="../image/discover/book.png" alt="">
             <div class="aui-grid-label">生活黄页</div>
         </div>
@@ -102,7 +102,7 @@
             <img src="../image/discover/car.png" alt="">
             <div class="aui-grid-label">送水到家</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="openComPhoneWin()">
             <img src="../image/discover/telephone.png" alt="">
             <div class="aui-grid-label">社区电话</div>
         </div>
@@ -169,6 +169,54 @@
         for (var i=1;i<=12;i++){
 
         }
+    }
+
+    /**
+     * 打开社区门诊
+     */
+    function openCommunityClinicWin() {
+        api.openWin({
+            name: 'community_clinic_win',
+            url: 'discover/community_clinic_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+
+    /**
+     * 打开社区电话
+     */
+    function openComPhoneWin() {
+        api.openWin({
+            name: 'com_phone_win',
+            url: 'discover/com_phone_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+
+    /**
+     * 打开生活黄页
+     */
+    function openPhoneBookWin() {
+        api.openWin({
+            name: 'photo_book_win',
+            url: 'discover/photo_book_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
     }
 </script>
 </html>

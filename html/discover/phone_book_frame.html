@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>生活黄页frame</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body{
+            background: rgba(255,255,255,1);
+            overflow-x: hidden;
+            font-size:1rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .aui-grid{
+            padding: 14.5px 0px 0;
+        }
+
+        .aui-grid .aui-row:nth-child(2) {
+            padding-top: 8.5px;
+            background: #fafafa;
+        }
+
+        .aui-grid .aui-row:nth-child(2) .title,.aui-grid .aui-row:nth-child(2) .aui-col-xs-3{
+            background: #fff;
+        }
+
+        .aui-grid .title {
+            height: 38.5px;
+            line-height: 38.5px;
+            height: 100%;
+            padding-left: 15px;
+            font-size: 0.6825rem;
+            color: #a5a5a5;
+        }
+
+        .aui-grid .aui-col-xs-3{
+            width: 33.333333333333%;
+            height: 45px;
+        }
+
+        .aui-grid>.aui-row>.aui-col-xs-3{
+            border:solid 1px #f6f6f6;
+            background: rgba(255,255,255,0);
+            z-index: 3;
+        }
+
+        .aui-grid>.aui-row>.aui-col-xs-3::after{
+            z-index: -1;
+            content: "";
+            background: rgba(255,255,255,0);
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            position: absolute;
+            width: 0%;
+            height: 0%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            -webkit-transition: all .15s;
+            -moz-transition: all .15s;
+            -ms-transition: all .15s;
+            -o-transition: all .15s;
+            transition: all .15s;
+        }
+
+        .aui-grid>.aui-row>.aui-col-xs-3:active::after{
+            background: rgba(200,200,200,.5);
+            width: 100%;
+            height: 100%;
+            -webkit-border-radius: 0%;
+            -moz-border-radius: 0%;
+            border-radius: 0%;
+        }
+
+        .aui-grid img {
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+        }
+        .aui-grid-label {
+            position: absolute;
+            font-size: 0.75rem !important;
+            color: #676767;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            margin-top:0px !important;
+        }
+        section:nth-child(2) {
+            padding-top: 57px;
+        }
+        section:nth-child(2) .title{
+            font-size: 0.75rem;
+            padding-left: 10px;
+        }
+        section:nth-child(2) .aui-slide-node img{
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<section class="aui-grid">
+    <div class="aui-row">
+        <div class="title">常用银行</div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">农业银行</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">工商银行</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">建设银行</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">中国银行</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">交通银行</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode  onclick="openMore('银行')">
+            <div class="aui-grid-label">更多</div>
+        </div>
+    </div>
+    <div class="aui-row">
+        <div class="title">常用快递</div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">顺丰</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">EMS</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">圆通</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">申通</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
+            <div class="aui-grid-label">韵达</div>
+        </div>
+        <div class="aui-col-xs-3" tapmode onclick="openMore('快递')">
+            <div class="aui-grid-label">更多</div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui-slide.js"></script>
+<script>
+    apiready=function () {
+        api.parseTapmode();
+    }
+    
+    function phoneDetails(dom) {
+        var headerName=dom.innerText;
+        api.openWin({
+            name: 'photo_book_msg_win',
+            url: 'photo_book_msg_win.html',
+            pageParam: {headerName: headerName},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+    
+    function openMore(type) {
+        api.openWin({
+            name: 'photo_book_more_win',
+            url: 'photo_book_more_win.html',
+            pageParam: {type: type},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+</script>
+</html>

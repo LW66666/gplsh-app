@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>社区电话frame</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0) !important;
+        }
+        section {
+            width: 100%;
+            height: 100%;
+            padding-top: 6.5px;
+        }
+        .aui-row {
+            height: 60.5px;
+            width: 100%;
+            border-bottom:solid 1px #f6f6f6;
+            position: relative;
+        }
+        .phoneBox {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            display: flex;
+            padding: 0 20px;
+        }
+        .phoneBox div:nth-child(1){
+            flex: 1;
+        }
+        .phoneBox .aui-iconfont {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: solid 1px #4298fd;
+            color: #4298fd;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -ms-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        .phoneBox .aui-iconfont:active{
+            color: #fff;
+            background: #4298fd;
+        }
+        .phoneBox .aui-iconfont::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .phoneBox div:nth-child(1)>div:nth-child(1) {
+            font-size: 0.8125rem;
+            color: #000;
+        }
+        .phoneBox div:nth-child(1)>div:nth-child(2) {
+            line-height: 0.7rem;
+            font-size: 0.75rem;
+            color: #8d8d8d;
+        }
+        .phoneBox>div:nth-child(2){
+            width: 30px;
+            padding: 5px 0px;
+        }
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0);">
+<section class="aui-content">
+    <div class="aui-row">
+        <div class="phoneBox">
+            <div>
+                <div>服务中心</div>
+                <div>0791-88888</div>
+            </div>
+            <div>
+                <i class="aui-iconfont aui-icon-phone"></i>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row">
+        <div class="phoneBox">
+            <div>
+                <div>服务中心</div>
+                <div>0791-88888</div>
+            </div>
+            <div>
+                <i class="aui-iconfont aui-icon-phone"></i>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+</script>
+</html>
