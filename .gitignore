@@ -5,6 +5,7 @@
 # IntelliJ project files
 .idea/*
 config.xml
+config-lock.xml
 feature
 .gitignore
 *.iml

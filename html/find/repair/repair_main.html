@@ -92,7 +92,7 @@
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
     <div class="aui-title">我的报事</div>
-    <div class="aui-pull-right aui-btn">
+    <div class="aui-pull-right aui-btn" tapmode onclick="clickMyRepair()">
         申请报事
     </div>
 </header>
@@ -141,7 +141,6 @@
                 x: 0,
                 y: y + 3,
                 w: api.winWidth,
-                // w: 240,
                 h: 'auto'
             },
             frames: [{
@@ -193,6 +192,16 @@
         var btn = $api.domAll('.menu-btn');
         $api.addCls(btn[isComplete], 'menu-active');
         $api.removeCls(btn[1 - isComplete], 'menu-active');
+    }
+
+    /**
+     * 点击我的报事
+     */
+    function clickMyRepair() {
+        api.openWin({
+            name:'addRepairWin',
+            url:'./addRepair/add_repair.html'
+        })
     }
 </script>
 </html>
