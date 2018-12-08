@@ -72,6 +72,94 @@
             box-shadow: 0 10px #f9f7f7;
             padding-bottom: 18px;
         }
+
+        .input-text-div {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            border-bottom: 1px solid #dadada;
+        }
+
+        .input-text-div textarea {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 120px;
+            font-size: 0.6875rem;
+            outline: none;
+        }
+
+        .input-text-div .font-num {
+            display: block;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .input-text-div .font-num span {
+            font-size: 0.6875rem;
+            color: #9d9d9d;
+        }
+
+        .select-img-group {
+            padding-top: 25px;
+            margin: 0 auto;
+            width: 100%;
+            height: 150px;
+            border-bottom: 1px solid #dadada;
+            padding-left: 28px;
+        }
+
+        .select-img-group > div {
+            display: inline-block;
+            position: relative;
+        }
+
+        .btn-select-img {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            max-width: 130px;
+            max-height: 240px;
+        }
+
+        .btn-select-img:active {
+            background: #c0c0c0;
+        }
+
+        .btn-select-img:nth-child(n+2) {
+            margin-left: 10px;
+        }
+
+        .btn-select-img img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+        }
+
+        .select-img-group > div .btn-close {
+            position: absolute;
+            z-index: 2;
+            top: -5px;
+            right: -5px;
+            width: 1rem;
+            height: 1rem;
+            text-align: center;
+            line-height: 1rem;
+            border-radius: 50%;
+            background-color: red;
+            color: #ffffff;
+        }
+        .img-num{
+
+        }
     </style>
 </head>
 <body>
@@ -131,7 +219,47 @@
             <span>其他</span>
         </div>
     </div>
+
+</div>
+<div class="input-text-div">
+    <textarea id="textInfo" maxlength="200" rows="6" placeholder="报事说明,请描述您遇到的问题"></textarea>
+    <span class="font-num">
+            <span>
+                <label id="textLen">0</label>/200
+            </span>
+        </span>
+</div>
+<div class="select-img-group">
+    <div>
+        <div class="btn-close">X</div>
+        <button class="btn-select-img">
+            <img src="../../../../image/applyKey/add.png">
+        </button>
+    </div>
+    <div>
+        <div class="btn-close">X</div>
+        <button class="btn-select-img">
+            <img src="../../../../image/applyKey/add.png">
+        </button>
+    </div>
+    <div>
+        <div class="btn-close">X</div>
+        <button class="btn-select-img">
+            <img src="../../../../image/applyKey/add.png">
+        </button>
+    </div>
+    <span class="img-num">
+        <span>
+            <label id="imgLen">0</label>/3
+        </span>
+    </span>
 </div>
 </body>
-<script type="text/javascript" src="../../../../script/api.js"></script>
 </html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    document.getElementById("textInfo").oninput = function () {
+        var text = this.value;
+        $api.text(document.getElementById('textLen'), text.length)
+    };
+</script>
