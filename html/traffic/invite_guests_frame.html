@@ -27,8 +27,8 @@
             color: #b1b1b1;
         }
         section .aui-row:nth-child(1) img{
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             position: absolute;
             top: 0;
             left: 7px;
@@ -502,16 +502,11 @@
             vScrollBarEnabled: false,
             hScrollBarEnabled: false,
             slidBackEnabled: false,
-            animation:{
-                type:"push",                //动画类型（详见动画类型常量）
-                subType:"from_right",       //动画子类型（详见动画子类型常量）
-                duration:300                //动画过渡时间，默认300毫秒
-            }
         });
     }
 
 
-    function openKeyMsg() {console.log("open")
+    function openKeyMsg() {
         document.querySelector(".keyMsg").setAttribute("style","display: block;background: rgba(0,0,0,0.5);")
         document.querySelector(".keyMsgBox").setAttribute("style","transform: translateX(0%)");
     }

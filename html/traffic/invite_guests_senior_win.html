@@ -64,11 +64,6 @@
             pageParam: {name: 'pageparam'},
             overScrollMode: "scrolls",
             bounces: true,
-            animation: {
-                type: "push",
-                subType: "from_left",
-                duration: 300
-            },
             progress: {
                 type: "page",
                 title: "加载中",
@@ -82,13 +77,7 @@
         api.closeFrame({
             name: 'invite_guests_senior_frame'
         });
-        api.closeWin({
-            animation:{
-                type:"push",                //动画类型（详见动画类型常量）
-                subType:"from_left",       //动画子类型（详见动画子类型常量）
-                duration:300                //动画过渡时间，默认300毫秒
-            }
-        });
+        api.closeWin();
     }
 
 
@@ -105,11 +94,6 @@
             vScrollBarEnabled: false,
             hScrollBarEnabled: false,
             slidBackEnabled: false,
-            animation:{
-                type:"push",                //动画类型（详见动画类型常量）
-                subType:"from_right",       //动画子类型（详见动画子类型常量）
-                duration:300                //动画过渡时间，默认300毫秒
-            }
         });
     }
 </script>
