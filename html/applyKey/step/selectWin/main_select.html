@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>第一步</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        header {
+            background: #ffffff;
+            background-image: none !important;
+            border-bottom: 1px #f9f7f7 solid;
+        }
+
+        header, header > div {
+            height: 48px !important;
+        }
+
+        header .aui-pull-left .aui-iconfont {
+            color: black !important;
+        }
+
+        header .aui-title {
+            color: black;
+            font-size: 0.875rem;
+            line-height: 48px !important;
+        }
+
+        header .aui-pull-right {
+            font-size: 0.75rem !important;
+            line-height: 48px !important;
+            padding: 0 18.5px 0 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+<header class="aui-bar aui-bar-nav aui-bar-light">
+    <div class="aui-pull-left aui-btn">
+        <span class="aui-iconfont aui-icon-left" id="back-btn" index="0" tapmode onclick="goBack()"></span>
+    </div>
+    <div id="headerTitle" class="aui-title">选择城市</div>
+</header>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initLayout();
+        initAPIEvent();
+        var obj = api.pageParam;
+        switch (obj.name) {
+            case 'city':
+                openCityFrame();
+                break;
+            case 'village':
+                changeHeader('选择小区');
+                openVillageFrame(obj.city);
+                break;
+            case 'room':
+                changeHeader('选择楼栋');
+                openRoomFrame(obj.village);
+                break;
+        }
+    };
+
+    function initAPIEvent() {
+        //监听手机的返回按钮的点击
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            goBack();
+        });
+    }
+
+    /**
+     * 更改头的标题
+     */
+    function changeHeader(title) {
+        $api.text(document.getElementById('headerTitle'), title);
+    }
+
+    /**
+     * 更改返回按钮的index
+     */
+    function changeIndex(index) {
+        console.log('changeIndex:' + index);
+        $api.attr(document.getElementById('back-btn'), 'index', index);
+    }
+
+    /**
+     * 初始化布局
+     */
+    function initLayout() {
+        api.parseTapmode();
+        //自适应沉浸式状态栏
+        $api.fixStatusBar($api.dom('header'));
+        api.setStatusBarStyle({
+            style: 'dark'
+        });
+    }
+
+    /**
+     * 打开选择城市的城市列表
+     */
+    function openCityFrame() {
+        var y = $api.dom('header').offsetHeight;
+        api.openFrame({
+            name: 'selectCity',
+            url: './select_city.html',
+            bgColor: '#ffffff',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: 'auto',
+                marginLeft: 0,    //相对父window左外边距的距离
+                marginTop: 0,    //相对父window上外边距的距离
+                marginBottom: 0,    //相对父window下外边距的距离
+                marginRight: 0    //相对父window右外边距的距离
+            },
+            // pageParam: {name: 'pageparam'},
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            bounces: false,
+            overScrollMode: "scrolls"
+        });
+    }
+
+    /**
+     * 打开选择小区的列表
+     */
+    function openVillageFrame(city) {
+        var y = $api.dom('header').offsetHeight;
+        api.openFrame({
+            name: 'selectCity',
+            url: './select_village.html',
+            bgColor: '#ffffff',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: 'auto',
+                marginLeft: 0,    //相对父window左外边距的距离
+                marginTop: 0,    //相对父window上外边距的距离
+                marginBottom: 0,    //相对父window下外边距的距离
+                marginRight: 0    //相对父window右外边距的距离
+            },
+            pageParam: {city: city},
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            bounces: false,
+            overScrollMode: "scrolls"
+        });
+    }
+
+    /**
+     * 打开选择房间的列表
+     */
+    function openRoomFrame(village) {
+        var y = $api.dom('header').offsetHeight;
+        api.openFrame({
+            name: 'selectCity',
+            url: './select_room.html',
+            bgColor: '#ffffff',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: 'auto',
+                marginLeft: 0,    //相对父window左外边距的距离
+                marginTop: 0,    //相对父window上外边距的距离
+                marginBottom: 0,    //相对父window下外边距的距离
+                marginRight: 0    //相对父window右外边距的距离
+            },
+            pageParam: {
+                y: y,
+                village: village
+            },
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            bounces: false,
+            overScrollMode: "scrolls"
+        });
+    }
+
+    /**
+     * 返回
+     */
+    function goBack() {
+        var index = Number($api.attr(document.getElementById('back-btn'), 'index')) || 0;
+        console.log('goBack:' + index);
+        if (index === 1) {
+            api.closeFrame({
+                name: 'selectRoomNum'
+            });
+            changeIndex(0);
+            changeHeader('选择楼栋');
+            return;
+        }
+        api.closeWin({
+            name: 'selectWin'
+        });
+    }
+</script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择小区</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        li{
+            background-position: 0 bottom !important;
+        }
+    </style>
+</head>
+<body>
+<ul class="aui-list aui-list-in">
+    <li class="aui-list-item" tapmode onclick="clickItem(this)" params="{'village':'皇宫','value':'huanggong'}">
+        <div class="aui-list-item-inner">
+            <div class="aui-list-item-title">皇宫</div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner" tapmode onclick="clickItem(this)" params="{'village':'圆明园','value':'yuangmingyuan'}">
+            <div class="aui-list-item-title">圆明园</div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner" tapmode onclick="clickItem(this)" params="{'village':'白宫','value':'baigong'}">
+            <div class="aui-list-item-title">白宫</div>
+        </div>
+    </li>
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner" tapmode onclick="clickItem(this)" params="{'village':'少林寺','value':'shaolingshi'}">
+            <div class="aui-list-item-title">少林寺</div>
+        </div>
+    </li>
+</ul>
+
+</body>
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initAPISet();
+        //获取选中的小区
+        var city = api.pageParam.city;
+        //这里可以请求小区
+    };
+    function initAPISet() {
+        api.parseTapmode();
+    }
+
+    function clickItem($this) {
+    //    获取选中的小区
+        var info =  eval("(" + $api.attr($this,'params')+ ")");
+        api.sendEvent({
+            name: 'selectVillageInfo',
+            extra: info
+        });
+        api.closeWin({
+            name: 'selectWin'
+        });
+    }
+
+</script>

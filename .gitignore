@@ -4,6 +4,9 @@
 
 # IntelliJ project files
 .idea/*
+config.xml
+feature
+.gitignore
 *.iml
 out
 gen

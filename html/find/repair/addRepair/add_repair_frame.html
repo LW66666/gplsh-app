@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>添加报事报修frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        body, html {
+            background: #fff;
+        }
+
+        .aui-list .aui-list-item {
+            padding-left: 24.5px;
+            height: 47.5px;
+        }
+
+        .aui-list .aui-list-item-label {
+            height: 47.5px;
+            padding-right: 10px;
+            font-size: .875rem;
+        }
+
+        .aui-list-item-input input {
+            height: 47.5px;
+            font-size: .6875rem;
+            color: #9d9d9d;
+        }
+
+        .title-type {
+            height: 47.5px;
+            padding-left: 24.5px;
+            font-size: .875rem;
+            line-height: 47.5px;
+        }
+
+        .btn-type-group {
+            width: calc(100% - 42px);
+            -webkit-box-orient: horizontal;
+            -webkit-flex-flow: row;
+            flex-flow: row;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            margin: 0 auto;
+        }
+
+        .btn-type-group .btn-type {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            text-align: center;
+            font-size: .6875rem;
+            padding-top: 10px;
+        }
+
+        .btn-type-group .btn-type img {
+            width: 2.5rem;
+            margin: 0 auto;
+        }
+
+        .btn-type-group .btn-type span {
+            padding-top: 8px;
+        }
+
+        .bottom-sh {
+            -webkit-box-shadow: 0 10px #f9f7f7;
+            -moz-box-shadow: 0 10px #f9f7f7;
+            box-shadow: 0 10px #f9f7f7;
+            padding-bottom: 18px;
+        }
+    </style>
+</head>
+<body>
+<div class="bottom-sh">
+    <ul class="aui-list aui-form-list">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    报事地点
+                </div>
+                <div class="aui-list-item-input">
+                    <input disabled="disabled" type="text" value="保利香槟金1期-H2栋-1单元-3103"/>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    联系人
+                </div>
+                <div class="aui-list-item-input">
+                    <input type="text" value="吕布"/>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
+                    联系电话
+                </div>
+                <div class="aui-list-item-input">
+                    <input type="text" value="18170041111"/>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="title-type">维修类型</div>
+    <div class="btn-type-group">
+        <div class="btn-type">
+            <img src="../../../../image/find/repair/icon/water_un.png" alt="">
+            <span>水</span>
+        </div>
+        <div class="btn-type">
+            <img src="../../../../image/find/repair/icon/electricity_un.png" alt="">
+            <span>电</span>
+        </div>
+        <div class="btn-type">
+            <img src="../../../../image/find/repair/icon/fire_un.png" alt="">
+            <span>可燃气</span>
+        </div>
+        <div class="btn-type">
+            <img src="../../../../image/find/repair/icon/lock_un.png" alt="">
+            <span>锁</span>
+        </div>
+        <div class="btn-type">
+            <img src="../../../../image/find/repair/icon/other_un.png" alt="">
+            <span>其他</span>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+</html>
