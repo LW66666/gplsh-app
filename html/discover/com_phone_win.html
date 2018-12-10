@@ -5,23 +5,23 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>开门</title>
+    <title>社区电话win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
         body{
             background: #fff !important;
-        }
-        .aui-title{
-            font-size: 0.9375rem;
-            color: #2f2e2e;
-            height: 100%;
-            line-height: 45px;
         }
         header {
             height: 40px !important;
             line-height: 40px !important;
             font-size: 0.9375rem !important;
             color: #4f4f4f !important;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #2f2e2e;
+            height: 100%;
+            line-height: 45px;
         }
         header a:nth-child(1) span{
             color: #565656 !important;
@@ -44,17 +44,17 @@
 
         #header .activeLine {
             position: absolute;
-            width: 10%;
+            width: 23%;
             height: 2px;
             bottom: 0px;
             background: #4298fd;
             z-index: 2;
             transition: all 0.6s;
-            -webkit-transform: translateX(200%);
-            -moz-transform: translateX(200%);
-            -ms-transform: translateX(200%);
-            -o-transform: translateX(200%);
-            transform: translateX(200%);
+            -webkit-transform: translateX(60%);
+            -moz-transform: translateX(60%);
+            -ms-transform: translateX(60%);
+            -o-transform: translateX(60%);
+            transform: translateX(60%);
         }
 
     </style>
@@ -64,15 +64,11 @@
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title">开锁钥匙</div>
-        <a class="aui-pull-right" tapmode>
-            <span class="aui-iconfont aui-font-size-20  aui-icon-question"></span>
-        </a>
+        <div class="aui-title">社区电话</div>
     </header>
     <div id="header" class="aui-content">
-        <div class="aui-col-xs-6 aui-text-center " tapmode onclick="switchKey(this)">小区</div>
-        <div class="aui-col-xs-6 aui-text-center" tapmode onclick="switchKey(this)">单元</div>
-        <!--<div class="line"></div>-->
+        <div class="aui-col-xs-6 aui-text-center " tapmode onclick="switchKey(this)">物业电话</div>
+        <div class="aui-col-xs-6 aui-text-center" tapmode onclick="switchKey(this)">紧急电话</div>
         <div class="activeLine"></div>
     </div>
 </body>
@@ -91,7 +87,7 @@
         });
 
         api.openFrameGroup({
-            name: 'open_door_frame_group',
+            name: 'com_phone_frame',
             background: 'rgba(255,255,255,0)',
             scrollEnabled: true,
             rect: {
@@ -103,23 +99,23 @@
             index: 0,
             frames:
                 [{
-                    name: 'open_door_frame0',
-                    url: 'open_door_frame.html',
+                    name: 'com_phone_frame0',
+                    url: 'com_phone_frame.html',
                     pageParam: {index: 0},
                     bounces:true,
                     bgColor: 'rgba(255,255,255,0);'
                 },{
-                    name: 'open_door_frame1',
-                    url: 'open_door_frame.html',
+                    name: 'com_phone_frame1',
+                    url: 'com_phone_frame.html',
                     pageParam: {index: 1},
                     bounces:true,
                     bgColor: 'rgba(255,255,255,0);'
                 }]
         }, function (ret, err) {
-            if (ret.index==1){
-                $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(700%)")
+            if (ret.index==0){
+                $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(60%)")
             }else {
-                $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(200%)")
+                $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(280%)")
             }
         });
     }
@@ -133,18 +129,18 @@
 
     function switchKey(dom) {
         var domText = dom.textContent;
-        if (domText == "小区") {
-            $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(200%)");
+        if (domText == "物业电话") {
+            $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(60%)");
             api.setFrameGroupIndex({
-                name: 'open_door_frame_group',
+                name: 'com_phone_frame',
                 index: 0,
                 scroll:true,
                 reload:true
             });
         } else {
-            $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(700%)");
+            $api.css(document.querySelector(".activeLine"),"-webkit-transform: translateX(280%)");
             api.setFrameGroupIndex({
-                name: 'open_door_frame_group',
+                name: 'com_phone_frame',
                 index: 1,
                 scroll:true,
                 reload:true

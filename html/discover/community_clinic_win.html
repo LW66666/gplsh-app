@@ -37,10 +37,7 @@
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title">访客邀请</div>
-        <a class="aui-pull-right" tapmode onclick="openRecord()">
-            <span>申请记录</span>
-        </a>
+        <div class="aui-title">社区门诊</div>
     </header>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -58,8 +55,8 @@
         });
 
         api.openFrame({
-            name: "invite_guests_frame",
-            url: "invite_guests_frame.html",
+            name: "community_clinic_frame",
+            url: "community_clinic_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
@@ -87,25 +84,9 @@
     
     function closeThisWin() {
         api.closeFrame({
-            name: 'invite_guests_frame'
+            name: 'community_clinic_frame'
         });
         api.closeWin();
-    }
-
-    /**
-     * 打开申请记录win
-     */
-    function openRecord() {
-        api.openWin({
-            name: 'application_record_win',
-            url: 'application_record_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-            bounces: false,
-            vScrollBarEnabled: false,
-            hScrollBarEnabled: false,
-            slidBackEnabled: false,
-        });
     }
 </script>
 </html>

@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>访客邀请win</title>
+    <title>生活黄页win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
         body{
@@ -18,18 +18,15 @@
             line-height: 45px;
         }
         header {
-            height: 48px !important;
-            line-height: 48px !important;
+            height: 40px !important;
+            line-height: 40px !important;
             font-size: 0.9375rem !important;
             color: #4f4f4f !important;
         }
         header a:nth-child(1) span{
             color: #565656 !important;
         }
-        header a:nth-child(3) span{
-            color: #4298fd !important;
-            font-size: .75rem !important;
-        }
+
     </style>
 </head>
 <body>
@@ -37,10 +34,7 @@
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title">访客邀请</div>
-        <a class="aui-pull-right" tapmode onclick="openRecord()">
-            <span>申请记录</span>
-        </a>
+        <div class="aui-title">生活黄页</div>
     </header>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -58,8 +52,8 @@
         });
 
         api.openFrame({
-            name: "invite_guests_frame",
-            url: "invite_guests_frame.html",
+            name: "phone_book_frame",
+            url: "phone_book_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
@@ -84,28 +78,12 @@
             }
         });
     }
-    
+
     function closeThisWin() {
         api.closeFrame({
-            name: 'invite_guests_frame'
+            name: 'phone_book_frame'
         });
         api.closeWin();
-    }
-
-    /**
-     * 打开申请记录win
-     */
-    function openRecord() {
-        api.openWin({
-            name: 'application_record_win',
-            url: 'application_record_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-            bounces: false,
-            vScrollBarEnabled: false,
-            hScrollBarEnabled: false,
-            slidBackEnabled: false,
-        });
     }
 </script>
 </html>
