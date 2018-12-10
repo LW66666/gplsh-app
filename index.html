@@ -31,8 +31,12 @@
             display: none;
             color: #000;
             position: relative;
-            font-size: 17px;
+            font-size: 0.9375rem;
             background: rgba(38, 141, 226, 0);
+        }
+
+        header ul li:nth-child(2) {
+            border-bottom: solid 0.5px #f9f7f7;
         }
 
         header ul li:nth-child(3) {
@@ -61,8 +65,15 @@
         }
 
         #footer {
-            border-top: solid 1px rgba(207, 207, 207, 1);
+            /*border-top: solid 1px rgba(207, 207, 207, 1);*/
             background-color: rgba(253, 253, 253, 1);
+
+            background-image: linear-gradient(0, #dddddd, #dddddd 50%, transparent 50%);
+            background-image: -webkit-linear-gradient(90deg, #dddddd, #dddddd 50%, transparent 50%);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 1px;
+            background-size: 100% 1px;
+            background-position: 0 top;
         }
 
         #footer ul li {
@@ -131,8 +142,7 @@
             <li class="border-b" style="display: none;">心家泊</li>
             <li class="border-b">发现</li>
             <li class="border-b aui-bar aui-bar-nav">
-                <div class="aui-bar aui-bar-btn aui-bar-btn-round" id="news" tapmode
-                     onclick="openFrameWithType(2,this);">
+                <div class="aui-bar aui-bar-btn aui-bar-btn-round" id="news">
                     <div class="aui-bar-btn-item aui-active" type="0">消息提醒</div>
                     <div class="aui-bar-btn-item" type="1">生活服务</div>
                 </div>
@@ -170,14 +180,30 @@
         });
         var height = document.querySelector("#main").clientHeight + 21;
         openFrame(0, "auto", height);
+
+        /*
+       消息模块的导航样式回调函数
+        */
+        api.addEventListener({
+            name: 'setNewsNavClass'
+        }, function (ret, err) {
+            var index = ret.value;
+            var domAll = $api.domAll(document.getElementById('news'), 'div');
+            $api.addCls(domAll[index], 'aui-active');
+            $api.removeCls(domAll[1 - index], 'aui-active');
+        });
     };
 
     var tab = new auiTab({
         element: document.getElementById("news"),
         index: 1,
-        repeatClick: true
-    }, function (ret) {
-
+        repeatClick: false
+    }, function (obj) {
+        var index = obj.index - 1;
+        api.setFrameGroupIndex({
+            name: 'newsFrameGroup',
+            index: index
+        });
     });
 
     // 随意切换按钮
@@ -204,7 +230,8 @@
         }
 
         var y = (index == 0 || index == 3) ? "auto" : $api.dom('header').offsetHeight;
-        var height = (index == 0 || index == 3) ? document.querySelector("#main").clientHeight + 21 : document.querySelector("#main").clientHeight;
+        var height = (index == 0 || index == 3) ? api.winHeight - document.getElementById("footer").clientHeight : document.querySelector("#main").clientHeight;
+        if (index === 3) height = ++height;
         openFrame(index, y, height);
     }
 
@@ -214,15 +241,23 @@
      * @param y y轴位置
      */
     function openFrame(index, y, h) {
+        // 关闭消息模块内部的frameGroup
+        if (index !== 2) {
+            api.closeFrameGroup({
+                name: 'newsFrameGroup'
+            });
+        }
+
         for (var i = 0; i < 4; i++) {
             api.closeFrame({
                 name: 'frame' + i
             });
         }
+
         api.openFrame({
             name: 'frame' + index,
             url: './html/frame' + index + '.html',
-            bgColor: 'rgba(0,0,0,0)',
+            bgColor: (index == 3) ? "#f6f6f6" : '#fff',
             rect: {
                 x: 0,
                 y: y,
@@ -233,50 +268,9 @@
                 marginBottom: 0,    //相对父window下外边距的距离
                 marginRight: 0    //相对父window右外边距的距离
             },
-            pageParam: {name: 'pageparam'},
+            pageParam: {y: y, h: h},
             bounces: true,
-            overScrollMode: "scrolls",
-            bounces: true,
-            animation: {
-                type: "reveal",
-                subType: "from_left",
-                duration: 300
-            },
-            progress: {
-                type: "page",
-                title: "加载中",
-                text: "加载中",
-                color: "#000"
-            }
-        });
-
-        if (index === 2) {
-            var domAll = $api.domAll(document.getElementById('news'), 'div');
-            var hasCls = $api.hasCls(domAll[0], 'aui-active');
-            if (hasCls) return;
-            $api.addCls(domAll[0], 'aui-active');
-            $api.removeCls(domAll[1], 'aui-active');
-        }
-    }
-
-    /**
-     * 消息中的消息提醒和生活服务的页面打开
-     */
-    function openFrameWithType(index, that) {
-        var domArr = $api.domAll(that, 'div');
-        var dom;
-        var type;
-        for (var i = 0; i < domArr.length; i++) {
-            if ($api.hasCls(domArr[i], 'aui-active')) {
-                dom = domArr[i];
-                break;
-            }
-        }
-        type = $api.attr(dom, 'type') || 0;
-        var jsfun = 'initType(\'' + type + '\');';
-        api.execScript({
-            frameName: 'frame' + index,
-            script: jsfun
+            overScrollMode: "scrolls"
         });
     }
 </script>

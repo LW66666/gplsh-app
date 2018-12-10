@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>访客邀请高级模式win</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body{
+            background: #fff;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #2f2e2e;
+            height: 100%;
+            line-height: 45px;
+        }
+        .aui-bar {
+            height: 48px ;
+            line-height: 48px ;
+            font-size: 0.9375rem ;
+            color: #4f4f4f !important;
+        }
+        header a:nth-child(1) span{
+            color: #565656 !important;
+        }
+        header a:nth-child(3) span{
+            color: #4298fd !important;
+            font-size: .75rem !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="aui-bar aui-bar-nav" style="background: #fff;border-bottom: solid 1px #f9f7f7;">
+        <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        <div class="aui-title">高级模式</div>
+        <a class="aui-pull-right" tapmode  onclick="openRecord()">
+            <span>申请记录</span>
+        </a>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
+        var systemType=api.systemType;
+        var statusHeight=0;
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
+
+        api.openFrame({
+            name: "invite_guests_senior_frame",
+            url: "invite_guests_senior_frame.html",
+            bgColor:"rgba(255,255,255,0)",
+            rect: {
+                x: 0,
+                y: document.querySelector("header").offsetHeight+statusHeight,
+                w: api.winWidth,
+                h: 'auto'
+            },
+            pageParam: {name: 'pageparam'},
+            overScrollMode: "scrolls",
+            bounces: true,
+            progress: {
+                type: "page",
+                title: "加载中",
+                text: "加载中",
+                color: "#000"
+            }
+        });
+    }
+    
+    function closeThisWin() {
+        api.closeFrame({
+            name: 'invite_guests_senior_frame'
+        });
+        api.closeWin();
+    }
+
+
+    /**
+     * 打开申请记录win
+     */
+    function openRecord() {
+        api.openWin({
+            name: 'application_record_win',
+            url: 'application_record_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+</script>
+</html>

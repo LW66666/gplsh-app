@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>生活黄页更多win</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body{
+            background: #fff !important;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #2f2e2e;
+            height: 100%;
+            line-height: 45px;
+        }
+        header {
+            height: 40px !important;
+            line-height: 40px !important;
+            font-size: 0.9375rem !important;
+            color: #4f4f4f !important;
+        }
+        header a:nth-child(1) span{
+            color: #565656 !important;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="aui-bar aui-bar-nav" style="background: #fff;border-bottom: solid 1px #f9f7f7;">
+        <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        <div class="aui-title">更多</div>
+    </header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    var type;
+    apiready = function () {
+        api.parseTapmode();
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
+        var systemType=api.systemType;
+        var statusHeight=0;
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
+
+        type=api.pageParam.type;
+
+        api.openFrame({
+            name: "phone_book_more_frame",
+            url: "phone_book_more_frame.html",
+            bgColor:"rgba(255,255,255,0)",
+            rect: {
+                x: 0,
+                y: document.querySelector("header").offsetHeight+statusHeight,
+                w: api.winWidth,
+                h: api.winHeight-document.querySelector("header").offsetHeight,
+                marginLeft: 0,    //相对父window左外边距的距离
+                marginTop: 0,    //相对父window上外边距的距离
+                marginBottom: 0,    //相对父window下外边距的距离
+                marginRight: 0    //相对父window右外边距的距离
+            },
+            pageParam: {type: type},
+            overScrollMode: "scrolls",
+            bounces: true,
+            scrollEnabled:true,
+            softInputMode:true,
+            progress: {
+                type: "page",
+                title: "加载中",
+                text: "加载中",
+                color: "#000"
+            }
+        });
+    }
+
+    function closeThisWin() {
+        api.closeFrame({
+            name: 'phone_book_more_frame'
+        });
+        api.closeWin();
+    }
+</script>
+</html>

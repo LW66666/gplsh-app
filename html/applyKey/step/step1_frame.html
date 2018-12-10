@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>第一步</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <style>
+        body, html {
+            background: #ffffff;
+        }
+
+        .title {
+            position: relative;
+            width: 100%;
+            padding-left: 14px;
+            margin-bottom: 8.5px;
+            height: 63.5px;
+            line-height: 63.5px;
+            font-size: .8125rem;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border-bottom: 1px #dddddd solid;
+            background: #ffffff;
+        }
+
+        .title-box {
+            -webkit-box-shadow: 0 8px .5px #f4f4f9;
+            -moz-box-shadow: 0 8px .5px #f4f4f9;
+            box-shadow: 0 8px .5px #f4f4f9;
+        }
+
+        .title .blue-line {
+            position: absolute;
+            top: 60.5px;
+            left: 15px;
+            height: 3px;
+            width: 28px;
+            background-color: #6eb0fd;
+        }
+    </style>
+    <style>
+        .aui-list {
+            background: none !important;
+        }
+
+        .aui-list .aui-list-item {
+            height: 45px;
+            line-height: 45px;
+            padding-left: 16.5px !important;
+            box-sizing: border-box;
+            background-position: bottom !important;
+        }
+
+        .aui-list-item-arrow:before {
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.3rem;
+            right: 21.5px;
+        }
+
+        .aui-list-item .aui-list-item-title {
+            font-size: .75rem;
+        }
+
+        .aui-list-item .aui-list-item-right {
+            margin-right: 12px;
+            font-size: .6875rem;
+        }
+
+        .add-certificate {
+            position: relative;
+            padding-bottom: 44px;
+            background-image: linear-gradient(0, #dddddd, #dddddd 50%, transparent 50%);
+            background-image: -webkit-linear-gradient(90deg, #dddddd, #dddddd 50%, transparent 50%);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100% 1px;
+            background-size: 100% 1px;
+            background-position: 0.75rem bottom;
+        }
+
+        .aui-radio:checked {
+            border: none;
+            background: #a4f7a9;
+        }
+
+        .add-certificate .bar {
+            padding-top: 44px;
+            padding-left: 16.5px;
+            font-size: .75rem;
+        }
+
+        .add-certificate .byline {
+            margin-top: 2.5px;
+            margin-left: 15px;
+            font-size: .625rem;
+        }
+
+        .add-certificate .btn_upImg {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 24.5px;
+            width: 23.61%;
+            height: 56%;
+            max-width: 130px;
+            max-height: 240px;
+        }
+
+        .add-certificate .btn_upImg:active {
+            background-color: #bbbbbb;
+        }
+
+        .add-certificate .btn_upImg > img {
+            display: block;
+            margin: auto;
+            width: 60%;
+        }
+
+        .btn_upImg_inner {
+            background-color: transparent !important;
+        }
+
+        .btn_upImg_inner > img {
+            display: block;
+            margin: auto;
+            width: 100% !important;
+        }
+
+        .add-certificate .aui-radio {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 2px;
+            top: 60%;
+        }
+
+        .btn-next {
+            color: #ffffff;
+            border: none;
+            border-radius: 4rem;
+        }
+
+        .btn-next-active {
+            background-color: #4298fd;
+        }
+
+        .btn-next-active:active {
+            color: #ffffff;
+            background-color: #2779c4;
+        }
+
+        .btn-next-disable {
+            background: #bac6d5;
+        }
+
+        .btn-next-disable:active {
+            color: #ffffff;
+            background: #bac6d5;
+        }
+
+        .btn-next-position {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 24px;
+            width: 76.07%;
+            height: 40px;
+            max-width: 210px;
+            max-height: 40px;
+            line-height: 40px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+<div class="title title-box">
+    填写房屋信息
+    <span class="blue-line"></span>
+</div>
+
+<div>
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="clickSelectCity()">
+                <div class="aui-list-item-title">城市</div>
+                <div class="aui-list-item-right" id="cityInfo">
+                    请选择城市
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="clickSelectVillage()">
+                <div class="aui-list-item-title">小区</div>
+                <div class="aui-list-item-right" id="villageInfo">
+                    请选择小区
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner aui-list-item-arrow" tapmode onclick="clickSelectRoom()">
+                <div class="aui-list-item-title">房号</div>
+                <div class="aui-list-item-right" id="roomInfo">
+                    请选择房号
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="add-certificate">
+        <div class="bar">上传证件</div>
+        <span class="byline">(购房合同/租房合同/不动产证/其他)</span>
+        <button class="btn_upImg" tapmode onclick="clickSelectImg()">
+            <img id="image" src="../../../image/applyKey/add.png">
+        </button>
+        <label id="isSelectImg" class="aui-hide">
+            <input type="radio" class="aui-radio" checked="checked"/>
+        </label>
+    </div>
+    <div id="btnNext" class="aui-btn btn-next btn-next-position  btn-next-disable" tapmode
+         onclick="clickNextStep(2,this)">
+        下一步
+    </div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    //当前选择的city信息
+    var cityInfo;
+    //当前选择的小区信息
+    var villageInfo;
+    //当前选择的房间信息
+    var roomInfo;
+    //是否选择了图片
+    var isSelectImg;
+    apiready = function () {
+        initAPIEvent();
+    };
+
+    /**
+     * api事件
+     */
+    function initAPIEvent() {
+        //接收到选择的城市
+        api.addEventListener({
+            name: 'selectCityInfo'
+        }, function (ret, err) {
+            cityInfo = ret.value;
+            setCityInfo(cityInfo);
+        });
+
+        //接收到选择的小区
+        api.addEventListener({
+            name: 'selectVillageInfo'
+        }, function (ret, err) {
+            villageInfo = ret.value;
+            setVillageInfo(villageInfo);
+        });
+
+        //接收到选择的房号
+        api.addEventListener({
+            name: 'selectRoomInfo'
+        }, function (ret, err) {
+            roomInfo = ret.value;
+            setRoomInfo(roomInfo);
+        });
+    }
+
+    /**
+     * 选择城市后的回调
+     */
+    function setCityInfo(info) {
+        console.log(info);
+        var cityName = info.city;
+        $api.text(document.getElementById('cityInfo'), cityName);
+        checkSelectAll();
+    }
+
+    /**
+     * 选择小区后的回调
+     */
+    function setVillageInfo(info) {
+        console.log(info);
+        var villageName = info.village;
+        $api.text(document.getElementById('villageInfo'), villageName);
+        checkSelectAll();
+    }
+
+    /**
+     * 选择房间后的回调
+     */
+    function setRoomInfo(info) {
+        console.log(info);
+        var roomName = info.roomNum;
+        $api.text(document.getElementById('roomInfo'), roomName);
+        checkSelectAll();
+    }
+
+    /**
+     * 点击选择城市事件
+     */
+    function clickSelectCity() {
+        api.openWin({
+            name: 'selectWin',
+            url: './selectWin/main_select.html',
+            pageParam: {
+                name: 'city'
+            }
+        });
+    }
+
+    /**
+     * 点击选择小区
+     */
+    function clickSelectVillage() {
+        if (!cityInfo) {
+            api.toast({
+                msg: '请先选择城市',
+                duration: 500,
+                location: 'bottom'
+            });
+            return;
+        }
+        api.openWin({
+            name: 'selectWin',
+            url: './selectWin/main_select.html',
+            pageParam: {
+                name: 'village',
+                //选中的是哪个城市
+                city: cityInfo
+            }
+        });
+    }
+
+    /**
+     * 点击选择房号
+     */
+    function clickSelectRoom() {
+        if (!villageInfo) {
+            api.toast({
+                msg: '请先选择小区',
+                duration: 500,
+                location: 'bottom'
+            });
+            return;
+        }
+        api.openWin({
+            name: 'selectWin',
+            url: './selectWin/main_select.html',
+            pageParam: {
+                name: 'room',
+                //选中的是哪个小区
+                village: villageInfo
+            }
+        });
+    }
+
+    /**
+     * 点击选择图片
+     */
+    function clickSelectImg() {
+        api.getPicture({
+            sourceType: 'library',
+            encodingType: 'jpg',
+            mediaValue: 'pic',
+            destinationType: 'url',
+            allowEdit: true,
+            quality: 50,
+            targetWidth: 100,
+            targetHeight: 100,
+            saveToPhotoAlbum: false
+        }, function (ret, err) {
+            if (err) alert('未知错误，请重新启动后重试！');
+            var $img = document.getElementById('image');
+            var $isSelectImg = document.getElementById('isSelectImg');
+            if (!ret.data) {
+                $api.attr($img, 'src', '../../../image/applyKey/add.png');
+                $api.removeCls($api.closest($img, 'button'), 'btn_upImg_inner');
+                isSelectImg = false;
+                $api.addCls($isSelectImg, 'aui-hide');
+            } else {
+                $api.attr($img, 'src', ret.data);
+                $api.addCls($api.closest($img, 'button'), 'btn_upImg_inner');
+                isSelectImg = true;
+                $api.removeCls($isSelectImg, 'aui-hide');
+            }
+            checkSelectAll();
+        });
+    }
+
+    /**
+     * 检查是不是全部都有值
+     * 有值就改变按钮样式
+     */
+    function checkSelectAll() {
+        if (cityInfo && villageInfo && roomInfo && isSelectImg) {
+            $api.removeCls(document.getElementById('btnNext'), 'btn-next-disable');
+            $api.addCls(document.getElementById('btnNext'), 'btn-next-active');
+        } else {
+            $api.removeCls(document.getElementById('btnNext'), 'btn-next-active');
+            $api.addCls(document.getElementById('btnNext'), 'btn-next-disable');
+        }
+    }
+
+    /**
+     * 点击下一步
+     * @param index
+     */
+    function clickNextStep(index, $this) {
+        if ($api.hasCls($this, 'btn-next-disable')) return;
+        api.closeWin({
+            name:'selectWin'
+        });
+        api.openWin({
+            name:'stepWin2',
+            url:'./step2.html'
+        });
+    }
+</script>

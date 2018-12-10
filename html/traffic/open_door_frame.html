@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>钥匙frame</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255,255,255,0) !important;
+        }
+        section {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+        }
+
+        header {
+            position: relative;
+            height: 44.5px;
+            width: 100%;
+            font-size: 0.935rem;
+        }
+
+        header .aui-col-xs-6 {
+            height: 100%;
+            line-height: 44.5px;
+        }
+
+        header .line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: 0px;
+            background: #f0f4f7;
+            z-index: 1;
+        }
+
+        header .activeLine {
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            bottom: 0px;
+            background: #4298fd;
+            z-index: 2;
+            transition: all 0.6s;
+            -webkit-transform: translateX(0%);
+            -moz-transform: translateX(0%);
+            -ms-transform: translateX(0%);
+            -o-transform: translateX(0%);
+            transform: translateX(0%);
+        }
+
+        section {
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+
+        section .keyWarp {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 25px 15px 0;
+            transition: all 0.6s;
+        }
+
+        section .keyWarp:nth-child(1) {
+            width: 100%;
+            height: 100%;
+        }
+
+        section .keyWarp:nth-child(2) {
+            width: 100%;
+            height: 100%;
+            transform: translateX(100%);
+        }
+
+        section img {
+            display: inline-block;
+        }
+
+        section .key{
+            height: 94px;
+            box-shadow: 0px 0px 10px 2.5px #f6f6f6;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            padding: 0 17.5px;
+            margin-top: 8px;
+        }
+
+        section .keyBox {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            padding-left: 67px;
+        }
+
+        section .keyBox i{
+            color: #40c4b9;
+            font-weight: bold;
+        }
+
+        section .keyBox>div:nth-child(2){
+            flex: 1;
+            padding-left: 83px;
+        }
+
+        section .keyBox>div h2 {
+            font-size: 0.875rem;
+            color: #4f4f4f;
+        }
+        section .keyBox>div h2 small {
+            font-size: 0.6875rem;
+            color: #4f4f4f;
+        }
+
+        section .keyBox .keyImg {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 5px rgba(254, 170, 170, 1);
+            float: left;
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 12px !important;
+            background: rgba(253, 66, 66, 1);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        section .keyBox .keyImg img{
+            width: 27px;
+            height: 27px;
+        }
+
+        section .key:active{
+            box-shadow: 0px 0px 10px 3px #e7e7e7;
+        }
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0);">
+<section class="aui-content">
+    <div class="keyWarp">
+        <div class="aui-col-xs-12 key" tapmode>
+            <div class="keyBox">
+                <div class="keyImg">
+                    <img src="../../image/traffic/door.png" alt="">
+                </div>
+                <div>
+                    <h2><span style="padding-right: 4px;">东人行</span><i class="aui-iconfont aui-icon-location"></i></h2>
+                    <h2><small>外滩国际东门岗（人行）</small></h2>
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-12 key" tapmode>
+            <div class="keyBox">
+                <div class="keyImg">
+                    <img src="../../image/traffic/door.png" alt="">
+                </div>
+                <div>
+                    <h2><span style="padding-right: 4px;">东非机动车</span><i class="aui-iconfont aui-icon-location"></i></h2>
+                    <h2><small>外滩国际东门岗（非机动车）</small></h2>
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-12 key" tapmode>
+            <div class="keyBox">
+                <div class="keyImg" style="background: #fdb442;box-shadow: 0px 0px 0px 5px rgba(254,211,170,1);">
+                    <img src="../../image/traffic/door.png" alt="">
+                </div>
+                <div>
+                    <h2><span style="padding-right: 4px;">西人行</span><i class="aui-iconfont aui-icon-location"></i></h2>
+                    <h2><small>外滩国际西门岗（人行）</small></h2>
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-12 key" tapmode>
+            <div class="keyBox">
+                <div class="keyImg" style="background: #4298fd;box-shadow: 0px 0px 0px 5px rgba(170,209,254,1);">
+                    <img src="../../image/traffic/door.png" alt="">
+                </div>
+                <div>
+                    <h2><span style="padding-right: 4px;">北人行</span><i class="aui-iconfont aui-icon-location"></i></h2>
+                    <h2><small>外滩国际北门岗（人行）</small></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+</script>
+</html>

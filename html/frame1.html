@@ -19,6 +19,41 @@
         .aui-grid{
             padding: 32.5px 24px 0;
         }
+
+        .aui-grid>.aui-row>.aui-col-xs-3{
+            background: rgba(255,255,255,0);
+            z-index: 3;
+        }
+
+        .aui-grid>.aui-row>.aui-col-xs-3::after{
+            z-index: -1;
+            content: "";
+            background: rgba(255,255,255,0);
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            position: absolute;
+            width: 0%;
+            height: 0%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            -webkit-transition: all .15s;
+            -moz-transition: all .15s;
+            -ms-transition: all .15s;
+            -o-transition: all .15s;
+            transition: all .15s;
+        }
+
+        .aui-grid>.aui-row>.aui-col-xs-3:active::after{
+            background: rgba(200,200,200,.5);
+            width: 100%;
+            height: 100%;
+            -webkit-border-radius: 0%;
+            -moz-border-radius: 0%;
+            border-radius: 0%;
+        }
+
         .aui-grid img {
             width: 28px;
             height: 28px;
@@ -51,7 +86,7 @@
             <img src="../image/discover/kit.png" alt="">
             <div class="aui-grid-label">业务办理</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="openCommunityClinicWin();">
             <img src="../image/discover/hospital.png" alt="">
             <div class="aui-grid-label">社区门诊</div>
         </div>
@@ -59,7 +94,7 @@
             <img src="../image/discover/lock.png" alt="">
             <div class="aui-grid-label">开锁换锁</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="openPhoneBookWin()">
             <img src="../image/discover/book.png" alt="">
             <div class="aui-grid-label">生活黄页</div>
         </div>
@@ -67,7 +102,7 @@
             <img src="../image/discover/car.png" alt="">
             <div class="aui-grid-label">送水到家</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="openComPhoneWin()">
             <img src="../image/discover/telephone.png" alt="">
             <div class="aui-grid-label">社区电话</div>
         </div>
@@ -115,8 +150,8 @@
                         margin:5
                     },
                     align: 'center',
-                    color: '#FFFFFF',
-                    activeColor: '#000000'
+                    color: '#bababa',
+                    activeColor: '#414141'
                 }
             },
             placeholderImg: 'widget://image/discover/loading.gif',
@@ -129,6 +164,58 @@
             if (ret) {
             } else {
             }
+        });
+
+        for (var i=1;i<=12;i++){
+
+        }
+    }
+
+    /**
+     * 打开社区门诊
+     */
+    function openCommunityClinicWin() {
+        api.openWin({
+            name: 'community_clinic_win',
+            url: 'discover/community_clinic_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+
+    /**
+     * 打开社区电话
+     */
+    function openComPhoneWin() {
+        api.openWin({
+            name: 'com_phone_win',
+            url: 'discover/com_phone_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
+        });
+    }
+
+    /**
+     * 打开生活黄页
+     */
+    function openPhoneBookWin() {
+        api.openWin({
+            name: 'photo_book_win',
+            url: 'discover/photo_book_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+            bounces: false,
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
+            slidBackEnabled: false,
         });
     }
 </script>

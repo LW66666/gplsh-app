@@ -205,7 +205,7 @@
             <div class="item-title">102</div>
             <div class="item-info">钥匙</div>
         </div>
-        <div class="list-item">
+        <div class="list-item" tapmode onclick="clickRepair()">
             <div class="item-title">60</div>
             <div class="item-info">报事</div>
         </div>
@@ -221,7 +221,7 @@
 </header>
 
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="openApplyKey();">
         <img src="../image/my/icon/footer.png">
         <div class="aui-list-item-inner">
             我的足迹
@@ -276,10 +276,30 @@
 <script>
     apiready = function () {
         var systemType = api.systemType;
-        if (systemType == 'android') {
+        if (systemType === 'android') {
             document.querySelector("header").setAttribute("style", "padding-top:-25px");
-        } else if (systemType == 'ios') {
+        } else if (systemType === 'ios') {
             document.querySelector("header").setAttribute("style", "padding-top:-20px");
         }
+    }
+
+    /**
+     * 去申请钥匙
+     */
+    function openApplyKey() {
+        api.openWin({
+            name: 'applyKeyWin',
+            url: './applyKey/apply_main.html'
+        });
+    }
+
+    /**
+     * 去报事保修页面
+     */
+    function clickRepair() {
+        api.openWin({
+            name: 'repairWin',
+            url: './find/repair/repair_main.html'
+        });
     }
 </script>
