@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>办理详情的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        body, html {
+            background-color: #fff;
+        }
+
+        .div-header {
+            height: 99px;
+            box-sizing: border-box;
+            background: url("../../../../image/find/repair/bg_details.png") no-repeat;
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
+
+        .div-header .title {
+            color: #ffffff;
+            font-size: .625rem;
+            padding-left: 20px;
+            padding-top: 15px;
+        }
+
+        .div-header .group-circle {
+            width: 85%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        .div-header .group-circle > * {
+            display: inline-block;
+        }
+
+        .group-circle .circle {
+            display: inline-block;
+            background-color: #ffffff;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .group-circle .circle-active {
+            background-color: #fbcf4b;
+            box-sizing: unset;
+            position: relative;
+            top: 5px;
+            left: -5px;
+            border: 5px solid #72b499;
+        }
+
+        .group-circle .line {
+            height: 2px;
+            background-color: #a7cfe3;
+            width: calc(25% - 24px);
+            vertical-align: 4px;
+        }
+
+        .group-circle-item {
+            width: 10px;
+            position: relative;
+        }
+
+        .group-circle-item .circle-detail {
+            float: left;
+            padding-top: 7px;
+            position: absolute;
+            left: -1.25rem;
+            width: 3rem;
+            color: #fefeff;
+            font-size: 0.625rem;
+        }
+    </style>
+    <style>
+        .box {
+            position: relative;
+            width: 95%;
+            box-sizing: border-box;
+            margin: 12.5px auto 0;
+            border-radius: 10px;
+            -webkit-box-shadow: 2px 2px 10px #efefef, -2px -2px 10px #efefef;
+            -moz-box-shadow: 2px 2px 10px #efefef, -2px -2px 10px #efefef;
+            box-shadow: 2px 2px 10px #efefef, -2px -2px 10px #efefef;
+        }
+
+        .box .box-title {
+            font-size: 0.875rem;
+            padding-left: 12px;
+            padding-top: 14px;
+        }
+
+        .box .box-title::before {
+            display: inline-block;
+            position: relative;
+            content: "";
+            top: 1.8px;
+            width: 2px;
+            height: 0.85rem;
+            background: #4298fd;
+            margin-right: 3.5px;
+        }
+
+        .box .box-title-small {
+            position: relative;
+            padding-left: 15px;
+            padding-top: 6px;
+        }
+
+        .box .box-title-small span:first-of-type {
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+        }
+
+        .box .box-title-small span:last-of-type {
+            position: absolute;
+            top: 0.68rem;
+            right: 13px;
+            color: #7f7f7f;
+            font-size: 0.6875rem;
+            line-height: 0.6875rem;
+        }
+
+        .box .box-info {
+            padding-left: 15px;
+            padding-top: 18px;
+            padding-bottom: 20px;
+            font-size: 0.6875rem;
+            color: #474747;
+        }
+
+        .box-info > div {
+            padding-top: 3px;
+        }
+
+        .box-info .img-list {
+            position: relative;
+            left: -5px;
+            display: inline-block;
+        }
+
+        .box-info .img-list > img {
+            position: relative;
+            top: 2px;
+            width: 13px;
+            margin: 0 1px;
+            display: inline-block;
+        }
+
+        .btn-evaluation {
+            position: absolute;
+            right: 20.5px;
+            bottom: 30px;
+            width: 70px;
+            height: 25px;
+            text-align: center;
+            border-radius: 1rem;
+            background: #4298fd;
+            font-size: 0.75rem;
+            line-height: 25px;
+            color: #ffffff;
+        }
+
+        .btn-evaluation:active {
+            background: #3986e2;
+        }
+    </style>
+    <style>
+        .time-line-group {
+            padding: 12px 0 15px;
+        }
+
+        .time-line-group .item {
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 10px;
+            color: #474747;
+        }
+
+        .time-line-group .item > * {
+            display: inline-block;
+        }
+
+        .time-line-group .item-time {
+            vertical-align: top;
+            width: 2.9rem;
+            padding-left: 17px;
+            font-size: 0.625rem;
+        }
+
+        .time-line-group .item-time > span {
+            display: block;
+        }
+
+        .time-line-group .circle {
+            position: relative;
+            /*top: .4125rem;*/
+            top: .6rem;
+            vertical-align: top;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            font-size: 0.625rem;
+            border: 3px solid #4298fd;
+        }
+
+        .time-line-group .circle::after {
+            position: relative;
+            top: 15px;
+            left: 1.76px;
+            content: "";
+            float: left;
+            width: 2px;
+            height: 60px;
+            background-color: #a7a7a7;
+        }
+
+        .time-line-group .circle.end::after {
+            display: none;
+        }
+
+        .time-line-group .item-inner {
+            width: calc(85% - 25px - 60px);
+            margin-left: 8px;
+        }
+
+        .time-line-group .item-inner > div {
+            font-size: .75rem;
+        }
+
+        .time-line-group .item-inner > p {
+            font-size: .625rem;
+        }
+
+        .time-line-group .item:first-child .item-time span:first-child {
+            position: relative;
+            left: -0.28rem;
+            font-size: 0.75rem;
+            color: black;
+        }
+
+        .time-line-group .item:first-child .circle {
+            box-sizing: unset;
+            background-color: #fbcf4b;
+            position: relative;
+            /*top: 5px;*/
+            left: -5px;
+            border: 5px solid #fef0c8;
+        }
+
+        .time-line-group .item:first-child .circle::after {
+            top: 17px;
+            left: 39%;
+        }
+
+        .time-line-group .item:first-child .item-inner {
+            margin-left: -1px;
+        }
+
+        .text-red {
+            color: #ff4747;
+        }
+    </style>
+</head>
+
+<body>
+<div class="div-header">
+    <div class="title">
+        <span>报事单号：</span>
+        <span>Y18092614118736</span>
+    </div>
+    <div>
+        <div class="group-circle">
+            <div class="group-circle-item">
+                <i class="circle"></i>
+                <span class="circle-detail">申请成功</span>
+            </div>
+            <div class="line"></div>
+            <div class="group-circle-item">
+                <i class="circle circle-active"></i>
+                <span class="circle-detail">已受理</span>
+            </div>
+            <div class="line"></div>
+            <div class="group-circle-item">
+                <i class="circle"></i>
+                <span class="circle-detail">处理中</span>
+            </div>
+            <div class="line"></div>
+            <div class="group-circle-item">
+                <i class="circle"></i>
+                <span class="circle-detail">待评价</span>
+            </div>
+            <div class="line"></div>
+            <div class="group-circle-item">
+
+                <i class="circle"></i>
+                <span class="circle-detail">已评价</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="box">
+    <div class="box-title">报事内容</div>
+    <div class="box-title-small">
+        <span>开一张居住证明</span>
+        <span>2018-09-28 12:22:22</span>
+    </div>
+    <div class="box-info">
+        <div>服务人员：<span>木子</span></div>
+        <div>联系电话：<span>18188886666</span></div>
+        <div>服务评价：
+            <div class="img-list">
+                <img src="../../../../image/find/repair/star_blue.png">
+                <img src="../../../../image/find/repair/star_ash.png">
+                <img src="../../../../image/find/repair/star_ash.png">
+                <img src="../../../../image/find/repair/star_ash.png">
+                <img src="../../../../image/find/repair/star_ash.png">
+            </div>
+        </div>
+    </div>
+    <div class="btn-evaluation" tapmode onclick="clickEvaluation()">评价</div>
+</section>
+<section class="box" style="margin-top: 8px;">
+    <div class="box-title">进度信息</div>
+    <div class="time-line-group">
+        <div class="item">
+            <div class="item-time">
+                <span>09-26</span>
+                <span>10:30</span>
+            </div>
+            <i class="circle"></i>
+            <div class="item-inner">
+                <div>已处理</div>
+                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-time">
+                <span>09-26</span>
+                <span>10:30</span>
+            </div>
+            <i class="circle"></i>
+            <div class="item-inner">
+                <div>已处理</div>
+                <p>客服如来佛祖正在处理，联系电话<span class="text-red">18188886666</span></p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-time">
+                <span>09-26</span>
+                <span>10:30</span>
+            </div>
+            <i class="circle"></i>
+            <div class="item-inner">
+                <div>已处理</div>
+                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-time">
+                <span>09-26</span>
+                <span>10:30</span>
+            </div>
+            <i class="circle"></i>
+            <div class="item-inner">
+                <div>已处理</div>
+                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-time">
+                <span>09-26</span>
+                <span>10:30</span>
+            </div>
+            <i class="circle end"></i>
+            <div class="item-inner">
+                <div>已处理</div>
+                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    function clickEvaluation() {
+        api.openWin({
+            name: 'evaluationWin',
+            url: '../evaluation/service_evaluation.html'
+        })
+    }
+</script>

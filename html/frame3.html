@@ -209,7 +209,7 @@
             <div class="item-title">60</div>
             <div class="item-info">报事</div>
         </div>
-        <div class="list-item">
+        <div class="list-item" tapmode onclick="clickTransaction()">
             <div class="item-title">14</div>
             <div class="item-info">办理</div>
         </div>
@@ -300,6 +300,16 @@
         api.openWin({
             name: 'repairWin',
             url: './find/repair/repair_main.html'
+        });
+    }
+
+    /**
+     * 去我的办理页面
+     */
+    function clickTransaction() {
+        api.openWin({
+            name: 'transactionWin',
+            url: './find/transaction/transaction_main.html'
         });
     }
 </script>

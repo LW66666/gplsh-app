@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>添加办理类型frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        .mui-list .mui-list-item{
+            width: 100%;
+            border-bottom: 1px solid #e9e9e9;
+            position: relative;
+            height: 57.5px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+        .mui-list .mui-list-item:active{
+            background: #f4f4f4;
+        }
+        .mui-list .mui-list-item>*{
+            display: inline-block;
+        }
+        .mui-list .mui-list-item img{
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+        }
+        .mui-list .mui-list-item .mui-list-item-inner{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 55px;
+            font-size: 0.75rem;
+        }
+        .mui-list .mui-list-item .mui-list-item-inner>div:last-child{
+            font-size: 0.625rem;
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+<ul class="mui-list">
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            入住证明
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            装修完工申请
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            大件物品搬出申报
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            装修许可证
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            装修出入证
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            钥匙托管
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            <div>业主卡</div>
+            <div>
+                门禁卡
+            </div>
+        </div>
+    </li>
+    <li class="mui-list-item" tapmode onclick="clickType(this)">
+        <img src="../../../../image/find/repair/icon/water_un.png">
+        <div class="mui-list-item-inner">
+            <div>其他</div>
+            <div>
+                更换二手业主信息，业主询问，其它
+            </div>
+        </div>
+    </li>
+</ul>
+</body>
+</html>
+<script src="../../../../script/api.js"></script>
+<script>
+    function clickType(){
+        api.openWin({
+            name:'addTransactionStep1',
+            url:'./add_transaction_step_1.html'
+        })
+    }
+</script>

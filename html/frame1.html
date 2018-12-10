@@ -78,7 +78,7 @@
 <body>
 <section class="aui-grid">
     <div class="aui-row">
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="clickRepair()">
             <img src="../image/discover/repair.png" alt="">
             <div class="aui-grid-label">报事保修</div>
         </div>
@@ -216,6 +216,16 @@
             vScrollBarEnabled: false,
             hScrollBarEnabled: false,
             slidBackEnabled: false,
+        });
+    }
+
+    /**
+     * 去报事保修页面
+     */
+    function clickRepair() {
+        api.openWin({
+            name: 'repairWin',
+            url: './find/repair/repair_main.html'
         });
     }
 </script>

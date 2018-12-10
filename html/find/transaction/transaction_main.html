@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>报事保修</title>
+    <title>业务办理</title>
     <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
     <style>
@@ -91,9 +91,9 @@
     <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
-    <div class="aui-title">我的报事</div>
+    <div class="aui-title">我的办理</div>
     <div class="aui-pull-right aui-btn" tapmode onclick="clickMyRepair()">
-        申请报事
+        申请办理
     </div>
 </header>
 
@@ -136,7 +136,7 @@
     function initFrameGroup() {
         var y = $api.dom('.nav-menu').offsetHeight + $api.dom('.nav-menu').offsetTop;
         api.openFrameGroup({
-            name: 'repairFrameGroup',
+            name: 'transactionFrameGroup',
             rect: {
                 x: 0,
                 y: y + 3,
@@ -144,12 +144,12 @@
                 h: 'auto'
             },
             frames: [{
-                name: 'repairComplete',
+                name: 'transactionComplete',
                 url: './mainFrameGroup/not_complete_frame.html',
                 bounces: true,
                 bgColor: '#fff'
             }, {
-                name: 'repairNotComplete',
+                name: 'transactionNotComplete',
                 url: './mainFrameGroup/complete_frame.html',
                 bounces: true,
                 bgColor: '#fff'
@@ -175,7 +175,7 @@
     function clickComplete(isComplete) {
         setCompleteClass(isComplete);
         api.setFrameGroupIndex({
-            name: 'repairFrameGroup',
+            name: 'transactionFrameGroup',
             scroll: true,
             reload: true,
             index: isComplete
@@ -199,8 +199,8 @@
      */
     function clickMyRepair() {
         api.openWin({
-            name:'addRepairWin',
-            url:'./addRepair/add_repair.html'
+            name:'addTransactionWin',
+            url:'./addTransaction/add_transaction.html'
         })
     }
 </script>
