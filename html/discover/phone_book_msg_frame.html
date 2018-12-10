@@ -54,6 +54,7 @@
             line-height: 50px;
             height: 50px;
             color: #343434;
+            font-size: 0.875rem;
         }
 
         .hotLine{
@@ -61,15 +62,21 @@
             padding:0 28px 0 25.5px;
         }
         .hotLine>div:nth-child(1){
-            padding-top: 12px;
-            font-size: 0.8125rem;
             height: 62px;
-            line-height: 1rem;
+            line-height: 0.9rem;
         }
-        .hotLine>div:nth-child(1)>div:nth-child(1){
+        .hotLine>div:nth-child(1)>div {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            transform: translate(0%,-50%);
+        }
+        .hotLine>div:nth-child(1)>div>div:nth-child(1){
+            font-size: 0.875rem;
             color: #343434;
         }
-        .hotLine>div:nth-child(1)>div:nth-child(2){
+        .hotLine>div:nth-child(1)>div>div:nth-child(2){
+            font-size: 0.625rem;
             color: #8d8d8d;
         }
         .hotLine>div:nth-child(2){
@@ -103,8 +110,10 @@
     </div>
     <div class="aui-row hotLine">
         <div class="aui-col-xs-10">
-            <div>95599</div>
-            <div>客服热线</div>
+            <div>
+                <div>95599</div>
+                <div>客服热线</div>
+            </div>
         </div>
         <div class="aui-col-xs-2">
             <img src="../../image/discover/call.png" alt="">
@@ -112,8 +121,10 @@
     </div>
     <div class="aui-row hotLine">
         <div class="aui-col-xs-10">
-            <div>4006695599</div>
-            <div>信用卡热线</div>
+            <div>
+                <div>4006695599</div>
+                <div>信用卡热线</div>
+            </div>
         </div>
         <div class="aui-col-xs-2">
             <img src="../../image/discover/call.png" alt="">
@@ -121,8 +132,10 @@
     </div>
     <div class="aui-row hotLine">
         <div class="aui-col-xs-10">
-            <div>4006195599</div>
-            <div>白金贵宾服务热线</div>
+            <div>
+                <div>4006195599</div>
+                <div>白金贵宾服务热线</div>
+            </div>
         </div>
         <div class="aui-col-xs-2">
             <img src="../../image/discover/call.png" alt="">
@@ -130,8 +143,10 @@
     </div>
     <div class="aui-row hotLine">
         <div class="aui-col-xs-10">
-            <div>1069095599</div>
-            <div>农业银行</div>
+            <div>
+                <div>1069095599</div>
+                <div>农业银行</div>
+            </div>
         </div>
         <div class="aui-col-xs-2">
             <img src="../../image/discover/call.png" alt="">

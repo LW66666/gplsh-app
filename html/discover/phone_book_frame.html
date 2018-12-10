@@ -15,7 +15,7 @@
             flex-direction: column;
         }
         .aui-grid{
-            padding: 14.5px 0px 0;
+            padding: 0px 0px 0;
         }
 
         .aui-grid .aui-row:nth-child(2) {
@@ -42,9 +42,12 @@
         }
 
         .aui-grid>.aui-row>.aui-col-xs-3{
-            border:solid 1px #f6f6f6;
             background: rgba(255,255,255,0);
             z-index: 3;
+            border-top: solid 1px #eeeeee;
+            border-left: solid 1px #eeeeee;
+            border-bottom: none;
+            border-right: none;
         }
 
         .aui-grid>.aui-row>.aui-col-xs-3::after{
@@ -130,7 +133,7 @@
             <div class="aui-grid-label">更多</div>
         </div>
     </div>
-    <div class="aui-row">
+    <div class="aui-row" style="border-bottom: solid 1px #eeeeee;">
         <div class="title">常用快递</div>
         <div class="aui-col-xs-3" tapmode onclick="phoneDetails(this)">
             <div class="aui-grid-label">顺丰</div>
