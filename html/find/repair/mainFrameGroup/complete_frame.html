@@ -12,6 +12,7 @@
         body, html {
             position: relative;
             background-color: #fff;
+            font-size: 20px;
         }
 
         .com-list {
@@ -26,8 +27,8 @@
             border: 1px #f5f5f5 solid;
             border-radius: 10px;
             margin-top: 11px;
-             -webkit-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
-             -moz-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
+            -webkit-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
+            -moz-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
             box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
         }
 
@@ -54,12 +55,15 @@
             font-family: Roboto, "Microsoft YaHei UI", serif;
             font-size: 0.6875rem;
         }
-
+        .com-list-item .com-num span{
+            color: #999999;
+        }
         .com-list-item .com-details img {
             position: relative;
             margin-right: 2px;
-            width: 15.5px;
-            height: 15.5px;
+            top: -1px;
+            width: 17px;
+            height: 17px;
         }
 
         .com-list-item .com-details {
@@ -67,8 +71,8 @@
             padding-top: 6.5px;
             padding-left: 14.5px;
             font-family: Roboto, "Microsoft YaHei UI", serif;
-            line-height: 0.9rem;
-            font-size: 0.85rem;
+            line-height: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .com-list-item .com-details span {
@@ -88,12 +92,13 @@
         }
 
         .com-list-item .com-status span:first-of-type {
-            font-size: .85rem;
+            vertical-align: top;
+            font-size: .75rem;
         }
 
         .com-list-item .com-status p:last-of-type {
             font-size: .625rem;
-            padding-top: 4px;
+            padding-top: 8px;
             color: #999999;
         }
 
@@ -110,7 +115,7 @@
 <body>
 <!--已完成-->
 <ul class="com-list">
-    <li class="com-list-item">
+    <li class="com-list-item" tapmode onclick="clickRepairDetails()">
         <div class="com-left">
             <div class="com-num">
                 <img src="../../../../image/find/repair/order_num.png"/>
@@ -179,3 +184,11 @@
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    function clickRepairDetails() {
+        api.openWin({
+            name: 'repairDetailsWin',
+            url: '../repairDetails/repair_details.html'
+        })
+    }
+</script>

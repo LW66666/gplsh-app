@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>服务评价</title>
+    <title>报事详情</title>
     <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
     <style>
@@ -32,15 +32,6 @@
         .aui-bar-nav.aui-bar-light .aui-title {
             font-size: 0.9375rem;
         }
-
-        .aui-pull-right {
-            font-size: 0.75rem;
-            color: #4298fd;
-        }
-
-        .aui-pull-right:active {
-            color: #367ace;
-        }
     </style>
 </head>
 <body>
@@ -48,10 +39,7 @@
     <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
-    <div class="aui-title">服务评价</div>
-    <div class="aui-pull-right aui-btn">
-        提交
-    </div>
+    <div class="aui-title">报事详情</div>
 </header>
 
 </body>
@@ -69,7 +57,7 @@
      */
     function initLayout() {
         api.parseTapmode();
-//自适应沉浸式状态栏
+        //自适应沉浸式状态栏
         $api.fixStatusBar($api.dom('header'));
         api.setStatusBarStyle({
             style: 'dark'
@@ -89,8 +77,8 @@
     function initFrameGroup() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'serviceEvaluationFrame',
-            url: './service_evaluation_frame.html',
+            name: 'repairDetails',
+            url: './repair_details_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -107,7 +95,7 @@
      * 初始化API的事件接收
      */
     function initAPIEvent() {
-//监听事件
+        //监听事件
     }
 
 </script>

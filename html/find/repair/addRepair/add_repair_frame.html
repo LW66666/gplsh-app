@@ -8,6 +8,7 @@
     <title>添加报事报修frame</title>
     <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/lCalendar.css"/>
     <style>
         body, html {
             background: #fff;
@@ -216,7 +217,16 @@
             padding-left: 7.5%;
         }
 
-        .select-time > span {
+        /*.select-time > span {*/
+        /*color: #9d9d9d;*/
+        /*font-size: 0.6875rem;*/
+        /*}*/
+
+        .select-time > input {
+            display: inline-block;
+            width: 80%;
+            height: 1rem;
+            line-height: 0.6875rem;
             color: #9d9d9d;
             font-size: 0.6875rem;
         }
@@ -229,7 +239,7 @@
 
         .select-time .select-img-btn > img {
             position: relative;
-            top: -2px;
+            top: -1px;
             width: 20px;
         }
 
@@ -250,11 +260,11 @@
             transform: translateX(-50%);
             margin-top: 29px;
             margin-bottom: 30px;
-            width: 76.07%;
-            height: 40px;
-            max-width: 210px;
-            max-height: 40px;
-            line-height: 40px;
+            width: 80%;
+            height: 49px;
+            max-width: 250px;
+            max-height: 49px;
+            line-height: 49px;
             font-size: 0.75rem;
         }
 
@@ -366,17 +376,21 @@
     </span>
 </div>
 <div class="select-time">
-    <span>2018-12-07 12:00:00</span>
+    <input type="text" readonly="" placeholder="请选择时间" data-lcalendar="2018-01-11,2021-12-31" id='datetime-picker'/>
     <button class="select-img-btn">
         <img src="../../../../image/find/repair/gray_lock.png"/>
     </button>
 </div>
-<div class="aui-btn btn-submit btn-submit-position">
+<div class="aui-btn btn-submit btn-submit-position" tapmode onclick="clickSubmit();">
     立即提交
 </div>
 </body>
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/lCalendar.js"></script>
+<script>
+
+</script>
 <script>
     var UIAlbumBrowser;
     apiready = function () {
@@ -386,12 +400,33 @@
         UIAlbumBrowser = api.require('UIAlbumBrowser');
         api.parseTapmode();
         initBtnGroupClick();
-    };
-    document.getElementById("textInfo").oninput = function () {
-        var text = this.value;
-        $api.text(document.getElementById('textLen'), text.length)
+        initStaticClick();
     };
 
+
+    /**
+     * 初始化静态点击事件
+     */
+    function initStaticClick() {
+        //输入框的数字判断
+        document.getElementById("textInfo").oninput = function () {
+            var text = this.value;
+            $api.text(document.getElementById('textLen'), text.length)
+        };
+
+        //初始化日期选择的时间段
+        var startDate = new Date();
+        var startTime = [startDate.getFullYear(),startDate.getMonth()+1,startDate.getDate()];
+        var endTime = [startDate.getFullYear()+2,startDate.getMonth()+1,startDate.getDate()];
+        $api.attr($api.dom('#datetime-picker'),'data-lcalendar',startTime.join('-')+','+endTime.join('-'));
+
+        //最底部的时间选择控件
+        var calendardatetime = new lCalendar();
+        calendardatetime.init({
+            'trigger': '#datetime-picker',
+            'type': 'datetime'
+        });
+    }
 
     /**
      * 类型按钮组的点击事件
@@ -414,6 +449,15 @@
         }
     }
 
+
+    /**
+     * 选择图片的点击事件
+     */
+    function btnImgGroupClick() {
+        checkPermission();
+        selectImg();
+    }
+
     /**
      * ios查看是否有相册权限
      */
@@ -432,9 +476,9 @@
     }
 
     /**
-     * 选择图片的点击事件
+     * 检测权限后选择图片
      */
-    function btnImgGroupClick() {
+    function selectImg() {
         UIAlbumBrowser.imagePicker({
             max: 3,
             styles: {
@@ -557,8 +601,6 @@
             $api.addCls($imgItem[k], 'aui-hide');
             $api.attr($api.dom($imgItem[k], 'img'), 'src', '');
         }
-
-
     }
 
     /**
@@ -585,5 +627,12 @@
         var len = res.length;
         $api.text($api.dom('#imgLen'), len);
         return res;
+    }
+
+    /**
+     * 点击立即提交
+     */
+    function clickSubmit() {
+        // $api.append($api.dom('body'),'<div class="loading_more"></div>')
     }
 </script>
