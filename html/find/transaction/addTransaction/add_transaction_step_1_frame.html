@@ -228,6 +228,16 @@
         <li class="aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label">
+                    办理类型
+                </div>
+                <div class="aui-list-item-input">
+                    <input id="transactionType" disabled="disabled" type="text" value=""/>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-label">
                     报事地点
                 </div>
                 <div class="aui-list-item-input">
@@ -316,8 +326,13 @@
         UIAlbumBrowser = api.require('UIAlbumBrowser');
         api.parseTapmode();
         initStaticClick();
+        initPageParam(api.pageParam);
     };
 
+    function initPageParam(param) {
+        var typeName = param.typeName;
+        $api.attr($api.dom('#transactionType'),'value',typeName);
+    }
 
     /**
      * 初始化静态点击事件

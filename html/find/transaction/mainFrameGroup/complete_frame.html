@@ -23,10 +23,11 @@
         .com-list .com-list-item {
             position: relative;
             width: 100%;
-            height: 85px;
+            height: 120px;
             border: 1px #f5f5f5 solid;
             border-radius: 10px;
             margin-top: 11px;
+            margin-bottom: 12px;
             -webkit-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
             -moz-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
             box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
@@ -36,70 +37,65 @@
             background-color: #f4f4f4;
         }
 
-        .com-list-item .com-left {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .com-list-item .com-num img {
+        .com-list-item .item-top img {
             position: relative;
-            top: 1px;
             width: 9px;
-            height: 11.5px;
-            margin-right: 3px;
+            height: 12px;
+            margin-right: 1px;
+            padding-left: 15px;
         }
 
-        .com-list-item .com-num {
-            padding-left: 14.5px;
-            font-family: Roboto, "Microsoft YaHei UI", serif;
-            font-size: 0.6875rem;
-        }
-        .com-list-item .com-num span{
+        .com-list-item .item-top {
+            height: 40px;
+            font-size: .75rem;
+            line-height: 40px;
+            position: relative;
+            border-bottom: .5px solid #eeeeee;
+            box-sizing: border-box;
             color: #999999;
         }
-        .com-list-item .com-details img {
-            position: relative;
-            margin-right: 2px;
-            top: -1px;
+
+        .com-list-item .item-top > span:last-child {
+            position: absolute;
+            right: 20px;
+        }
+
+        .com-list-item .item-details {
+            overflow: hidden;
+            padding-left: 15px;
+        }
+
+        .com-list-item .item-details > * {
+            display: inline-block;
+            float: left;
+        }
+
+        .com-list-item .item-details img {
+            padding-top: 12px;
+            padding-right: 3px;
             width: 17px;
             height: 17px;
         }
 
-        .com-list-item .com-details {
-            width: 100%;
-            padding-top: 6.5px;
-            padding-left: 14.5px;
-            font-family: Roboto, "Microsoft YaHei UI", serif;
-            line-height: 0.8rem;
-            font-size: 0.75rem;
-        }
-
-        .com-list-item .com-details span {
-            width: 140px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: #4f4f4f;
-        }
-
-        .com-list-item .com-status {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 17px;
-            text-align: right;
-        }
-
-        .com-list-item .com-status span:first-of-type {
-            vertical-align: top;
+        .com-list-item .item-details p {
+            width: calc(100% - 33px);
+            display: inline-block;
+            padding-top: 10px;
             font-size: .75rem;
+            height: 2rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            color: #000000;
         }
 
-        .com-list-item .com-status p:last-of-type {
+        .com-list-item .item-time {
             font-size: .625rem;
             padding-top: 8px;
             color: #999999;
+            text-align: right;
+            padding-right: 20px;
         }
 
         .text-green {
@@ -115,68 +111,124 @@
 <body>
 <!--已完成-->
 <ul class="com-list">
-    <li class="com-list-item" tapmode onclick="clickRepairDetails()">
-        <div class="com-left">
-            <div class="com-num">
+    <li class="com-list-item" tapmode onclick="clickTransactionDetails()">
+        <div class="item-top">
+            <span>
                 <img src="../../../../image/find/repair/order_num.png"/>
                 <span>Y18092614118736</span>
-            </div>
-            <div class="com-details">
-                <img src="../../../../image/find/repair/icon/water.png"/>
-                <span>水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水</span>
-            </div>
+            </span>
+            <span class="text-green">
+                已评价
+            </span>
         </div>
-        <div class="com-status">
-            <span class="text-green">已评价</span>
-            <p>2018-09-28 14:30:40</p>
+        <div class="item-details">
+            <img src="../../../../image/find/repair/icon/water.png"/>
+            <p>
+                睡觉的时候，家里失火了，什么都烧没了，就剩一副眼镜还是裂开的，衣服也被烧掉了，现在就穿一条破洞秋裤，上衣是袈裟似的羽绒服。好冷啊！
+            </p>
+        </div>
+        <div class="item-time">
+            <span>2018-9-28 14:30:40</span>
         </div>
     </li>
-    <li class="com-list-item">
-        <div class="com-left">
-            <div class="com-num">
+    <li class="com-list-item" tapmode onclick="clickTransactionDetails()">
+        <div class="item-top">
+            <span>
                 <img src="../../../../image/find/repair/order_num.png"/>
                 <span>Y18092614118736</span>
-            </div>
-            <div class="com-details">
-                <img src="../../../../image/find/repair/icon/fire.png"/>
-                <span>水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水</span>
-            </div>
+            </span>
+            <span class="text-red">
+                未评价
+            </span>
         </div>
-        <div class="com-status">
-            <span class="text-green">已评价</span>
-            <p>2018-09-28 14:30:40</p>
+        <div class="item-details">
+            <img src="../../../../image/find/repair/icon/water.png"/>
+            <p>
+                睡觉的时候，家里失火了，什么都烧没了，就剩一副眼镜还是裂开的，衣服也被烧掉了，现在就穿一条破洞秋裤，上衣是袈裟似的羽绒服。好冷啊！
+            </p>
+        </div>
+        <div class="item-time">
+            <span>2018-9-28 14:30:40</span>
         </div>
     </li>
-    <li class="com-list-item">
-        <div class="com-left">
-            <div class="com-num">
+    <li class="com-list-item" tapmode onclick="clickTransactionDetails()">
+        <div class="item-top">
+            <span>
                 <img src="../../../../image/find/repair/order_num.png"/>
                 <span>Y18092614118736</span>
-            </div>
-            <div class="com-details">
-                <img src="../../../../image/find/repair/icon/lock.png"/>
-                <span>水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水</span>
-            </div>
+            </span>
+            <span class="text-green">
+                已评价
+            </span>
         </div>
-        <div class="com-status">
-            <span class="text-green">已评价</span>
-            <p>2018-09-28 14:30:40</p>
+        <div class="item-details">
+            <img src="../../../../image/find/repair/icon/water.png"/>
+            <p>
+                睡觉的时候，家里失火了，什么都烧没了，就剩一副眼镜还是裂开的，衣服也被烧掉了，现在就穿一条破洞秋裤，上衣是袈裟似的羽绒服。好冷啊！
+            </p>
+        </div>
+        <div class="item-time">
+            <span>2018-9-28 14:30:40</span>
         </div>
     </li>
-    <li class="com-list-item">
-        <div class="com-left">
-            <div class="com-num">
+    <li class="com-list-item" tapmode onclick="clickTransactionDetails()">
+        <div class="item-top">
+            <span>
                 <img src="../../../../image/find/repair/order_num.png"/>
                 <span>Y18092614118736</span>
-            </div>
-            <div class="com-details">
-                <img src="../../../../image/find/repair/icon/other.png"/>
-                <span>水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水水管漏水</span>
-            </div>
+            </span>
+            <span class="text-green">
+                已评价
+            </span>
         </div>
-        <div class="com-status">
-            <span class="text-red">未评价</span>
-            <p>2018-09-28 14:30:40</p>
+        <div class="item-details">
+            <img src="../../../../image/find/repair/icon/water.png"/>
+            <p>
+                睡觉的时候，家里失火了，什么都烧没了，就剩一副眼镜还是裂开的，衣服也被烧掉了，现在就穿一条破洞秋裤，上衣是袈裟似的羽绒服。好冷啊！
+            </p>
+        </div>
+        <div class="item-time">
+            <span>2018-9-28 14:30:40</span>
+        </div>
+    </li>
+    <li class="com-list-item" tapmode onclick="clickTransactionDetails()">
+        <div class="item-top">
+            <span>
+                <img src="../../../../image/find/repair/order_num.png"/>
+                <span>Y18092614118736</span>
+            </span>
+            <span class="text-green">
+                已评价
+            </span>
+        </div>
+        <div class="item-details">
+            <img src="../../../../image/find/repair/icon/water.png"/>
+            <p>
+                睡觉的时候，家里失火了，什么都烧没了，就剩一副眼镜还是裂开的，衣服也被烧掉了，现在就穿一条破洞秋裤，上衣是袈裟似的羽绒服。好冷啊！
+            </p>
+        </div>
+        <div class="item-time">
+            <span>2018-9-28 14:30:40</span>
+        </div>
+    </li>
+    <li class="com-list-item" tapmode onclick="clickTransactionDetails()">
+        <div class="item-top">
+            <span>
+                <img src="../../../../image/find/repair/order_num.png"/>
+                <span>Y18092614118736</span>
+            </span>
+            <span class="text-green">
+                已评价
+            </span>
+        </div>
+        <div class="item-details">
+            <img src="../../../../image/find/repair/icon/water.png"/>
+            <p>
+                睡觉的时候，家里失火了，什么都烧没了，就剩一副眼镜还是裂开的，衣服也被烧掉了，现在就穿一条破洞秋裤，上衣是袈裟似的羽绒服。好冷啊！
+            </p>
+        </div>
+        <div class="item-time">
+            <span>2018-9-28 14:30:40</span>
         </div>
     </li>
 </ul>
@@ -185,7 +237,7 @@
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
-    function clickRepairDetails() {
+    function clickTransactionDetails() {
         api.openWin({
             name: 'transactionDetailsWin',
             url: '../transactionDetails/transaction_details.html'

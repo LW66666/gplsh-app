@@ -47,44 +47,44 @@
 <body>
 <ul class="mui-list">
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/1.png">
+        <div class="mui-list-item-inner" title="入住证明">
             入住证明
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/2.png">
+        <div class="mui-list-item-inner" title="装修完工申请">
             装修完工申请
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/3.png">
+        <div class="mui-list-item-inner" title="大件物品搬出申报">
             大件物品搬出申报
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/4.png">
+        <div class="mui-list-item-inner" title="装修许可证">
             装修许可证
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/5.png">
+        <div class="mui-list-item-inner" title="装修出入证">
             装修出入证
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/6.png">
+        <div class="mui-list-item-inner" title="钥匙托管">
             钥匙托管
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/7.png">
+        <div class="mui-list-item-inner" title="业主卡">
             <div>业主卡</div>
             <div>
                 门禁卡
@@ -92,8 +92,8 @@
         </div>
     </li>
     <li class="mui-list-item" tapmode onclick="clickType(this)">
-        <img src="../../../../image/find/repair/icon/water_un.png">
-        <div class="mui-list-item-inner">
+        <img src="../../../../image/find/transaction/8.png">
+        <div class="mui-list-item-inner" title="其他">
             <div>其他</div>
             <div>
                 更换二手业主信息，业主询问，其它
@@ -105,10 +105,14 @@
 </html>
 <script src="../../../../script/api.js"></script>
 <script>
-    function clickType(){
+    function clickType($this){
+        var dom = $api.dom($this,'.mui-list-item-inner');
         api.openWin({
             name:'addTransactionStep1',
-            url:'./add_transaction_step_1.html'
+            url:'./add_transaction_step_1.html',
+            pageParam:{
+                typeName:$api.attr(dom,'title')
+            }
         })
     }
 </script>
