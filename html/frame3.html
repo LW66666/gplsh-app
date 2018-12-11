@@ -197,7 +197,7 @@
                 <div class="phone">192****6666</div>
             </div>
         </div>
-        <span class="set">
+        <span class="set" tapmode onclick="clickOption()">
             <img src="../image/my/set.png"/>
         </span>
     </div>
@@ -361,6 +361,16 @@
         api.openWin({
             name: 'callDivertWin',
             url: './my/callDivert/call_divert.html'
+        });
+    }
+
+    /**
+     * 点击设置按钮
+     */
+    function clickOption() {
+        api.openWin({
+            name: 'optionWin',
+            url: './my/option/option.html'
         });
     }
 </script>

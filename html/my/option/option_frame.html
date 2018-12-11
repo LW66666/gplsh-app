@@ -5,17 +5,17 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>设置frame</title>
+    <title>设置的frame</title>
     <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
     <style>
-        body,html {
+        body, html {
             background-color: #f6f6f6;
         }
 
-        div, li {
-            background-color: #ffffff;
-        }
+        /*{*/
+        /*background-color: #ffffff;*/
+        /*}*/
 
         input[type=range] {
             background: linear-gradient(#059CFA, #059CFA) no-repeat;
@@ -43,6 +43,7 @@
             outline: none;
             -webkit-appearance: none;
             width: 100%;
+            max-width: 300px;
             height: 2px;
             background-color: #cccccc !important;
             position: relative;
@@ -60,11 +61,12 @@
         }
 
         .top-mic {
-            margin-top: 8px;
+            margin-top: 10px;
             padding-left: 20px;
-            height: 65px;
+            height: 75px;
             border-top: 1px solid #ececec;
             border-bottom: 1px solid #ececec;
+            background-color: #fff;
         }
 
         .top-mic img {
@@ -75,17 +77,19 @@
             top: 5px;
         }
 
-        .top-mic .top-mic-info{
+        .top-mic .top-mic-info {
             display: inline-block;
             width: calc(100% - 40px);
             padding-left: 12px;
         }
-        .top-mic .top-mic-info>span{
+
+        .top-mic .top-mic-info > span {
             padding-top: 12px;
             font-size: 0.625rem;
             color: #9a9a9a;
         }
-        .top-mic .top-mic-info>*{
+
+        .top-mic .top-mic-info > * {
             display: block;
         }
 
@@ -97,10 +101,18 @@
         }
 
         .aui-list {
-            background: none !important;
+            margin-top: 10px;
         }
 
-        ul > li {
+        .aui-list .aui-list-item-right {
+            font-size: 0.75rem;
+        }
+
+        .bui-not-btn:active {
+            background-color: unset !important;
+        }
+
+        .aui-list > .aui-list-item {
             position: relative;
             width: 100%;
             padding-left: 20px !important;
@@ -110,8 +122,35 @@
             background-position: bottom !important;
         }
 
-        li > div {
+        .aui-list-item > div {
             padding-top: .5px;
+        }
+
+        .aui-list .bui-item{
+            position: relative;
+            width: 100%;
+            margin: 0;
+            height: 56.5px;
+            box-sizing: border-box;
+            background-position: bottom;
+            border: none;
+            background-size: 100% 1px;
+            background-repeat: no-repeat;
+            background-image: linear-gradient(0,#dddddd,#dddddd 50%,transparent 50%);
+            background-image: -webkit-linear-gradient(90deg,#dddddd,#dddddd 50%,transparent 50%);
+        }
+
+        .aui-list .bui-item:active{
+            background-color: #ececec;
+        }
+
+        .logout{
+            color: #4298fd;
+            vertical-align: middle;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
         }
     </style>
 </head>
@@ -121,48 +160,188 @@
     <img src="../../../image/my/option/mic.png"/>
     <div class="top-mic-info">
         <span>MIC音量调节</span>
-        <label class="slider-block">
+        <label class="slider-block" for="slider">
             <input id="slider" class="slider" type="range" max="100" min="0" value="6" step="1">
         </label>
     </div>
 </div>
 
-<!--生活服务-->
-<!--<ul class="aui-list aui-list-in" id="life">-->
-<!--<li class="aui-list-item">-->
-<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
-<!--如何快速获取钥匙-->
-<!--</div>-->
-<!--</li>-->
-<!--<li class="aui-list-item">-->
-<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
-<!--如何开锁-->
-<!--</div>-->
-<!--</li>-->
-<!--<li class="aui-list-item">-->
-<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
-<!--如何给家人或者访客分享钥匙-->
-<!--</div>-->
-<!--</li>-->
-<!--<li class="aui-list-item">-->
-<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
-<!--故障排除-->
-<!--</div>-->
-<!--</li>-->
-<!--</ul>-->
+<ul class="aui-list">
+    <li class="aui-list-item" tapmode onclick="clickSecurity()">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            安全设置
+        </div>
+    </li>
+    <li class="aui-list-item bui-not-btn">
+        <div class="aui-list-item-inner font">
+            通话免打扰
+            <div class="aui-list-item-right">
+                <input type="checkbox" class="aui-switch" checked>
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item bui-not-btn">
+        <div class="aui-list-item-inner font">
+            消息通知设置
+            <div class="aui-list-item-right">
+                <input type="checkbox" class="aui-switch">
+            </div>
+        </div>
+    </li>
+</ul>
+
+<ul class="aui-list">
+    <li class="aui-list-item" tapmode onclick="clickCheckUpdate()">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            版本更新
+            <div class="aui-list-item-right">
+                <span id="versions">v3.4.0</span>
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onclick="clickClearCache()">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            清理缓存
+            <div class="aui-list-item-right">
+                已使用<span id="cacheSize">0</span>M
+            </div>
+        </div>
+    </li>
+</ul>
+
+<ul class="aui-list">
+    <li class="bui-item" tapmode onclick="clickLogout()">
+        <div class="aui-text-center  font">
+            <span class="logout">退出登录</span>
+        </div>
+    </li>
+</ul>
 </body>
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
 <script type="text/javascript" src="../../../script/range-slider.js"></script>
 <script>
-    RangeSlider({
-        el: document.getElementById("slider"),
-        min: 0,
-        max: 100,
-        step: 1,
-        callback: function ($input) {
-            console.log($input.value);
-        }
-    });
+    apiready = function () {
+        //设置当前缓存大小
+        setCacheSize();
+        //获取新版本
+        haveUpdate();
+        initStaticFun();
+    };
+
+    function initStaticFun() {
+        RangeSlider({
+            el: document.getElementById("slider"),
+            min: 0,
+            max: 100,
+            step: 1,
+            callback: function ($input) {
+                // console.log($input.value);
+            }
+        });
+    }
+
+    //清除缓存
+    function clickClearCache() {
+        api.showProgress({
+            title: '清除中',
+            modal: true
+        });
+        api.clearCache(function () {
+            setTimeout(function () {
+                setCacheSize();
+                api.toast({
+                    msg: '清除完成'
+                });
+            }, 1000);
+        });
+    }
+
+    //给都没元素设置缓存大小
+    function setCacheSize() {
+        api.getCacheSize(function (ret, err) {
+            api.hideProgress();
+            $api.dom('#cacheSize').innerHTML = parseInt(ret.size / 1024 / 1024 * 100) / 100;
+        });
+    }
+
+    //手动检测新版本
+    function clickCheckUpdate() {
+        var mam = api.require('mam');
+        mam.checkUpdate(function (ret, err) {
+            if (ret.status) {//操作成功
+                var result = ret.result;
+                //var str = '操作成功状态值:'+ret.status+';是否有更新:'+result.update+';设备上当前版本是否被强行关闭:'+result.closed+';新版本型号:'+result.version+';更新描述:'+result.versionDes+';强行关闭提示语:'+result.closeTip+';更新提示语:'+result.updateTip+';下载地址:'+result.source+';发布时间:'+result.time;
+                if (result.update) {//有更新
+                    api.confirm({
+                        title: '发现新版本',
+                        msg: '最新版本' + result.version + "\n" + result.updateTip,
+                        buttons: ['立即更新', '取消']
+                    }, function (ret, err) {
+                        if (ret.buttonIndex === 1) {//点击了立即更新
+                            window.location.href = result.source;
+                        }
+                    });
+                } else {
+                    api.toast({
+                        msg: '没有发现新版本！',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            }
+            if (err){
+                api.alert({msg: err.msg});
+            }
+        });
+    }
+
+    //自动检测新版本
+    function haveUpdate() {
+        var mam = api.require('mam');
+        mam.checkUpdate(function (ret, err) {
+            if (ret.status) {//操作成功
+                var result = ret.result;
+                //var str = '操作成功状态值:'+ret.status+';是否有更新:'+result.update+';设备上当前版本是否被强行关闭:'+result.closed+';新版本型号:'+result.version+';更新描述:'+result.versionDes+';强行关闭提示语:'+result.closeTip+';更新提示语:'+result.updateTip+';下载地址:'+result.source+';发布时间:'+result.time;
+                if (result.update) {//有更新
+                    $api.html($api.dom('#versions'), '发现新的版本');
+                }
+            }
+            if (err){
+                api.alert({msg: err.msg});
+            }
+        });
+    }
+
+    /**
+     * 退出登录
+     */
+    function clickLogout() {
+        api.confirm({
+            title: '确定要退出登录吗？',
+            // msg: '',
+            buttons: ['确认', '取消']
+        }, function (ret, err) {
+            if (ret.buttonIndex === 1) {
+                //点击了确认
+                api.showProgress({
+                    title: '正在退出'
+                });
+                setTimeout(function () {
+                    api.hideProgress();
+                },1000)
+            }
+        });
+    }
+
+    /**
+     * 点击安全设置
+     */
+    function clickSecurity() {
+        api.openWin({
+           name:'security',
+           url:'./security/security.html'
+        });
+    }
 </script>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>安全设置的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        body,html {
+            background-color: #f6f6f6;
+        }
+
+        .font {
+            font-size: .75rem;
+        }
+
+        .aui-list {
+            margin-top: 10px;
+        }
+
+        .aui-list .aui-list-item-right {
+            font-size: 0.75rem;
+            color: #c4c4c4;
+        }
+
+        .aui-list > .aui-list-item {
+            position: relative;
+            width: 100%;
+            padding-left: 20px !important;
+            margin: 0;
+            height: 56.5px;
+            box-sizing: border-box;
+            background-position: bottom !important;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<ul class="aui-list aui-list-in" id="life">
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            手机号
+            <div class="aui-list-item-right">
+                181****2222
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onclick="clickSetPassword()">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            设置密码
+        </div>
+    </li>
+    <li class="aui-list-item" tapmode onclick="clickResetPassword()">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            重置密码
+        </div>
+    </li>
+</ul>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    /**
+     * 点击设置密码
+     */
+    function clickSetPassword() {
+        api.openWin({
+            name:'setPasswordWin',
+            url:'./setPassword/set_password.html'
+        })
+    }
+
+    /**
+     * 点击重置密码
+     */
+    function clickResetPassword() {
+        api.openWin({
+            name:'resetPasswordWin',
+            url:'./resetPassword/reset_password.html'
+        })
+    }
+</script>
