@@ -157,7 +157,7 @@
             box-sizing: border-box;
             background-position: bottom !important;
             padding-left: 0 !important;
-            height: 48.5px;
+            height: 49px;
         }
 
         .aui-list > li:last-child {
@@ -175,7 +175,8 @@
         }
 
         .aui-list .aui-list-item-inner {
-            font-size: .7rem;
+            font-size: .75rem;
+            line-height: 49px;
         }
 
     </style>
@@ -201,7 +202,7 @@
         </span>
     </div>
     <div class="msg-list">
-        <div class="list-item">
+        <div class="list-item" tapmode onclick="clickMyKey()">
             <div class="item-title">102</div>
             <div class="item-info">钥匙</div>
         </div>
@@ -235,7 +236,7 @@
     </li>
 </ul>
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickFeedback()">
         <img src="../image/my/icon/smile.png">
         <div class="aui-list-item-inner">
             反馈意见
@@ -247,13 +248,13 @@
             分享给好友
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickHelp();">
         <img src="../image/my/icon/help.png">
         <div class="aui-list-item-inner">
             帮助中心
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickAbout();">
         <img src="../image/my/icon/plaint.png">
         <div class="aui-list-item-inner">
             关于珉轩智能
@@ -310,6 +311,46 @@
         api.openWin({
             name: 'transactionWin',
             url: './find/transaction/transaction_main.html'
+        });
+    }
+
+    /**
+     * 去我的钥匙页面
+     */
+    function clickMyKey() {
+        api.openWin({
+            name: 'myKeyWin',
+            url: './my/myKey/my_key.html'
+        });
+    }
+
+    /**
+     * 点击关于珉轩智能
+     */
+    function clickAbout() {
+        api.openWin({
+            name: 'aboutWin',
+            url: './my/about/about.html'
+        });
+    }
+
+    /**
+     * 点击反馈意见
+     */
+    function clickFeedback() {
+        api.openWin({
+            name: 'feedbackWin',
+            url: './my/feedback/feedback.html'
+        });
+    }
+
+    /**
+     * 点击帮助中心
+     */
+    function clickHelp() {
+        api.openWin({
+            name: 'helpWin',
+            url: './my/help/help.html'
         });
     }
 </script>
