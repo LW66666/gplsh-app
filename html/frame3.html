@@ -228,7 +228,7 @@
             我的足迹
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickCallDivert();">
         <img src="../image/my/icon/phone.png">
         <div class="aui-list-item-inner">
             呼叫转移
@@ -351,6 +351,16 @@
         api.openWin({
             name: 'helpWin',
             url: './my/help/help.html'
+        });
+    }
+
+    /**
+     * 点击呼叫转移
+     */
+    function clickCallDivert(){
+        api.openWin({
+            name: 'callDivertWin',
+            url: './my/callDivert/call_divert.html'
         });
     }
 </script>
