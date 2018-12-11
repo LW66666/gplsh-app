@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>设置frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <style>
+        body,html {
+            background-color: #f6f6f6;
+        }
+
+        div, li {
+            background-color: #ffffff;
+        }
+
+        input[type=range] {
+            background: linear-gradient(#059CFA, #059CFA) no-repeat;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12.5px;
+            width: 12.5px;
+            margin-top: -2.5px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 .125em .125em #3b4547;
+        }
+
+        .slider-block {
+            background: unset !important;
+        }
+
+        .slider {
+            outline: none;
+            -webkit-appearance: none;
+            width: 100%;
+            height: 2px;
+            background-color: #cccccc !important;
+            position: relative;
+        }
+
+        .slider::after {
+            content: "";
+            width: 100%;
+            height: 2px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #CCCCCC;
+            z-index: -1;
+        }
+
+        .top-mic {
+            margin-top: 8px;
+            padding-left: 20px;
+            height: 65px;
+            border-top: 1px solid #ececec;
+            border-bottom: 1px solid #ececec;
+        }
+
+        .top-mic img {
+            width: 10px;
+            height: 15px;
+            display: inline-block;
+            position: relative;
+            top: 5px;
+        }
+
+        .top-mic .top-mic-info{
+            display: inline-block;
+            width: calc(100% - 40px);
+            padding-left: 12px;
+        }
+        .top-mic .top-mic-info>span{
+            padding-top: 12px;
+            font-size: 0.625rem;
+            color: #9a9a9a;
+        }
+        .top-mic .top-mic-info>*{
+            display: block;
+        }
+
+    </style>
+    <style>
+
+        .font {
+            font-size: .75rem;
+        }
+
+        .aui-list {
+            background: none !important;
+        }
+
+        ul > li {
+            position: relative;
+            width: 100%;
+            padding-left: 20px !important;
+            margin: 0;
+            height: 56.5px;
+            box-sizing: border-box;
+            background-position: bottom !important;
+        }
+
+        li > div {
+            padding-top: .5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-mic">
+    <img src="../../../image/my/option/mic.png"/>
+    <div class="top-mic-info">
+        <span>MIC音量调节</span>
+        <label class="slider-block">
+            <input id="slider" class="slider" type="range" max="100" min="0" value="6" step="1">
+        </label>
+    </div>
+</div>
+
+<!--生活服务-->
+<!--<ul class="aui-list aui-list-in" id="life">-->
+<!--<li class="aui-list-item">-->
+<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
+<!--如何快速获取钥匙-->
+<!--</div>-->
+<!--</li>-->
+<!--<li class="aui-list-item">-->
+<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
+<!--如何开锁-->
+<!--</div>-->
+<!--</li>-->
+<!--<li class="aui-list-item">-->
+<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
+<!--如何给家人或者访客分享钥匙-->
+<!--</div>-->
+<!--</li>-->
+<!--<li class="aui-list-item">-->
+<!--<div class="aui-list-item-inner aui-list-item-arrow font">-->
+<!--故障排除-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+</body>
+
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/range-slider.js"></script>
+<script>
+    RangeSlider({
+        el: document.getElementById("slider"),
+        min: 0,
+        max: 100,
+        step: 1,
+        callback: function ($input) {
+            console.log($input.value);
+        }
+    });
+</script>
