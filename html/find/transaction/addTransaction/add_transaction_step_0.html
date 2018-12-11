@@ -11,6 +11,7 @@
     <style>
         body, html {
             background: #fff;
+            color: #4f4f4f;
         }
 
         .aui-bar.aui-bar-light {
@@ -88,8 +89,8 @@
     function initFrameGroup() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'addRepair',
-            url: './add_repair_frame.html',
+            name: 'addTransactionStep0',
+            url: './add_transaction_step_0_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -110,7 +111,11 @@
     }
 
     function clickMyTransaction() {
-
+        api.openWin({
+            name:'transactionWin',
+            url:'../transaction_main.html'
+        });
+        api.closeWin();
     }
 </script>
 </html>

@@ -82,7 +82,7 @@
             <img src="../image/discover/repair.png" alt="">
             <div class="aui-grid-label">报事保修</div>
         </div>
-        <div class="aui-col-xs-3" tapmode>
+        <div class="aui-col-xs-3" tapmode onclick="clickTransaction()">
             <img src="../image/discover/kit.png" alt="">
             <div class="aui-grid-label">业务办理</div>
         </div>
@@ -226,6 +226,16 @@
         api.openWin({
             name: 'repairWin',
             url: './find/repair/repair_main.html'
+        });
+    }
+
+    /**
+     * 去办理类型页面
+     */
+    function clickTransaction() {
+        api.openWin({
+            name:'addTransactionWin',
+            url:'./find/transaction/addTransaction/add_transaction_step_0.html'
         });
     }
 </script>

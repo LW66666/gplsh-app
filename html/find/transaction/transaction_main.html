@@ -92,7 +92,7 @@
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
     <div class="aui-title">我的办理</div>
-    <div class="aui-pull-right aui-btn" tapmode onclick="clickMyRepair()">
+    <div class="aui-pull-right aui-btn" tapmode onclick="clickAddTransaction()">
         申请办理
     </div>
 </header>
@@ -195,13 +195,14 @@
     }
 
     /**
-     * 点击我的报事
+     * 点击申请办理
      */
-    function clickMyRepair() {
+    function clickAddTransaction() {
         api.openWin({
             name:'addTransactionWin',
-            url:'./addTransaction/add_transaction.html'
-        })
+            url:'./addTransaction/add_transaction_step_0.html'
+        });
+        api.closeWin();
     }
 </script>
 </html>

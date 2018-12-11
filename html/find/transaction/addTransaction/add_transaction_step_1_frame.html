@@ -35,42 +35,6 @@
             color: #9d9d9d;
         }
 
-        .title-type {
-            height: 47.5px;
-            padding-left: 24.5px;
-            font-size: .875rem;
-            line-height: 47.5px;
-        }
-
-        .btn-type-group {
-            width: calc(100% - 42px);
-            -webkit-box-orient: horizontal;
-            -webkit-flex-flow: row;
-            flex-flow: row;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            margin: 0 auto;
-        }
-
-        .btn-type-group .btn-type {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            flex: 1;
-            text-align: center;
-            font-size: .6875rem;
-            padding-top: 10px;
-        }
-
-        .btn-type-group .btn-type img {
-            width: 2.5rem;
-            margin: 0 auto;
-        }
-
-        .btn-type-group .btn-type span {
-            padding-top: 8px;
-        }
-
         .bottom-sh {
             -webkit-box-shadow: 0 10px #f9f7f7;
             -moz-box-shadow: 0 10px #f9f7f7;
@@ -211,32 +175,12 @@
             font-size: 0.6875rem;
         }
 
-        .select-time {
-            position: relative;
-            padding-top: 13px;
-            padding-left: 7.5%;
-        }
+       .text-h-right{
+           background: none;
+           color: #9d9d9d;
+           font-size: .625rem;
+       }
 
-        .select-time > input {
-            display: inline-block;
-            width: 80%;
-            height: 1rem;
-            line-height: 0.6875rem;
-            color: #9d9d9d;
-            font-size: 0.6875rem;
-        }
-
-        .select-time .select-img-btn {
-            background: transparent;
-            position: absolute;
-            right: 7px;
-        }
-
-        .select-time .select-img-btn > img {
-            position: relative;
-            top: -1px;
-            width: 20px;
-        }
 
         .btn-submit {
             color: #ffffff;
@@ -312,33 +256,9 @@
             </div>
         </li>
     </ul>
-    <!--<div class="title-type">维修类型</div>-->
-    <!--<div class="btn-type-group">-->
-        <!--<div class="btn-type">-->
-            <!--<img src="../../../../image/find/repair/icon/water_un.png" alt="">-->
-            <!--<span>水</span>-->
-        <!--</div>-->
-        <!--<div class="btn-type">-->
-            <!--<img src="../../../../image/find/repair/icon/electricity_un.png" alt="">-->
-            <!--<span>电</span>-->
-        <!--</div>-->
-        <!--<div class="btn-type">-->
-            <!--<img src="../../../../image/find/repair/icon/fire_un.png" alt="">-->
-            <!--<span>可燃气</span>-->
-        <!--</div>-->
-        <!--<div class="btn-type">-->
-            <!--<img src="../../../../image/find/repair/icon/lock_un.png" alt="">-->
-            <!--<span>锁</span>-->
-        <!--</div>-->
-        <!--<div class="btn-type">-->
-            <!--<img src="../../../../image/find/repair/icon/other_un.png" alt="">-->
-            <!--<span>其他</span>-->
-        <!--</div>-->
-    <!--</div>-->
-
 </div>
 <div class="input-text-div">
-    <textarea id="textInfo" maxlength="200" rows="6" placeholder="报事说明,请描述您遇到的问题"></textarea>
+    <textarea id="textInfo" maxlength="200" rows="6" placeholder="办理说明,请简单描述您的需求"></textarea>
     <span class="font-num">
             <span>
                 <label id="textLen">0</label>/200
@@ -370,12 +290,13 @@
         </span>
     </span>
 </div>
-<div class="select-time">
-    <input type="text" readonly="" placeholder="请选择时间" data-lcalendar="2018-01-11,2021-12-31" id='datetime-picker'/>
-    <button class="select-img-btn">
-        <img src="../../../../image/find/repair/gray_lock.png"/>
+
+<div class="aui-col-xs-12 aui-text-right">
+    <button class="text-h-right">
+        业务办理说明
     </button>
 </div>
+
 <div class="aui-btn btn-submit btn-submit-position" tapmode onclick="clickSubmit();">
     立即提交
 </div>
@@ -394,7 +315,6 @@
          */
         UIAlbumBrowser = api.require('UIAlbumBrowser');
         api.parseTapmode();
-        initBtnGroupClick();
         initStaticClick();
     };
 
@@ -408,40 +328,6 @@
             var text = this.value;
             $api.text(document.getElementById('textLen'), text.length)
         };
-
-        //初始化日期选择的时间段
-        var startDate = new Date();
-        var startTime = [startDate.getFullYear(),startDate.getMonth()+1,startDate.getDate()];
-        var endTime = [startDate.getFullYear()+2,startDate.getMonth()+1,startDate.getDate()];
-        $api.attr($api.dom('#datetime-picker'),'data-lcalendar',startTime.join('-')+','+endTime.join('-'));
-
-        //最底部的时间选择控件
-        var calendardatetime = new lCalendar();
-        calendardatetime.init({
-            'trigger': '#datetime-picker',
-            'type': 'datetime'
-        });
-    }
-
-    /**
-     * 类型按钮组的点击事件
-     */
-    function initBtnGroupClick() {
-        var btnGroup = $api.domAll('.btn-type-group .btn-type');
-        for (var i = 0; i < btnGroup.length; i++) {
-            btnGroup[i].onclick = function () {
-                var $img = $api.dom(this, 'img');
-                var src = $api.attr($img, 'src').toString();
-                var isHave = src.lastIndexOf('_un');
-                if (isHave !== -1) {
-                    src = src.replace('_un', '');
-                } else {
-                    var number = src.lastIndexOf('.');
-                    src = src.substring(0, number) + '_un' + src.substring(number);
-                }
-                $api.attr($img, 'src', src);
-            }
-        }
     }
 
 
