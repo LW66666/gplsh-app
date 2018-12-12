@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>设置生日</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0,0,0,0) !important;
+            height: 40px !important;
+            line-height: 40px !important;
+            font-size: 0.9375rem !important;
+            color: #4f4f4f !important;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #fff;
+            height: 100%;
+            line-height: 45px;
+        }
+        header a:nth-child(1) span{
+            color: #fff !important;
+        }
+
+        section {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+            display: flex;
+            box-sizing: border-box;
+            flex-direction: column;
+            padding: 48px 0px 0px 0px;
+        }
+
+        section>.aui-row{
+            padding-left: 37.5px !important;
+            padding-right: 39px !important;
+            position: relative;
+        }
+
+        section img{
+            display: inline-block;
+            position: relative;
+        }
+        section .aui-row:nth-child(1){
+            height: 131px;
+            padding: 7.5px 0 0;
+            position: relative;
+        }
+        section .aui-row:nth-child(1)>div {
+            position: relative;
+            height: 88px;
+            width: 88px;
+            border-radius: 50%;
+            margin: auto;
+            background: rgba(255,255,255,1);
+            -webkit-box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
+            -moz-box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
+            box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
+        }
+        section .aui-row:nth-child(1)>div:nth-child(1):active{
+            -webkit-box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
+            -moz-box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
+            box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
+        }
+        section .aui-row:nth-child(1) img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            width: 44.5px;
+            height: 44.5px;
+        }
+
+        .aui-row:nth-child(2) {
+            background: rgba(255,255,255,0);
+            height: 187px;
+            display: flex;
+            flex-direction: column;
+        }
+        .aui-row:nth-child(2)>div{
+            background: rgba(255,255,255,0);
+            flex: 1;
+            -webkit-flex:1 ;
+            padding: 0;
+        }
+        .aui-row:nth-child(2)>div>div:nth-child(1) {
+            font-size: 0.8125rem;
+            color: #fff;
+        }
+        .aui-row:nth-child(2)>div>div:nth-child(2){
+            padding: 11px 68.5px 26px;
+        }
+        .aui-row:nth-child(2)>div>div:nth-child(2)>input {
+            text-align: center;
+            height: 40.5px;
+            line-height: 40.5px;
+            color: #fff;
+            background: #2b778a;
+            font-size: 0.75rem;
+            border-radius: 50px;
+        }
+
+        .aui-row:nth-child(3){
+            flex: 1;
+        }
+
+        .aui-row:nth-child(4) {
+            height: 106px;
+            padding: 45.5px 1.5px 167px;
+
+        }
+        .aui-row:nth-child(4) button {
+            border-radius: 50px;
+            border: none;
+            background:#2f4b65;
+            font-size: 0.9375rem;
+            -webkit-transition: background-color 0.2s;
+            -moz-transition: background-color 0.2s;
+            -ms-transition: background-color 0.2s;
+            -o-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+            background: #00e4ff;
+            color: #fff;
+        }
+        .aui-row:nth-child(4) button[disabled="disabled"]{
+            background:#367590;
+            color: #efd6d6;
+        }
+        .aui-row:nth-child(4) button:active{
+            background: #00c2dd;
+        }
+    </style>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav">
+    <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
+        <span class="aui-iconfont aui-icon-left"></span>
+    </a>
+    <div class="aui-title">我的</div>
+</header>
+<section class="aui-content">
+    <div class="aui-row">
+        <div>
+            <img src="../../image/login/header1.png" alt="">
+        </div>
+    </div>
+    <div class="aui-row">
+        <div>
+            <div class="aui-text-center"  >
+                出生日期
+            </div>
+            <div>
+                <input type="date" id="birthday">
+            </div>
+        </div>
+        <div>
+            <div class="aui-text-center" >
+                昵称
+            </div>
+            <div>
+                <input type="text" maxlength="10" id="name">
+            </div>
+        </div>
+    </div>
+    <div class="aui-row">
+
+    </div>
+    <div class="aui-row">
+        <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn">
+            下一步
+        </button>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    var pwStatus=false;
+    apiready=function () {
+        api.parseTapmode();
+        var systemType=api.systemType;
+        if (systemType=="android"){
+            document.querySelector("body").setAttribute("style", "padding-top:25px");
+        }else if (systemType=="ios"){
+            document.querySelector("body").setAttribute("style", "padding-top:20px");
+        }
+    }
+
+    /**
+     * 打开密码登录页面
+     */
+    function codeLogin() {
+        api.openWin({
+            name: 'code_login_win',
+            url: 'code_login_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    document.getElementById("name").onchange=function(){
+        checkFromByType(1);
+    }
+    document.getElementById("name").oninput=function(){
+        var checkStatus=checkFrame();
+        if (checkStatus==1){
+            document.getElementById("loginBtn").removeAttribute("disabled");
+        }else {
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+    document.getElementById("birthday").oninput=function(){
+        var checkStatus=checkFrame();console.log(checkStatus)
+        if (checkStatus==1){
+            document.getElementById("loginBtn").removeAttribute("disabled");
+        }else {
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    document.getElementById("loginBtn").onclick=function () {
+        checkFromByType();
+    }
+
+    /**
+     * 检查表单
+     * @returns {*} 1：正确，0：昵称含有非法字符已选择日期，-1未选择日期，-2昵称为空，日期为空
+     */
+    function checkFrame() {
+        var nameReg=/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+        var birReg= /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+        var bir=document.getElementById("birthday").value;
+        var name=document.getElementById("name").value;console.log(nameReg.test(name))
+        if (birReg.test(bir) && nameReg.test(name)){
+            return 1;
+        }else if (!birReg.test(bir) && name ==""){
+            return -2;
+        }else if (birReg.test(bir) && !nameReg.test(name)){
+            return 0;
+        }else if (!birReg.test(bir) && nameReg.test(name)){
+            return -1;
+        }
+    }
+
+    function checkFromByType() {
+        var checkStatus=checkFrame();
+        if(checkStatus==1){
+            document.getElementById("loginBtn").removeAttribute("disabled")
+        }
+        else if (checkStatus==0) {
+            api.toast({
+                msg: '请输入合法昵称',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    function closeThisWin() {
+        api.closeWin();
+    }
+</script>
+</html>

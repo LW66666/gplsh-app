@@ -17,7 +17,7 @@
 
     <access origin="*" />
 
-    <preference name="softInputMode" value="resize"/>
+    <preference name="softInputMode" value="pan"/>
 
     <preference name="pageBounce" value="false"/>
 
