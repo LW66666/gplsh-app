@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>用户信息预览的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+        body, html {
+            background-color: #ffffff;
+            font-size: 20px;
+        }
+
+        .info-top {
+            position: relative;
+            height: 150px;
+            width: 100%;
+            background: -webkit-linear-gradient(90deg, #599cca, #3ea6be) no-repeat;
+        }
+
+        .avatar {
+            position: absolute;
+            left: 50%;
+            bottom: -45px;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, .3);
+        }
+
+        .avatar-dec {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9375rem;
+        }
+
+        .avatar-dec img {
+            position: relative;
+            top: .1rem;
+            height: .85rem;
+        }
+
+        .avatar-dec p {
+            margin: 7px auto 10px;
+            font-size: 0.6875rem;
+            color: #4298fd;
+            width: 80%;
+            height: 2rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            max-width: 600px;
+        }
+
+        .ul-list {
+            padding-top: 20px;
+            padding-bottom: 40px;
+            width: 100%;
+        }
+
+        .ul-list .item {
+            display: -webkit-box;
+            display: flex;
+            flex: 1;
+            height: 2rem;
+        }
+
+        .ul-list .item .item-left, .ul-list .item .item-info {
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+            font-size: 0.75rem;
+        }
+
+        .ul-list .item .item-left {
+            padding-left: 15px;
+            -webkit-box-flex: 3;
+            -webkit-flex: 3;
+            flex: 3;
+            color: #000;
+        }
+
+        .ul-list .item .item-info {
+            color: #7f7f7f;
+            -webkit-box-flex: 5;
+            -webkit-flex: 5;
+            flex: 5;
+            padding-right: 20px;
+        }
+
+        .item-line {
+            border-bottom: 1px solid #ececec;
+            margin-bottom: 20px;
+        }
+
+        .avatar-dec .text-ha {
+            color: #949494;
+        }
+    </style>
+</head>
+
+<body>
+<div class="info-top">
+    <img class="avatar" src="../../../image/my/userInfo/header.png"/>
+</div>
+<div class="avatar-dec">
+    <span>木子</span>
+    <img src="../../../image/my/female.png"/>
+    <p class="text-ha">
+        悄悄的我来了，什么也没留下
+        悄悄的我来了，什么也没留下
+    </p>
+</div>
+<ul class="ul-list">
+    <li class="item">
+        <div class="item-left">账户</div>
+        <div class="item-info">18170041120</div>
+    </li>
+    <li class="item item-line">
+        <div class="item-left">真实姓名</div>
+        <div class="item-info">张二狗</div>
+    </li>
+    <li class="item">
+        <div class="item-left">地区</div>
+        <div class="item-info">江西南昌</div>
+    </li>
+    <li class="item">
+        <div class="item-left">小区坐标</div>
+        <div class="item-info">光明小区-1期-北区-2栋-2单元-1202</div>
+    </li>
+    <li class="item item-line">
+        <div class="item-left">小区身份</div>
+        <div class="item-info">普通业主</div>
+    </li>
+    <li class="item">
+        <div class="item-left">星座</div>
+        <div class="item-info">天蝎座</div>
+    </li>
+    <li class="item">
+        <div class="item-left">职业</div>
+        <div class="item-info">教育</div>
+    </li>
+    <li class="item">
+        <div class="item-left">标签</div>
+        <div class="item-info">爱萌宠、白富美、小可爱、高富帅、完美主义、傻白甜、有为青年、白领、萝莉、IT民工</div>
+    </li>
+</ul>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    //滑动处理
+    var startX, startY;
+    document.addEventListener('touchstart', function (ev) {
+        startX = ev.touches[0].pageX;
+        startY = ev.touches[0].pageY;
+    }, false);
+
+    document.addEventListener('touchend', function (ev) {
+        var endX, endY;
+        endX = ev.changedTouches[0].pageX;
+        endY = ev.changedTouches[0].pageY;
+        var direction = GetSlideDirection(startX, startY, endX, endY);
+        switch (direction) {
+            case 0:
+                alert("无操作");
+                break;
+            case 1:
+                // 向上
+                alert("up");
+                break;
+            case 2:
+                // 向下
+                alert("down");
+                break;
+
+            default:
+        }
+    }, false);
+
+    function GetSlideDirection(startX, startY, endX, endY) {
+        var dy = startY - endY;
+        //var dx = endX - startX;
+        var result = 0;
+        if (dy > 0) {//向上滑动
+            result = 1;
+        } else if (dy < 0) {//向下滑动
+            result = 2;
+        }
+        else {
+            result = 0;
+        }
+        return result;
+    }
+
+</script>

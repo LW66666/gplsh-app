@@ -186,13 +186,13 @@
 <header>
     <div class="header-bg">
         <div class="header-info">
-            <div class="avatar">
-                <img src="../image/my/avatar.jpg"/>
+            <div class="avatar" tapmode onclick="clickUserInfo()">
+                <img src="../image/my/userInfo/header.png"/>
             </div>
             <div class="info">
                 <div>
                     <span class="nickname">孙悟空</span>
-                    <img src="../image/my/female.png">
+                    <img src="../image/my/male.png">
                 </div>
                 <div class="phone">192****6666</div>
             </div>
@@ -371,6 +371,16 @@
         api.openWin({
             name: 'optionWin',
             url: './my/option/option.html'
+        });
+    }
+
+    /**
+     * 用户点击详情
+     */
+    function clickUserInfo() {
+        api.openWin({
+            name: 'userInfoWin',
+            url: './my/userInfo/user_info.html'
         });
     }
 </script>
