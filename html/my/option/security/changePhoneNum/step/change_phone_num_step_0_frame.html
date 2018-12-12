@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>更换手机号的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../../css/aui.css"/>
+    <style>
+        body, html {
+            background-color: #ffffff;
+        }
+
+        .font {
+            font-size: .75rem;
+        }
+
+        .aui-list {
+            margin-top: 10px;
+            box-shadow: 0 -10px #f6f6f6;
+        }
+
+        .aui-list .aui-list-item-right {
+            font-size: 0.75rem;
+            color: #c4c4c4;
+        }
+
+        .aui-list > .aui-list-item {
+            position: relative;
+            width: 100%;
+            padding-left: 20px !important;
+            margin: 0;
+            height: 49px;
+            box-sizing: border-box;
+            background-position: bottom !important;
+        }
+
+        .bui-disclick:active{
+            background-color: unset !important;
+        }
+
+        .aui-list-item-inner.bui-item label {
+            width: 3rem;
+        }
+
+        .aui-list-item-inner.bui-item input {
+            position: absolute;
+            left: 3.25rem;
+            width: calc(100% - 4.5rem - 40px);
+        }
+
+        .aui-list-item-inner.bui-item span {
+            width: 30px;
+            height: 30px;
+        }
+
+        .aui-list-item-inner.bui-item span img {
+            position: relative;
+            left: 5px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn-submit {
+            color: #ffffff;
+            background-color: #4298fd;
+            border-radius: 4rem;
+        }
+
+        .btn-submit:active {
+            background-color: #2779c4;
+            color: #ffffff;
+        }
+
+        .btn-submit-position {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 29px;
+            margin-bottom: 30px;
+            width: 80%;
+            height: 49px;
+            max-width: 250px;
+            max-height: 49px;
+            line-height: 49px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<ul class="aui-list aui-list-in">
+    <li class="aui-list-item">
+        <div class="aui-list-item-inner aui-list-item-arrow font">
+            国家地区
+            <div class="aui-list-item-right">
+                中国大陆
+            </div>
+        </div>
+    </li>
+    <li class="aui-list-item bui-disclick">
+        <div class="aui-list-item-inner bui-item font">
+            <label for="phoneNum">+86</label>
+            <input type="number" id="phoneNum" placeholder="请输入新手机号码"/>
+            <span id="delPhoneNum" class="aui-hide">
+               <img src="../../../../../../image/my/option/del.png"/>
+            </span>
+        </div>
+    </li>
+</ul>
+<div class="aui-btn btn-submit btn-submit-position" tapmode onclick="clickNextStep()">
+    下一步
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initStaticEvent();
+    };
+
+    function initStaticEvent() {
+        var delBTn = $api.dom('#delPhoneNum');
+        $api.dom('#phoneNum').oninput  = function () {
+            var len = this.value.length;
+            if (len > 0 ){
+                delBTn.removeAttribute('class','aui-hide');
+            } else {
+                delBTn.setAttribute('class','aui-hide');
+            }
+        };
+        delBTn.onclick = function () {
+            $api.dom('#phoneNum').value = '';
+        }
+    }
+
+    /**
+     * 点击更换手机号
+     */
+    function clickNextStep() {
+        api.confirm({
+            title: '更换手机号码',
+            msg: '更换绑定新的手机号码前，需要将当前的绑定关系解除，请确认是否更换。',
+            buttons: ['确认', '取消']
+        }, function (ret, err) {
+            if (ret.buttonIndex === 1) {//点击了确认
+                var $pn = $api.dom('#phoneNum');
+                // if(!(/^1[34578]\d{9}$/.test($pn.value))){
+                if(!$pn.value){
+                    api.toast({
+                        msg: '手机号码有误，请重新输入！',
+                        duration: 1500,
+                        location: 'bottom'
+                    });
+                    return;
+                }
+                api.openWin({
+                    name:'changePhoneNumStep1Win',
+                    url:'./change_phone_num_step_1_frame.html',
+                    pageParam:{
+                        phoneNum:$pn.value
+                    }
+                });
+            }
+        });
+
+    }
+</script>

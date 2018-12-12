@@ -31,7 +31,7 @@
             width: 100%;
             padding-left: 20px !important;
             margin: 0;
-            height: 56.5px;
+            height: 49px;
             box-sizing: border-box;
             background-position: bottom !important;
         }
@@ -42,7 +42,7 @@
 <body>
 
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item">
+    <li class="aui-list-item"  tapmode onclick="clickChangePassword()">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             手机号
             <div class="aui-list-item-right">
@@ -83,6 +83,16 @@
         api.openWin({
             name:'resetPasswordWin',
             url:'./resetPassword/reset_password.html'
+        })
+    }
+
+    /**
+     * 点击手机号
+     */
+    function clickChangePassword(){
+        api.openWin({
+            name:'changePhoneNumWin',
+            url:'./changePhoneNum/change_phone_num.html'
         })
     }
 </script>
