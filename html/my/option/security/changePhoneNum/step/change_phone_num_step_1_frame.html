@@ -21,11 +21,43 @@
             font-size: 0.75rem;
             box-shadow: 0 -10px #f6f6f6;
         }
-        .info p{
+
+        .info p {
             padding-top: 10px;
             color: #000;
             font-size: 0.75rem;
             line-height: 1rem;
+        }
+
+        .code-inner {
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .code-inner input {
+            width: 1.125rem;
+            font-size: 1.125rem;
+            color: #4298fd;
+            border-bottom: solid 1px #c9c9c9;
+            text-align: center;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .code-inner .has-num {
+            border-bottom: solid 1px #4298fd;
+        }
+
+        .code-time {
+            width: 100%;
+            padding-top: 30px;
+            font-size: 0.625rem;
+            text-align: center;
+        }
+
+        .code-time span {
+            color: #4298fd;
         }
     </style>
 </head>
@@ -38,8 +70,119 @@
         <span id="phoneNum">10086</span>
     </p>
 </div>
+
+<!--有优化的余地，没值点删除不会到前一个输入框中-->
+<div class="code-inner" id="codeGroup">
+    <input type="number" size="1" maxlength="1" id="code1" oninput="codeOninput(1,this)">
+    <input type="number" size="1" maxlength="1" id="code2" oninput="codeOninput(2,this)">
+    <input type="number" size="1" maxlength="1" id="code3" oninput="codeOninput(3,this)">
+    <input type="number" size="1" maxlength="1" id="code4" oninput="codeOninput(4,this)">
+</div>
+
+<p id="codeTimer" class="code-time">
+    <span>
+        <label id="time">60</label>秒
+    </span> 后重新发送验证码
+</p>
+
+<p id="reGetCode" class="code-time aui-hide">
+    收不到短信验证码？<span onclick="getCode()">重新获取</span>
+</p>
+
 </body>
 
 </html>
 <script type="text/javascript" src="../../../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initStaticEvent();
+        //请求验证码
+        getCode();
+    };
 
+    function initStaticEvent() {
+        var phone = api.pageParam.phoneNum;
+        document.getElementById('phoneNum').innerText = phone;
+    }
+
+    /**
+     * 发送完验证码后的回调
+     */
+    function codeWaitTimer() {
+        var $time = $api.dom('#time');
+        var codeTimer = setInterval(function () {
+            var val = Number($time.innerText);
+            if (val !== 0) {
+                $time.innerText = --val;
+            } else {
+                $api.removeCls($api.dom('#reGetCode'), 'aui-hide');
+                $api.addCls($api.dom('#codeTimer'), 'aui-hide');
+                $time.innerText = 60;
+                clearInterval(codeTimer);
+            }
+        }, 1000);
+    }
+
+    function getCode() {
+        //请求验证码这里写ajax
+        $api.removeCls($api.dom('#codeTimer'), 'aui-hide');
+        $api.addCls($api.dom('#reGetCode'), 'aui-hide');
+        codeWaitTimer();
+    }
+
+
+    /**
+     * 验证码输入时一系列操作
+     * */
+    function codeOninput(num, $this) {
+        var dom = document.getElementById("code1");
+        var val = $this.value;
+        var len = $this.value.length;
+        var numReg = /^[0-9]$/;
+        //当输入框中无值，证明点击删除键
+        if (!val) {
+            $this.value = '';
+            $this.removeAttribute('class', 'has-num');
+            if (num !== 1) {
+                document.getElementById("code" + (num - 1)).focus();
+            }
+        }
+        //当输入框中输入值
+        else {
+            if (!numReg.test(val)) {
+                $this.value = val.substring(len - 1);
+                return;
+            }
+            if (!dom.value) {
+                dom.value = $this.value;
+                document.getElementById("code1").setAttribute('class', 'has-num');
+                document.getElementById("code2").focus();
+                $this.value = '';
+                return;
+            }
+            $this.setAttribute("class", "has-num");
+            if (num !== 4) {
+                document.getElementById("code" + (num + 1)).focus();
+            } else {
+                //    跳转操作
+                var isInTimer = !$api.hasCls($api.dom('#codeTimer'), 'aui-hide');
+                if (isInTimer) {
+                    api.showProgress({
+                        title: '请稍后',
+                        modal: true
+                    });
+                    setTimeout(function () {
+                        api.hideProgress();
+                    }, 1000);
+                } else {
+                    api.toast({
+                        msg: '请重新获取验证码',
+                        duration: 1500,
+                        location: 'bottom'
+                    });
+                }
+            }
+        }
+    }
+
+</script>

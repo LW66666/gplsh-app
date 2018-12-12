@@ -274,7 +274,7 @@
     }
 
     /**
-     * 打开钥匙界面
+     * 打开访客邀请
      */
     function inviteGuests() {
         api.openWin({
@@ -298,10 +298,11 @@
             url: 'login/pw_login_win.html',
             pageParam: {name: 'pageparamname'},
             bgColor:"#fff",
-            bounces: false,
-            vScrollBarEnabled: false,
-            hScrollBarEnabled: false,
-            slidBackEnabled: false,
+            animation:{
+                type:"movein",                //动画类型（详见动画类型常量）
+                subType:"from_left",       //动画子类型（详见动画子类型常量）
+                duration:200                //动画过渡时间，默认300毫秒
+            }
         });
     }
 </script>

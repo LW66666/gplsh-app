@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>设置性别</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
+        }
+
+        header {
+            background: rgba(0,0,0,0) !important;
+            height: 40px !important;
+            line-height: 40px !important;
+            font-size: 0.9375rem !important;
+            color: #4f4f4f !important;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #fff;
+            height: 100%;
+            line-height: 45px;
+        }
+        header a:nth-child(1) span{
+            color: #fff !important;
+        }
+
+        section {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex: 1;
+            box-sizing: border-box;
+            flex-direction: column;
+        }
+
+        .aui-row:nth-child(1) {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .aui-row:nth-child(1)>div:nth-child(3){
+            flex: 1;
+        }
+        .aui-row:nth-child(1)>div:nth-child(2) {
+            padding-top: 136px;
+            box-sizing: content-box;
+            height: 150px;
+        }
+        .aui-row:nth-child(1)>div:nth-child(2)>div {
+            position: relative;
+            width: 100%;
+        }
+        .aui-row:nth-child(1)>div:nth-child(2)>div:nth-child(1){
+            height: 87.5px;
+            display: flex;
+        }
+        .aui-row:nth-child(1)>div:nth-child(2)>div:nth-child(1)>div{
+            flex: 1;
+            text-align: center;
+        }
+        .aui-row:nth-child(1)>div:nth-child(2)>div:nth-child(2) {
+            height: 60px;
+            padding-top: 48px;
+            font-size: 0.75rem;
+            color: #fff;
+        }
+        .aui-row:nth-child(1)>div:nth-child(2)>div:nth-child(1)>div{
+            flex: 1;
+            position: relative;
+        }
+
+        .aui-row:nth-child(2) {
+            height: 42.5px;
+            padding: 0 10.5px;
+        }
+        .aui-row:nth-child(2) button{
+            border-radius: 50px;
+            border: none;
+            background: #2f4b65;
+            font-size: 0.9375rem;
+            -webkit-transition: background-color 0.2s;
+            -moz-transition: background-color 0.2s;
+            -ms-transition: background-color 0.2s;
+            -o-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+            background: #00e4ff;
+            color: #fff;
+            display: block;
+            width: 100%;
+            height: 2rem;
+            line-height: 2rem;
+            font-size: 0.75rem;
+        }
+        .aui-row:nth-child(2) button[disabled="disabled"] {
+            background: #367590;
+            color: #efd6d6;
+        }
+        .aui-row:nth-child(2) button:active{
+            background: #00c2dd;
+        }
+
+        .aui-row:nth-child(3) {
+            height: 68px;
+            padding-top: 12.5px;
+            font-size: 0.625rem;
+            color: #fff;
+        }
+
+        .sexActive,.sex{
+            position: relative;
+            transition: background-color 0.5s;
+        }
+        .sex {
+            width: 87.5px;
+            height: 87.5px;
+            display: inline-block;
+            background: #70a5fd;
+            border-radius: 50%;
+        }
+        .sexActive{
+            width: 87.5px;
+            height: 87.5px;
+            display: inline-block;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 6px rgba(253,112,142,0.4);
+            background:rgba(253,112,142,1);
+        }
+        .sexActive img,.sex img{
+            width: 50%;
+            top: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        
+    </style>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav">
+    <div class="aui-title">我是</div>
+</header>
+<section class="aui-content">
+    <div class="aui-row">
+        <div></div>
+        <div>
+            <div>
+                <div>
+                    <div class="sexActive" data-sex="man">
+                        <img src="../../image/login/mem.png" alt="">
+                    </div>
+                </div>
+                <div>
+                    <div class="sex" data-sex="woman">
+                        <img src="../../image/login/women.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="aui-text-center">
+                选择专属形象，让我们更懂你！
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <div class="aui-row">
+        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn">
+            下一步
+        </button>
+    </div>
+    <div class="aui-row aui-text-center">
+        <span>返回首页</span>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    var pwStatus=false;
+    apiready=function () {
+        api.parseTapmode();
+        var systemType=api.systemType;
+        if (systemType=="android"){
+            document.querySelector("body").setAttribute("style", "padding-top:25px");
+        }else if (systemType=="ios"){
+            document.querySelector("body").setAttribute("style", "padding-top:20px");
+        }
+    }
+
+    /**
+     * 打开忘记密码页面
+     */
+    function forgetPw() {
+        api.openWin({
+            name: 'forget_pw_win',
+            url: 'forget_pw_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    document.querySelector(".sex").addEventListener("click",function () {
+        document.querySelector(".sexActive").setAttribute("class","sex");
+        this.setAttribute("class", "sexActive");
+    })
+    document.querySelector(".sexActive").addEventListener("click",function () {console.log("click")
+        document.querySelector(".sexActive").setAttribute("class","sex");
+        this.setAttribute("class", "sexActive");
+    })
+
+    function closeThisWin() {
+        api.closeWin();
+    }
+</script>
+</html>

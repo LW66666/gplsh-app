@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>密码登录</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
+        }
+
+        header {
+            background: rgba(0,0,0,0) !important;
+            height: 40px !important;
+            line-height: 40px !important;
+            font-size: 0.9375rem !important;
+            color: #4f4f4f !important;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #fff;
+            height: 100%;
+            line-height: 45px;
+        }
+        header a:nth-child(1) span{
+            color: #fff !important;
+        }
+
+        section {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex: 1;
+            box-sizing: border-box;
+            flex-direction: column;
+            padding: 48px 0px 0px 0px;
+        }
+
+        section>.aui-row{
+            padding-left: 37.5px !important;
+            padding-right: 39px !important;
+            position: relative;
+        }
+
+        section img{
+            display: inline-block;
+            position: relative;
+        }
+
+        .aui-row:nth-child(2) {
+            background: rgba(255,255,255,0);
+            height: 57.5px;
+            display: flex;
+            flex-direction: column;
+        }
+        .aui-row:nth-child(2)>div{
+            background: rgba(255,255,255,0);
+            flex: 1;
+            -webkit-flex:1 ;
+            padding: 0;
+            border-bottom: solid 1px #64b7cc;
+        }
+         .aui-list .aui-list-item:active{
+            background: rgba(255,255,255,0) !important;
+        }
+        .aui-row:nth-child(2) ::-webkit-input-placeholder{
+            color: #a0d2e0;
+            font-size: 0.75rem;
+        }
+        .aui-row:nth-child(2) .aui-list-item-input input{
+            position: relative;
+            color: #fff;
+        }
+        .aui-list-item-label{
+            width: 25% !important;
+            padding-left: 0% !important;
+        }
+        .aui-row:nth-child(2) .aui-list-item-label img {
+            width: 19px !important;
+            height: 9.5px;
+            display: inline !important;
+            display: inline;
+        }
+        .aui-list-item-label>span {
+            width: 28px;
+            height: 16px;
+            background: rgba(255,255,255,0.2);
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            color: #fff;
+            display: inline-table;
+            line-height: 1rem;
+            padding: 0 5px;
+        }
+        #pwStatus{
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            position: relative;
+        }
+        #pwStatus img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .aui-list-item-input:nth-child(2) {
+            padding-right: 0;
+            display: flex;
+        }
+        .aui-list-item-input:nth-child(2) input{
+            flex: 1;
+            -webkit-flex:1 ;
+        }
+
+        .aui-row:nth-child(3) {
+            height: 106px;
+            padding: 45.5px 1.5px 17px;
+
+        }
+        .aui-row:nth-child(3) button {
+            border-radius: 50px;
+            border: none;
+            background:#2f4b65;
+            font-size: 0.9375rem;
+            -webkit-transition: background-color 0.2s;
+            -moz-transition: background-color 0.2s;
+            -ms-transition: background-color 0.2s;
+            -o-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+            background: #00e4ff;
+            color: #fff;
+        }
+        .aui-row:nth-child(3) button[disabled="disabled"]{
+            background:#367590;
+            color: #efd6d6;
+        }
+        .aui-row:nth-child(3) button:active{
+            background: #00c2dd;
+        }
+
+        .aui-row:nth-child(4){
+            font-size: 0.6875rem;
+            color: #fff;
+            padding-top: 9.5px;
+        }
+        .aui-row:nth-child(4)>div>span{
+            color: #91cf60;
+        }
+    </style>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav">
+    <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
+        <span class="aui-iconfont aui-icon-left"></span>
+    </a>
+    <div class="aui-title">注册</div>
+</header>
+<section class="aui-content">
+    <div class="aui-row">
+    </div>
+    <div class="aui-row aui-list aui-form-list">
+        <div class="aui-col-xs-12 aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-input">
+                    <input type="password" id="pw" maxlength="20" placeholder="请输入密码">
+                </div>
+                <div class="aui-list-item-label aui-text-center" style="height: 100%;">
+                    <div id="pwStatus">
+                        <img src="../../image/login/hide.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="aui-row">
+        <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn">
+            同意协议并注册
+        </button>
+    </div>
+    <div class="aui-row">
+        <div class="aui-col-xs-12 aui-text-center">
+            注册即表示同意-<span id="userAgr">用户服务协议</span>和<span id="priArg">隐私协议</span>
+        </div>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    var pwStatus=false;
+    apiready=function () {
+        api.parseTapmode();
+        var systemType=api.systemType;
+        if (systemType=="android"){
+            document.querySelector("body").setAttribute("style", "padding-top:25px");
+        }else if (systemType=="ios"){
+            document.querySelector("body").setAttribute("style", "padding-top:20px");
+        }
+    }
+
+    /**
+     * 打开忘记密码页面
+     */
+    function forgetPw() {
+        api.openWin({
+            name: 'forget_pw_win',
+            url: 'forget_pw_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    document.getElementById("pw").onchange=function(){
+        checkFromByType();
+    }
+    document.getElementById("pw").oninput=function(){
+        var checkStatus=checkFrame();
+        if (checkStatus){
+            document.getElementById("loginBtn").removeAttribute("disabled");
+        }else {
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    document.getElementById("loginBtn").onclick=function () {
+        checkFromByType();
+    }
+
+    document.getElementById("pwStatus").onclick=function (){
+        var img=document.querySelector("#pwStatus img");
+        var pw=document.getElementById("pw");
+        if (pwStatus){
+            img.setAttribute("src", "../../image/login/hide.png");
+            pw.setAttribute("type","password");
+        }else {
+            img.setAttribute("src", "../../image/login/show.png");
+            pw.setAttribute("type","text");
+        }
+        pwStatus=!pwStatus;
+    }
+
+    /**
+     * 检查表单
+     * @returns {*} true:正确，false:错误
+     */
+    function checkFrame() {
+        var pwReg=/^(\w){6,20}$/;
+        var pw=document.getElementById("pw").value;
+        if (pwReg.test(pw)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    function checkFromByType() {
+        var checkStatus=checkFrame();
+        if(checkStatus){
+            document.getElementById("loginBtn").removeAttribute("disabled")
+        }else {
+            api.toast({
+                msg: '密码请设置6-20位字母、数字组合',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    function closeThisWin() {
+        api.closeWin();
+    }
+</script>
+</html>

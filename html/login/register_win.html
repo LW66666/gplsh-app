@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>密码登录</title>
+    <title>验证码登录win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
         body {
@@ -14,12 +14,32 @@
             width: 100%;
             height: 100vh;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
             background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
         }
+
+        header {
+            background: rgba(0,0,0,0) !important;
+            height: 40px !important;
+            line-height: 40px !important;
+            font-size: 0.9375rem !important;
+            color: #4f4f4f !important;
+        }
+        .aui-title{
+            font-size: 0.9375rem;
+            color: #fff;
+            height: 100%;
+            line-height: 45px;
+        }
+        header a:nth-child(1) span{
+            color: #fff !important;
+        }
+
         section {
             width: 100%;
-            height: 100%;
             display: flex;
+            flex: 1;
             box-sizing: border-box;
             flex-direction: column;
             padding: 48px 0px 0px 0px;
@@ -34,39 +54,6 @@
         section img{
             display: inline-block;
             position: relative;
-        }
-        section .aui-row:nth-child(1){
-            height: 131px;
-            padding: 7.5px 0 0;
-            position: relative;
-        }
-        section .aui-row:nth-child(1)>div {
-            position: relative;
-            height: 88px;
-            width: 88px;
-            border-radius: 50%;
-            margin: auto;
-            background: rgba(255,255,255,1);
-            -webkit-box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
-            -moz-box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
-            box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
-        }
-        section .aui-row:nth-child(1)>div:nth-child(1):active{
-            -webkit-box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
-            -moz-box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
-            box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
-        }
-        section .aui-row:nth-child(1) img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translate(-50%,-50%);
-            -moz-transform: translate(-50%,-50%);
-            -ms-transform: translate(-50%,-50%);
-            -o-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
-            width: 44.5px;
-            height: 44.5px;
         }
 
         .aui-row:nth-child(2) {
@@ -142,6 +129,11 @@
             color: #92ce60;
             text-align: right;
         }
+        #forGetPw button {
+            background: rgba(0, 0, 0, 0);
+            border: none;
+            padding: 0;
+        }
 
         .aui-row:nth-child(3) {
             height: 106px;
@@ -151,7 +143,6 @@
         .aui-row:nth-child(3) button {
             border-radius: 50px;
             border: none;
-            background:#2f4b65;
             font-size: 0.9375rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
@@ -168,97 +159,17 @@
         .aui-row:nth-child(3) button:active{
             background: #00c2dd;
         }
-
-        .aui-row:nth-child(4) {
-            text-align: center;
-            color: #ffffff;
-            font-size: 0.6875rem;
-        }
-
-
-        .aui-row:nth-child(5) {
-            padding: 0px !important;
-            flex: 1;
-            -webkit-flex:1 ;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-        .aui-row:nth-child(5)>div:nth-child(1) {
-            position: relative;
-            flex: 1;
-            -webkit-flex:1 ;
-            width: 100%;
-        }
-        .aui-row:nth-child(5)>div:nth-child(2){
-            position: relative;
-            width: 100%;
-            height: 87px;
-            display: flex;
-            flex-direction: column;
-        }
-        .aui-row:nth-child(5)>div:nth-child(2)>div:nth-child(1){
-            height: 15px;
-            display: flex;
-        }
-        .line {
-            flex: 1;
-            -webkit-flex:1 ;
-            background: #78b1d5;
-            height: 1px;
-            margin-top: 7px;
-        }
-        .line:nth-child(1)+div {
-            width: 85px;
-            font-size: 0.6875rem;
-            color: #9dc6e0;
-            line-height: 15px;
-            text-align: center;
-        }
-        .aui-row:nth-child(5)>div:nth-child(2)>div:nth-child(2) {
-            flex: 1;
-            -webkit-flex:1 ;
-            display: flex;
-            position: relative;
-        }
-        .aui-row:nth-child(5)>div:nth-child(2)>div:nth-child(2)>div{
-            flex: 1;
-            -webkit-flex:1 ;
-            position: relative;
-        }
-        .aui-row:nth-child(5) i {
-            font-size: 1.5625rem;
-            width: 1.5625rem;
-            height: 1.5625rem;
-            display: block;
-            color: #fff;
-            position: absolute;
-            top: 50% !important;
-            left: 50% !important;
-            -webkit-transform: translate(-50%,-50%);
-            -moz-transform: translate(-50%,-50%);
-            -ms-transform: translate(-50%,-50%);
-            -o-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
-        }
-        .aui-row:nth-child(5) i::before {
-            position: absolute;
-            top: 50% !important;
-            left: 50% !important;
-            -webkit-transform: translate(-50%,-50%);
-            -moz-transform: translate(-50%,-50%);
-            -ms-transform: translate(-50%,-50%);
-            -o-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
-        }
     </style>
 </head>
 <body>
+<header class="aui-bar aui-bar-nav">
+    <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
+        <span class="aui-iconfont aui-icon-left"></span>
+    </a>
+    <div class="aui-title">注册</div>
+</header>
 <section class="aui-content">
     <div class="aui-row">
-        <div>
-            <img src="../../image/login/header1.png" alt="">
-        </div>
     </div>
     <div class="aui-row aui-list aui-form-list">
         <div class="aui-col-xs-12 aui-list-item">
@@ -277,13 +188,13 @@
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label aui-text-center" style="height: 100%;">
                     <div id="pwStatus">
-                        <img src="../../image/login/hide.png" alt="">
+                        <!--<img src="../../image/login/hide.png" alt="">-->
                     </div>
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="password" id="pw" maxlength="20" placeholder="请输入密码">
+                    <input type="number" id="pw" maxlength="4" placeholder="请输入验证码">
                     <div id="forGetPw">
-                        <span onclick="forgetPw()">忘记密码？</span>
+                        <button  onclick="getCode(this)">发送验证码</button>
                     </div>
                 </div>
             </div>
@@ -291,42 +202,14 @@
     </div>
     <div class="aui-row">
         <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn">
-            登录
+            下一步
         </button>
-    </div>
-    <div class="aui-row">
-        <div class="aui-col-xs-12">
-            <span onclick="codeLogin()">密码登录</span>
-            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <span>用户注册</span>
-        </div>
-    </div>
-    <div class="aui-row">
-        <div></div>
-        <div>
-            <div>
-                <div class="line"></div>
-                <div>快速登录</div>
-                <div class="line"></div>
-            </div>
-            <div>
-                <div class="aui-text-center">
-                    <i class="aui-iconfont aui-icon-qq" onclick="otherLogin(this)" data-type="qq"></i>
-                </div>
-                <div class="aui-text-center">
-                    <i class="aui-iconfont aui-icon-wechat" onclick="otherLogin(this)" data-type="wechat"></i>
-                </div>
-                <div class="aui-text-center">
-                    <i class="aui-iconfont aui-icon-weibo" onclick="otherLogin(this)" data-type="weibo"></i>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script>
-    var pwStatus=false;
+    var codeTimer;
     apiready=function () {
         api.parseTapmode();
         var systemType=api.systemType;
@@ -340,29 +223,12 @@
     /**
      * 打开密码登录页面
      */
-    function codeLogin() {
-        api.openWin({
-            name: 'code_login_win',
-            url: 'code_login_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-        });
-    }
-
-    /**
-     * 打开忘记密码页面
-     */
-    function forgetPw() {
-        api.openWin({
-            name: 'forget_pw_win',
-            url: 'forget_pw_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-        });
+    function pwLogin() {
+        api.closeWin();
     }
 
     document.getElementById("phone").onchange=function(){
-        checkFromByType(1);
+        checkFromByType();
     }
     document.getElementById("phone").oninput=function(){
         var checkStatus=checkFrame(0);
@@ -374,9 +240,13 @@
     }
 
     document.getElementById("pw").onchange=function(){
-        checkFromByType(2);
+        checkFromByType();
     }
     document.getElementById("pw").oninput=function(){
+        var val=this.value.toString();
+        if (val.length>4){
+            this.value = val.substring(0, 4);
+        }
         var checkStatus=checkFrame(0);
         if (checkStatus==1){
             document.getElementById("loginBtn").removeAttribute("disabled");
@@ -386,43 +256,18 @@
     }
 
     document.getElementById("loginBtn").onclick=function () {
-        checkFromByType(0);
-    }
-
-    document.getElementById("pwStatus").onclick=function (){
-        var img=document.querySelector("#pwStatus img");
-        var pw=document.getElementById("pw");
-        if (pwStatus){
-            img.setAttribute("src", "../../image/login/hide.png");
-            pw.setAttribute("type","password");
-        }else {
-            img.setAttribute("src", "../../image/login/show.png");
-            pw.setAttribute("type","text");
-        }
-        pwStatus=!pwStatus;
-    }
-
-    function otherLogin(dom) {
-        var type=dom.dataset.type;
-        console.log(dom.dataset.type)
-        if (type=="qq"){
-
-        }else if (type=="wechat"){
-
-        }else if (type=="weibo"){
-
-        }
+        checkFromByType();
     }
 
     /**
      * 检查表单
-     * @returns {*} 1：正确，0：手机号和密码均错误，-1手机号错误，-2密码错误；
-     *              -3：手机格式错误，密码为空；-4：手机号为空，密码错误;-5：均为空
-     *              -6：手机格式正确，密码为空，-7：手机号为空，密码正确
+     * @returns {*} 1：正确，0：手机号和验证码均错误，-1手机号错误，-2验证码错误；
+     *              -3：手机格式错误，验证码为空；-4：手机号为空，验证码错误;-5：均为空
+     *              -6：手机格式正确，验证码为空，-7：手机号为空，验证码正确
      */
     function checkFrame() {
         var phoneReg = /^(13[0-9]{1}|14[5|7|9]{1}|15[0-3|5-9]{1}|166|17[0-3|5-8]{1}|18[0-9]{1}|19[8-9]{1}){1}\d{8}$/;
-        var pwReg=/^(\w){6,20}$/;
+        var pwReg=/^[0-9]{4}$/;
         var phone=document.getElementById("phone").value;
         var pw=document.getElementById("pw").value;
         if (phone=="" && pw ==""){
@@ -453,7 +298,7 @@
         }
         else if (checkStatus==0) {
             api.toast({
-                msg: '请输入正确的手机号和密码',
+                msg: '请输入正确的手机号和验证码',
                 duration: 2000,
                 location: 'top'
             });
@@ -469,7 +314,7 @@
         }
         else if (checkStatus==-2) {
             api.toast({
-                msg: '请输入6-20位密码',
+                msg: '请输入四位数验证码',
                 duration: 2000,
                 location: 'top'
             });
@@ -485,12 +330,30 @@
         }
         else if (checkStatus==-4) {
             api.toast({
-                msg: '请输入6-20位密码',
+                msg: '请输入四位数验证码',
                 duration: 2000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
         }
+    }
+
+    /**
+     * 获取验证码
+     * @param dom dom元素
+     */
+    function getCode(dom) {
+        dom.setAttribute("disabled","disabled");
+        var codeNum=60;
+        codeTimer=setInterval(function () {
+            if (codeNum<=0){
+                dom.removeAttribute("disabled");
+                dom.innerHTML="重新发送";
+                clearInterval(codeTimer);
+            }else {
+                dom.innerHTML=codeNum--+"s";
+            }
+        },1000);
     }
 
     function closeThisWin() {

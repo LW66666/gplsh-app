@@ -86,7 +86,7 @@
             max-width: 250px;
             max-height: 49px;
             line-height: 49px;
-            font-size: 0.75rem;
+            font-size: 0.8125rem;
         }
     </style>
 </head>
@@ -161,12 +161,13 @@
                 }
                 api.openWin({
                     name:'changePhoneNumStep1Win',
-                    url:'./change_phone_num_step_1_frame.html',
+                    url:'./change_phone_num_step_1.html',
                     pageParam:{
                         phoneNum:$pn.value
                     }
                 });
             }
+            return false;
         });
 
     }
