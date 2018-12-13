@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>帮助中心</title>
-    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <title>个性标签</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
     <style>
         body, html {
             background: #fff;
@@ -49,7 +49,7 @@
     <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
-    <div class="aui-title">我的资料</div>
+    <div class="aui-title">个性标签</div>
     <div class="aui-pull-right aui-btn">
         保存
     </div>
@@ -57,7 +57,7 @@
 
 </body>
 </html>
-<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../../script/api.js"></script>
 <script>
     apiready = function () {
         initLayout();
@@ -90,8 +90,8 @@
     function initFrameGroup() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'editUserInfoFrame',
-            url: './edit_user_info_frame.html',
+            name: 'selectTagFrame',
+            url: './select_tag_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,

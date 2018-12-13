@@ -5,275 +5,288 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>我的资料修改的frame</title>
-    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <title>个性标签的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
     <style>
         body, html {
             background-color: #ffffff;
             font-size: 20px;
         }
 
-        .font {
-            font-size: .75rem;
-        }
-
-        .aui-list {
-            margin-top: 10px;
-            box-shadow: 0 -10px #f6f6f6;
-        }
-
-        .aui-list > .aui-list-item {
-            position: relative;
+        .body {
             width: 100%;
-            padding-left: 20px !important;
-            margin: 0;
-            height: 49px;
-            box-sizing: border-box;
-            background-position: bottom !important;
+            padding: 0 20px;
         }
 
-        .aui-list .aui-list-item-inner {
-            padding-right: 1.5rem;
+        .title {
+            padding-top: 15px;
         }
 
-        .aui-list .aui-list-item.bui-item {
+        .title h4 {
+            font-size: 0.9375rem;
+        }
+
+        .title span {
+            color: #aaaaaa;
+            font-size: 0.625rem;
+        }
+
+        .tag-group {
+            width: 100%;
+            height: 190px;
+            margin-top: 7px;
+            overflow: hidden;
+        }
+
+        .tag-group .tag-group-inner {
+            width: 10000px;
+            height: 170px;
+        }
+
+        .tag-group .tag-group-inner .row {
+            padding-top: 18px;
+            overflow: hidden;
+        }
+
+        .btn-tag {
+            float: left;
+            color: #4298fd;
             background-color: #ffffff;
+            border-radius: 1rem;
+            border: 1px #2779c4 solid;
+            box-sizing: border-box;
         }
 
-        .aui-list-item-arrow .aui-pull-left {
-            width: 100%;
+        .btn-tag:active {
+            background-color: #2779c4;
+            color: #ffffff;
         }
 
-        .aui-pull-left {
-            display: flex;
-            width: 100%;
+        .btn-tag-position {
+            /*width: 85.5px;*/
+            width: 90px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 0.6875rem;
         }
 
-        .aui-pull-left label {
-            height: 49px;
-            line-height: 49px;
-            flex: 3;
+        .round-group {
+            margin-top: 10px;
+            height: 10px;
+            text-align: center;
         }
 
-        .aui-pull-left input {
-            height: 49px;
-            line-height: 49px;
-            flex: 7;
-            color: #6d6c6c;
-            font-size: 0.75rem;
+        .round-group .round {
+            display: inline-block;
+            vertical-align: top;
+            padding: 0;
+            margin: 0 10px 0 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #cccccc;
         }
 
-        .aui-pull-left span {
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            flex: 7;
-            font-size: .75rem;
-        }
-
-        .aui-pull-left input:focus {
-            color: #000000;
-        }
-
-        .aui-pull-left .text-black {
-            color: black;
+        .round-group .round.active {
+            background-color: #4298fd;
         }
     </style>
 </head>
 
 <body>
+<div class="body">
+    <div class="title">
+        <h4>添加标签</h4>
+        <span class="title-des">已添加2个标签，还可以添加8个。</span>
+    </div>
+    <div class="tag-group">
+        <div class="tag-group-inner">
 
-<ul class="aui-list">
-    <li class="aui-list-item bui-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="nickname">昵称</label>
-                <input id="nickname" type="text" value="狗子"/>
-            </div>
         </div>
-    </li>
-    <li class="aui-list-item" tapmode onclick="clickGender(this)">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="gender">性别</label>
-                <input id="gender" disabled="disabled" type="text" value="未知"/>
-            </div>
+        <div class="round-group">
+            <!--<i class="round active"></i>-->
+            <!--<i class="round"></i>-->
+            <!--<i class="round"></i>-->
+            <!--<i class="round"></i>-->
         </div>
-    </li>
-    <li class="aui-list-item" tapmode onclick="clickBloodType(this)">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="bloodType">血型</label>
-                <input id="bloodType" disabled="disabled" type="text" value="A"/>
-            </div>
-        </div>
-    </li>
-    <li class="aui-list-item" tapmode onclick="clickBirthday(this)">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="birthday">生日</label>
-                <input id="birthday" disabled="disabled" type="text" value="2022-12-22"/>
-            </div>
-        </div>
-    </li>
-    <li class="aui-list-item bui-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="constellation">星座</label>
-                <input id="constellation" disabled="disabled" type="text" value="疯子坐"/>
-            </div>
-        </div>
-    </li>
-    <li class="aui-list-item bui-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="region">地区</label>
-                <input id="region" class="text-black" disabled="disabled" type="text" value="江西南昌"/>
-            </div>
-        </div>
-    </li>
-</ul>
+    </div>
 
-<ul class="aui-list">
-    <li class="aui-list-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="occupation">职业</label>
-                <input id="occupation" type="text" value="铲屎官"/>
-            </div>
-        </div>
-    </li>
-    <li class="aui-list-item bui-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="identity">小区身份</label>
-                <input class="text-black" id="identity" disabled="disabled" type="text" value="普通用户"/>
-            </div>
-        </div>
-    </li>
-    <li class="aui-list-item bui-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label>小区坐标</label>
-                <span>
-                    光明小区-1期-北区-2栋-2单元-1202
-                </span>
-            </div>
-        </div>
-    </li>
-</ul>
+</div>
 
-<ul class="aui-list">
-    <li class="aui-list-item">
-        <div class="aui-list-item-inner font">
-            <div class="aui-pull-left">
-                <label for="autograph">签名</label>
-                <input id="autograph" type="text" placeholder="悄悄的我来了，什么也没留下！" value=""/>
-            </div>
-        </div>
-    </li>
-
-    <li class="aui-list-item" tapmode onclick="clickTag()">
-        <div class="aui-list-item-inner aui-list-item-arrow font">
-            <div class="aui-pull-left">
-                <label for="tag">标签</label>
-                <input id="tag" disabled="disabled" type="text" placeholder="白富美、高富帅、有为青年、完美主义" value=""/>
-            </div>
-        </div>
-    </li>
-</ul>
 
 </body>
 
 </html>
-<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../../script/api.js"></script>
 <script>
-    var slidingList;
 
     apiready = function () {
-        slidingList = api.require('slidingList');
+
     };
 
+    var tag = [
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族'},
+        {text: '有车一族d'},
+        {text: '有车一族z'}
+    ];
+    initLayout(tag);
+
+
+    function initLayout(tag) {
+        //每个条目的宽
+        var btnW = 90;
+        //显示几个条目
+        var n;
+        var infoWidth = $api.dom('.tag-group').offsetWidth;
+        //条目距右边距离
+        var mr;
+        //条目的宽度
+        var itemW;
+        if (infoWidth < btnW * 3 + 10) {
+            //不能够显示三条
+            mr = (infoWidth - btnW * 2) / 2;
+            n = 2;
+        } else if (infoWidth >= btnW * 3 + 10 && infoWidth <= btnW * 4 + 15) {
+            //能够显示三条
+            mr = (infoWidth - btnW * 3) / 2;
+            n = 3;
+        } else {
+            //能够显示更多
+            if (infoWidth >= 440) {
+                itemW = 110;
+            }
+            if (itemW) {
+                btnW = itemW;
+            }
+            //一共能显示几个
+            n = parseInt(infoWidth / btnW);
+            mr = (infoWidth - btnW * n) / n;
+            if (mr < 10) {
+                mr = btnW / (n - 2);
+                n = n - 1;
+            }
+
+        }
+        addTag(tag, n);
+        var row =  parseInt(tag.length % 3 ? tag.length / 3 + 1 : tag.length / 3);
+        if (row <= 0) row = 1;
+        if (row > 3) n = row;
+        var $btnTag = $api.domAll('.btn-tag');
+        //TODO 有个bug明天解决注意i
+        for (var i = 0; i < $btnTag.length; i++) {
+            if (i === 0 || (i-1)% n !== 0) {
+                console.log(i);
+                $btnTag[i].style.marginRight = mr + 'px';
+            }
+            if (itemW) {
+                $btnTag[i].style.width = itemW + 'px';
+            }
+        }
+    }
+
+    function addTag(tag, n) {
+        //正常一行显示n个
+        var len = tag.length;
+        //看下这东西一行显示几个
+        var row = parseInt(len % 3 ? len / 3 + 1 : len / 3);
+        if (row <= 0) row = 1;
+        console.log('row:'+row);
+        addSlideEvent(len, n);
+        if (row > 3) {
+            n = row;
+        }
+        var html = ['<div class="row">'];
+        var innerRow = 0;
+        for (var i = 0; i < len; i++) {
+            // 添加行
+            if (innerRow < 2 && i !== 0 && i % (n) === 0 && i !== len) {
+                innerRow++;
+                html.push('</div><div class="row">');
+            }
+            html.push('<div class="btn-tag btn-tag-position">' + tag[i].text + '</div>');
+        }
+        html.push('</div>');
+        $api.dom('.tag-group-inner').innerHTML = html.join('');
+    }
+
     /**
-     * 选择性别
+     * 添加滑动事件
+     * @param len 共显示几个
+     * @param n 你能看到几个
      */
-    function clickGender($this) {
-        var $input = $api.dom($this, '#gender');
-        slidingList.showList({
-            rightbtn: '确定',
-            leftbtn: '取消',
-            item_height: '10',
-            item_num: '2',
-            data: [{content: '女'}, {content: '男'}, {content: '女'}, {content: '男'}]
-        }, function (ret, err) {
-            if (ret && ret.select_item) {
-                $input.value = ret.select_item;
+    function addSlideEvent(len, n) {
+        var infoWidth = $api.dom('.tag-group').offsetWidth;
+        var $inner = $api.dom('.tag-group-inner');
+        var x = parseInt((len % n * 3) ? len / (n * 3) + 1 : len / n * 3);
+        $inner.style.width = infoWidth * x + 'px';
+        //加点
+        var $roundGroup = $api.dom('.round-group');
+        for (var k = 0; k < x; k++) {
+            if (k === 0) {
+                $api.append($roundGroup, '<i class="round active"></i>');
+                continue;
+            }
+            $api.append($roundGroup, '<i class="round"></i>');
+        }
+        var $roundArr = $api.domAll($roundGroup, 'i');
+
+        var startX, endX, timeStart;
+        $inner.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].pageX;
+            timeStart = new Date().getTime();
+        });
+        $inner.addEventListener('touchmove', function (e) {
+            endX = e.touches[0].pageX;
+            var left = Number(startX - endX);
+            var nowLeft = Number(this.style.marginLeft.replace('px', ''));
+            var allWidth = Number(this.style.width.replace('px', ''));
+
+            var active = parseInt(Math.abs(nowLeft) / infoWidth);
+            $api.removeCls($api.dom($roundGroup, '.active'), 'active');
+            $api.addCls($roundArr[active], 'active');
+
+
+            if (nowLeft >= 0) {
+                if (left < 0) {
+                    return;
+                }
+            }
+            if (-nowLeft >= allWidth - infoWidth) {
+                if (left > 0) {
+                    return;
+                }
+            }
+            if (Math.abs(left) > 10) {
+                left = left / 5;
+                if (Math.abs(left) > 10) {
+                    left = left / 4;
+                }
+                this.style.marginLeft = eval(nowLeft - left) + 'px';
             }
         });
-    }
-
-    /**
-     * 点击选择血型
-     */
-    function clickBloodType($this) {
-        var $input = $api.dom($this, '#bloodType');
-        slidingList.showList({
-            rightbtn: '确定',
-            leftbtn: '取消',
-            item_height: '130',
-            item_num: '4',
-            data: [{content: 'A'}, {content: 'B'}, {content: 'AB'}, {content: 'O'}, {content: '其它'}]
-        }, function (ret, err) {
-            if (ret && ret.select_item) {
-                $input.value = ret.select_item;
-            }
-        });
-    }
-
-    /**
-     * 点击选择血型
-     */
-    function clickBirthday($this) {
-        var $input = $api.dom($this, '#birthday');
-        var d = new Date();
-        var now = [d.getFullYear, d.getMonth + 1, d.getDate];
-        api.openPicker({
-            type: 'date',
-            date: $input.value || now.join('-'),
-            title: '请选择日期'
-        }, function (ret, err) {
-            if (ret) {
-                var $constellation = $api.dom('#constellation');
-                var m = ret.month;
-                var d = ret.day;
-                var dateArr = [
-                    ret.year,
-                    m > 9 ? m : '0' + m,
-                    d > 9 ? d : '0' + d
-                ];
-                $input.value = dateArr.join('-');
-                $constellation.value = getConstellation(m, d);
-            }
-        });
-    }
-
-    /**
-     * 月日获取星座
-     */
-    function getConstellation(m, d) {
-        var s = "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
-        var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
-        return s.substr(m * 2 - (d < arr[m - 1] ? 2 : 0), 2);
-    }
-
-    /**
-     * 点击选择标签
-     */
-    function clickTag() {
-        api.openWin({
-            name:'selectTagWin',
-            url:''
-        })
     }
 </script>

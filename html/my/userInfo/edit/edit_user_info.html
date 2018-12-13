@@ -5,19 +5,16 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>我的主页（用户详细信息）</title>
-    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <title>帮助中心</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
     <style>
         body, html {
-            background-color: #ffffff;
-        }
-
-        header {
-            background-color: #3ea6be !important;
+            background: #fff;
         }
 
         .aui-bar.aui-bar-light {
+            border-bottom: solid 0.5px #f9f7f7;
             background: none;
         }
 
@@ -29,13 +26,22 @@
         }
 
         .aui-bar-nav.aui-bar-light .aui-iconfont {
-            color: #ffffff;
+            color: #000000;
         }
 
-        .aui-pull-right img {
-            height: .9rem;
-            width: .9rem;
+        .aui-bar-nav.aui-bar-light .aui-title {
+            font-size: 0.9375rem;
         }
+
+        .aui-pull-right {
+            font-size: 0.75rem;
+            color: #4298fd;
+        }
+
+        .aui-pull-right:active {
+            color: #367ace;
+        }
+
     </style>
 </head>
 <body>
@@ -43,14 +49,15 @@
     <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
-    <div class="aui-pull-right aui-btn" tapmode onclick="goEdit()">
-        <img src="../../../image/my/userInfo/edit.png"/>
+    <div class="aui-title">我的资料</div>
+    <div class="aui-pull-right aui-btn">
+        保存
     </div>
 </header>
 
 </body>
 </html>
-<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
     apiready = function () {
         initLayout();
@@ -78,24 +85,14 @@
     }
 
     /**
-     * 去修改
-     */
-    function goEdit() {
-        api.openWin({
-            name:'editUserInfo',
-            url:'./edit'
-        })
-    }
-
-    /**
      * 初始化frameGroup
      */
     function initFrameGroup() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'myKeyFrame',
-            url: './user_info_frame.html',
-            bgColor: '#ffffff',
+            name: 'editUserInfoFrame',
+            url: './edit_user_info_frame.html',
+            bgColor: '#f6f6f6',
             rect: {
                 x: 0,
                 y: y,
@@ -113,4 +110,5 @@
     function initAPIEvent() {
 //监听事件
     }
+
 </script>

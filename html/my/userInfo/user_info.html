@@ -43,7 +43,7 @@
     <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
-    <div class="aui-pull-right aui-btn">
+    <div class="aui-pull-right aui-btn" tapmode onclick="goEdit()">
         <img src="../../../image/my/userInfo/edit.png"/>
     </div>
 </header>
@@ -78,6 +78,16 @@
     }
 
     /**
+     * 去修改
+     */
+    function goEdit() {
+        api.openWin({
+            name:'editUserInfoWin',
+            url:'./edit/edit_user_info.html'
+        })
+    }
+
+    /**
      * 初始化frameGroup
      */
     function initFrameGroup() {
@@ -85,8 +95,7 @@
         api.openFrame({
             name: 'myKeyFrame',
             url: './user_info_frame.html',
-            // bgColor: '#ffffff',
-            bgColor: '../../../image/my/userInfo/bg.png',
+            bgColor: '#ffffff',
             rect: {
                 x: 0,
                 y: y,
