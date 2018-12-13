@@ -13,7 +13,7 @@
 
     </author>
 
-    <content src="index.html" />
+    <content src="./html/login/pw_login_win.html" />
 
     <access origin="*" />
 

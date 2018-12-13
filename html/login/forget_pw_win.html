@@ -8,11 +8,15 @@
     <title>忘记密码win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
+        html{
+            overflow: hidden;
+        }
         body {
             padding: 0;
             margin: 0;
             width: 100%;
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction:column;
             box-sizing: border-box;
@@ -38,10 +42,8 @@
 
         section {
             width: 100%;
-            height: 100%;
             flex: 1;
             display: flex;
-            box-sizing: border-box;
             flex-direction: column;
             padding: 7.26% 0px 0px 0px;
         }
@@ -113,7 +115,7 @@
         .aui-row:nth-child(2) button {
             border-radius: 50px;
             border: none;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
             -ms-transition: background-color 0.2s;
@@ -152,7 +154,7 @@
         <div class="aui-col-xs-12 aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label aui-text-center">
-                    <span>
+                    <span onclick="">
                         +86
                     </span>
                 </div>
@@ -174,13 +176,15 @@
 <script type="text/javascript" src="../../script/api.js"></script>
 <script>
     apiready=function () {
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         api.parseTapmode();
-        var systemType=api.systemType;
-        if (systemType=="android"){
-            document.querySelector("body").setAttribute("style", "padding-top:25px");
-        }else if (systemType=="ios"){
-            document.querySelector("body").setAttribute("style", "padding-top:20px");
-        }
+        // var systemType=api.systemType;
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
     }
 
     document.getElementById("phone").onchange=function(){

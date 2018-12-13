@@ -8,6 +8,9 @@
     <title>密码登录</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
+        html{
+            overflow: hidden;
+        }
         body {
             padding: 0;
             margin: 0;
@@ -152,7 +155,7 @@
             border-radius: 50px;
             border: none;
             background:#2f4b65;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
             -ms-transition: background-color 0.2s;
@@ -296,9 +299,9 @@
     </div>
     <div class="aui-row">
         <div class="aui-col-xs-12">
-            <span onclick="codeLogin()">密码登录</span>
+            <span onclick="codeLogin()">验证码登录</span>
             <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <span>用户注册</span>
+            <span onclick="openRegister()">用户注册</span>
         </div>
     </div>
     <div class="aui-row">
@@ -335,6 +338,16 @@
         }else if (systemType=="ios"){
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
+
+        setTimeout(function () {
+            focusInput();
+        },3000)
     }
 
     /**
@@ -356,6 +369,18 @@
         api.openWin({
             name: 'forget_pw_win',
             url: 'forget_pw_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    /**
+     * 打开注册页面
+     */
+    function openRegister() {
+        api.openWin({
+            name: 'register_win',
+            url: 'register_win.html',
             pageParam: {name: 'pageparamname'},
             bgColor:"#fff",
         });
@@ -495,6 +520,17 @@
 
     function closeThisWin() {
         api.closeWin();
+    }
+
+    /**
+     * 电话输入框获得焦点，并且弹起软键盘
+     */
+    function focusInput(){
+        // 使用模块弹出键盘
+        var softInput = api.require('softInputMgr');
+        softInput.toggleKeyboard();
+        // 将相应的输入框获取焦点
+        document.getElementById("phone").focus()
     }
 </script>
 </html>

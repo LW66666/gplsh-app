@@ -8,6 +8,9 @@
     <title>验证码登录win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
+        html{
+            overflow: hidden;
+        }
         body {
             padding: 0;
             margin: 0;
@@ -39,7 +42,6 @@
         section {
             width: 100%;
             display: flex;
-            flex: 1;
             box-sizing: border-box;
             flex-direction: column;
             padding: 48px 0px 0px 0px;
@@ -143,7 +145,7 @@
         .aui-row:nth-child(3) button {
             border-radius: 50px;
             border: none;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
             -ms-transition: background-color 0.2s;
@@ -211,13 +213,14 @@
 <script>
     var codeTimer;
     apiready=function () {
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         api.parseTapmode();
-        var systemType=api.systemType;
-        if (systemType=="android"){
-            document.querySelector("body").setAttribute("style", "padding-top:25px");
-        }else if (systemType=="ios"){
-            document.querySelector("body").setAttribute("style", "padding-top:20px");
-        }
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
     }
 
     /**
@@ -226,6 +229,19 @@
     function pwLogin() {
         api.closeWin();
     }
+
+    /**
+     * 打开设置密码页面
+     */
+    function openSetPw() {
+        api.openWin({
+            name: 'set_pw_win',
+            url: 'set_pw_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
 
     document.getElementById("phone").onchange=function(){
         checkFromByType();
@@ -257,6 +273,7 @@
 
     document.getElementById("loginBtn").onclick=function () {
         checkFromByType();
+        openSetPw();
     }
 
     /**

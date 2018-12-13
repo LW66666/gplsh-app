@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>密码登录</title>
+    <title>验证码登录win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
         html{
@@ -16,10 +16,10 @@
             margin: 0;
             width: 100%;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
             box-sizing: border-box;
             background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
@@ -60,7 +60,7 @@
 
         .aui-row:nth-child(2) {
             background: rgba(255,255,255,0);
-            height: 57.5px;
+            height: 115px;
             display: flex;
             flex-direction: column;
         }
@@ -124,6 +124,18 @@
             flex: 1;
             -webkit-flex:1 ;
         }
+        #forGetPw {
+            line-height: 2.2rem;
+            width: 5.5em;
+            font-size: 0.6875rem;
+            color: #92ce60;
+            text-align: right;
+        }
+        #forGetPw button {
+            background: rgba(0, 0, 0, 0);
+            border: none;
+            padding: 0;
+        }
 
         .aui-row:nth-child(3) {
             height: 106px;
@@ -133,7 +145,6 @@
         .aui-row:nth-child(3) button {
             border-radius: 50px;
             border: none;
-            background:#2f4b65;
             font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
@@ -150,15 +161,6 @@
         .aui-row:nth-child(3) button:active{
             background: #00c2dd;
         }
-
-        .aui-row:nth-child(4){
-            font-size: 0.6875rem;
-            color: #fff;
-            padding-top: 9.5px;
-        }
-        .aui-row:nth-child(4)>div>span{
-            color: #91cf60;
-        }
     </style>
 </head>
 <body>
@@ -166,7 +168,7 @@
     <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
         <span class="aui-iconfont aui-icon-left"></span>
     </a>
-    <div class="aui-title">注册</div>
+    <div class="aui-title">绑定手机号码</div>
 </header>
 <section class="aui-content">
     <div class="aui-row">
@@ -174,12 +176,27 @@
     <div class="aui-row aui-list aui-form-list">
         <div class="aui-col-xs-12 aui-list-item">
             <div class="aui-list-item-inner">
-                <div class="aui-list-item-input">
-                    <input type="password" id="pw" maxlength="20" placeholder="请输入密码">
+                <div class="aui-list-item-label aui-text-center">
+                    <span>
+                        +86
+                    </span>
                 </div>
+                <div class="aui-list-item-input">
+                    <input type="tel" id="phone" maxlength="11" placeholder="请输入手机号">
+                </div>
+            </div>
+        </div>
+        <div class="aui-col-xs-12 aui-list-item">
+            <div class="aui-list-item-inner">
                 <div class="aui-list-item-label aui-text-center" style="height: 100%;">
                     <div id="pwStatus">
-                        <img src="../../image/login/hide.png" alt="">
+                        <!--<img src="../../image/login/hide.png" alt="">-->
+                    </div>
+                </div>
+                <div class="aui-list-item-input">
+                    <input type="number" id="pw" maxlength="4" placeholder="请输入验证码">
+                    <div id="forGetPw">
+                        <button  onclick="getCode(this)">发送验证码</button>
                     </div>
                 </div>
             </div>
@@ -187,43 +204,55 @@
     </div>
     <div class="aui-row">
         <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn">
-            同意协议并注册
+            登录
         </button>
-    </div>
-    <div class="aui-row">
-        <div class="aui-col-xs-12 aui-text-center">
-            注册即表示同意-<span id="userAgr">用户服务协议</span>和<span id="priArg">隐私协议</span>
-        </div>
     </div>
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script>
-    var pwStatus=false;
+    var codeTimer;
     apiready=function () {
-        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         api.parseTapmode();
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         var systemType=api.systemType;
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
     }
 
     /**
-     * 打开设置性别页面
+     * 打开密码登录页面
      */
-    function forgetSetSex() {
-        api.openWin({
-            name: 'set_sex_win',
-            url: 'set_sex_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-        });
+    function pwLogin() {
+        api.closeWin();
+    }
+
+    document.getElementById("phone").onchange=function(){
+        checkFromByType();
+    }
+    document.getElementById("phone").oninput=function(){
+        var checkStatus=checkFrame(0);
+        if (checkStatus==1){
+            document.getElementById("loginBtn").removeAttribute("disabled");
+        }else {
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
     }
 
     document.getElementById("pw").onchange=function(){
         checkFromByType();
     }
     document.getElementById("pw").oninput=function(){
-        var checkStatus=checkFrame();
-        if (checkStatus){
+        var val=this.value.toString();
+        if (val.length>4){
+            this.value = val.substring(0, 4);
+        }
+        var checkStatus=checkFrame(0);
+        if (checkStatus==1){
             document.getElementById("loginBtn").removeAttribute("disabled");
         }else {
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -232,48 +261,115 @@
 
     document.getElementById("loginBtn").onclick=function () {
         checkFromByType();
-        forgetSetSex();
     }
 
-    document.getElementById("pwStatus").onclick=function (){
-        var img=document.querySelector("#pwStatus img");
-        var pw=document.getElementById("pw");
-        if (pwStatus){
-            img.setAttribute("src", "../../image/login/hide.png");
-            pw.setAttribute("type","password");
-        }else {
-            img.setAttribute("src", "../../image/login/show.png");
-            pw.setAttribute("type","text");
+    function otherLogin(dom) {
+        var type=dom.dataset.type;
+        console.log(dom.dataset.type)
+        if (type=="qq"){
+
+        }else if (type=="wechat"){
+
+        }else if (type=="weibo"){
+
         }
-        pwStatus=!pwStatus;
     }
 
     /**
      * 检查表单
-     * @returns {*} true:正确，false:错误
+     * @returns {*} 1：正确，0：手机号和验证码均错误，-1手机号错误，-2验证码错误；
+     *              -3：手机格式错误，验证码为空；-4：手机号为空，验证码错误;-5：均为空
+     *              -6：手机格式正确，验证码为空，-7：手机号为空，验证码正确
      */
     function checkFrame() {
-        var pwReg=/^(\w){6,20}$/;
+        var phoneReg = /^(13[0-9]{1}|14[5|7|9]{1}|15[0-3|5-9]{1}|166|17[0-3|5-8]{1}|18[0-9]{1}|19[8-9]{1}){1}\d{8}$/;
+        var pwReg=/^[0-9]{4}$/;
+        var phone=document.getElementById("phone").value;
         var pw=document.getElementById("pw").value;
-        if (pwReg.test(pw)) {
-            return true;
-        }else {
-            return false;
+        if (phone=="" && pw ==""){
+            return -5;
+        }else if (!phoneReg.test(phone) && pw =="") {
+            return -3;
+        }else if (!pwReg.test(pw) && phone=="") {
+            return -4;
+        }else if (phoneReg.test(phone) && pw =="") {
+            return -6;
+        }else if (pwReg.test(pw) && phone=="") {
+            return -7;
+        }else if (phoneReg.test(phone) && pwReg.test(pw)){
+            return 1;
+        }else if (phoneReg.test(phone)==false && pwReg.test(pw)==false){
+            return 0;
+        }else if (phoneReg.test(phone)==false && pwReg.test(pw)==true){
+            return -1;
+        }else if (phoneReg.test(phone)==true && pwReg.test(pw)==false){
+            return -2;
         }
     }
 
     function checkFromByType() {
         var checkStatus=checkFrame();
-        if(checkStatus){
+        if(checkStatus==1){
             document.getElementById("loginBtn").removeAttribute("disabled")
-        }else {
+        }
+        else if (checkStatus==0) {
             api.toast({
-                msg: '密码请设置6-20位字母、数字组合',
+                msg: '请输入正确的手机号和验证码',
                 duration: 2000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
         }
+        else if (checkStatus==-1) {
+            api.toast({
+                msg: '请输入十一位手机号码',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+        else if (checkStatus==-2) {
+            api.toast({
+                msg: '请输入四位数验证码',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+        else if (checkStatus==-3) {
+            api.toast({
+                msg: '请输入十一位数的手机号',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+        else if (checkStatus==-4) {
+            api.toast({
+                msg: '请输入四位数验证码',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    /**
+     * 获取验证码
+     * @param dom dom元素
+     */
+    function getCode(dom) {
+        dom.setAttribute("disabled","disabled");
+        var codeNum=60;
+        codeTimer=setInterval(function () {
+            if (codeNum<=0){
+                dom.removeAttribute("disabled");
+                dom.innerHTML="重新发送";
+                clearInterval(codeTimer);
+            }else {
+                dom.innerHTML=codeNum--+"s";
+            }
+        },1000);
     }
 
     function closeThisWin() {

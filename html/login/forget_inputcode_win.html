@@ -8,6 +8,9 @@
     <title>忘记密码win</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
+        html{
+            overflow: hidden;
+        }
         body {
             padding: 0;
             margin: 0;
@@ -36,7 +39,6 @@
 
         section {
             width: 100%;
-            height: 100%;
             display: flex;
             box-sizing: border-box;
             flex-direction: column;
@@ -116,7 +118,7 @@
         .aui-row:nth-child(3) button {
             border-radius: 50px;
             border: none;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
             -ms-transition: background-color 0.2s;
@@ -189,12 +191,14 @@
 <script>
     apiready=function () {
         api.parseTapmode();
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         var systemType=api.systemType;
-        if (systemType=="android"){
-            document.querySelector("body").setAttribute("style", "padding-top:25px");
-        }else if (systemType=="ios"){
-            document.querySelector("body").setAttribute("style", "padding-top:20px");
-        }
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
     }
 
     /**
@@ -257,7 +261,7 @@
             }else {
                 timeDom.innerHTML=codeNum--+"秒";
             }
-        },100);
+        },1000);
     }
 
     /**
