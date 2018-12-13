@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>促销详情frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <style>
+        body{
+            width: 100%;
+            height: 100vh;
+            background: rgba(255,255,255,0) !important;
+        }
+        section {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+
+        section>.aui-row {
+            width: 100%;
+            position: relative;
+            padding: 0 15px;
+        }
+
+        section>.aui-row:nth-child(1) {
+            height: 128px;
+            background: url("../../../image/news/life/salesBg.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        section>.aui-row:nth-child(2) {
+            padding: 17.5px 15px 9px;
+            display: flex;
+        }
+        section>.aui-row:nth-child(2)>div:nth-child(1) {
+            flex: 1;
+            color: #000;
+            font-size: 0.8125rem;
+        }
+        section>.aui-row:nth-child(2)>div:nth-child(2) {
+            width: 6em;
+            text-align: right;
+            color: #bebebe;
+            font-size: 0.625rem;
+        }
+
+        section>.aui-row:nth-child(3) {
+            font-size: 0.6875rem;
+            color: #999999;
+        }
+
+        section>.aui-row:nth-child(4){
+            padding-top: 30.5px;
+            display: flex;
+            font-size: 0.75rem;
+            padding-bottom: 48px;
+        }
+        section>.aui-row:nth-child(4)>div:nth-child(1){
+            flex: 1;
+        }
+        section>.aui-row:nth-child(4)>div:nth-child(1)>div{
+            width: 100%;
+            padding-bottom: 9px;
+            display: flex;
+        }
+        section>.aui-row:nth-child(4)>div:nth-child(1)>div>div:nth-child(1) {
+            font-size: 0.75rem;
+            width: 6em;
+        }
+        section>.aui-row:nth-child(4)>div:nth-child(1)>div>div:nth-child(2) {
+            flex: 1;
+        }
+        section>.aui-row:nth-child(4)>div:nth-child(2) {
+            width: 76px;
+            display: flex;
+            align-content: center;
+        }
+        section>.aui-row:nth-child(4)>div:nth-child(2)>img {
+            width: 76px;
+            height: 76px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .aui-row:nth-child(5) {
+            border-top: 8px solid #f6f6f6;
+            padding-top: 15px;
+        }
+        .aui-row:nth-child(5)>div:nth-child(1) {
+            color: #2f2e2e;
+            padding-left: 3.5px;
+            border-left: solid 1px #4298fd;
+        }
+        .aui-row:nth-child(5)>div:nth-child(1) {
+            color: #2f2e2e;
+            padding-left: 3.5px;
+            border-left: solid 1px #4298fd;
+        }
+        .aui-row:nth-child(5)>div:nth-child(2) {
+            padding-top: 20px;
+            font-size: 0.75rem;
+            color: #6c6b6b;
+        }
+        .aui-row:nth-child(5)>div:nth-child(3)>img {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0);">
+<section class="aui-content">
+    <div class="aui-row">
+
+    </div>
+    <div class="aui-row">
+        <div>2019预售款iPhoneMAX20</div>
+        <div>浏览<span>108次</span></div>
+    </div>
+    <div class="aui-row">
+        2018-12-12 12:12:12
+    </div>
+    <div class="aui-row">
+        <div>
+            <div>
+                <div>活动内容：</div>
+                <div>全场15折</div>
+            </div>
+            <div>
+                <div>开始时间：</div>
+                <div style="color: #333333;">2018-12-11 00:00:00</div>
+            </div>
+            <div>
+                <div>结束时间：</div>
+                <div style="color: #333333;">2018-12-12 24:00:00</div>
+            </div>
+            <div>
+                <div>活动地址：</div>
+                <div>南昌外滩国际东门岗</div>
+            </div>
+        </div>
+        <div>
+            <img src="../../../image/news/life/overdue.png" alt="">
+        </div>
+    </div>
+    <div class="aui-row">
+        <div>
+            详细信息
+        </div>
+        <div>
+            2019预售款iPhoneMAX20快来抢购
+        </div>
+        <div>
+            <img src="../../../image/news/life/street.png" alt="">
+        </div>
+    </div>
+    <div class="aui-row"></div>
+</section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+</script>
+</html>

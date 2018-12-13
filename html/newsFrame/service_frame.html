@@ -50,25 +50,25 @@
 <body>
 <!--生活服务-->
 <ul class="aui-list aui-list-in" id="life">
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="openExpress();">
         <img src="../../image/news/lifeService/express.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             快递代取
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="openFind()">
         <img src="../../image/news/lifeService/lost.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             失物招领
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="openPromotion()">
         <img src="../../image/news/lifeService/activity.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             周边促销
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="openOldMan()">
         <img src="../../image/news/lifeService/doctor.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             老人体检
@@ -76,5 +76,59 @@
     </li>
 </ul>
 </body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+    /**
+     * 打开快递页面
+     */
+    function openExpress() {
+        api.openWin({
+            name: 'express_msg_win',
+            url: '../news/life/express_msg_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    /**
+     * 打开老人体验
+     */
+    function openOldMan() {
+        api.openWin({
+            name: 'oldman_taste_win',
+            url: '../news/life/oldman_taste_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    /**
+     * 打开失物招领
+     */
+    function openFind() {
+        api.openWin({
+            name: 'find_lost_win',
+            url: '../news/life/find_lost_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    /**
+     * 打开周边促销
+     */
+    function openPromotion() {
+        api.openWin({
+            name: 'sales_win',
+            url: '../news/life/sales_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+</script>
 </html>
 

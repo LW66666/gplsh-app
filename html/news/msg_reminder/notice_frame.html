@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>申请记录frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <style>
+        body{
+            width: 100%;
+            height: 100vh;
+            background: rgba(255,255,255,0) !important;
+        }
+        section {
+            width: 100%;
+            height: 100%;
+        }
+
+        section {
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+        .newsBox {
+            position: relative;
+            width: 100%;
+        }
+        .time {
+            position: relative;
+            height: 47.5px;
+            width: 100%;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;/*垂直居中*/
+            justify-content: center;/*水平居中*/
+
+        }
+        .timeLabel{
+            padding: 4px 7px;
+            font-size: 0.6875rem;
+            line-height: 1;
+            color: #ffffff;
+            background-color: #d1d1d1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            border-radius: 15em;
+            position: relative;
+        }
+        .new{
+            position: relative;
+            width: 100%;
+            background: #fff;
+            display: flex;
+            padding:9px 15px;
+            -webkit-transition: all 0.2s;
+            -moz-transition: all 0.2s;
+            -ms-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
+            border-top: solid 1px #f6f6f6;
+        }
+        .new:nth-child(1){
+            border-top: none;
+        }
+        .new:active{
+            background: #f6f6f6;
+        }
+        .newLael {
+            font-size: 0.6875rem;
+            color: #fff;
+            background: #4298fd;
+        }
+        .newRead {
+            font-size: 0.625rem;
+            color: #fff;
+            background: #85c266;
+        }
+        .newNotRead {
+            font-size: 0.625rem;
+            color: #fff;
+            background: #ff9a78;
+        }
+        .new>div:nth-child(1) {
+            position: relative;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .new>div:nth-child(2) {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-left: 16px;
+        }
+        .new>div:nth-child(2)>div {
+            position: relative;
+            flex: 1;
+            font-size: 0.625rem;
+            color: #959595;
+        }
+        .new>div:nth-child(2)>div:nth-child(1){
+            display: flex;
+        }
+        .new>div:nth-child(2)>div:nth-child(1)>div:nth-child(1) {
+            font-size: 0.75rem;
+            color: #4f4f4f;
+            flex: 1;
+            display: flex;
+            align-items: center;/*垂直居中*/
+        }
+        .new>div:nth-child(2)>div:nth-child(1)>div:nth-child(2) {
+            width: 55px;
+            font-size: 0.625rem;
+            color: #c9c9c9;
+        }
+
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0);">
+<section class="aui-content">
+    <div class="aui-row newsBox">
+        <div class="time">
+            <div class="timeLabel">2018-12-13</div>
+        </div>
+        <div class="new" tapmode>
+            <div>
+                <div class="aui-label aui-label-primary newLael">物业</div>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        天气预报提示&nbsp;&nbsp;
+                        <div class="aui-label newRead">已读</div>
+                    </div>
+                    <div>10:11:00</div>
+                </div>
+                <div class="aui-ellipsis-1">
+                    南昌一周天气预报
+                </div>
+            </div>
+        </div >
+        <div class="new" tapmode>
+            <div>
+                <div class="aui-label aui-label-primary newLael">物业</div>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        天气预报提示&nbsp;&nbsp;
+                        <div class="aui-label newNotRead">未读</div>
+                    </div>
+                    <div>10:11:02</div>
+                </div>
+                <div class="aui-ellipsis-1">
+                    南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报
+                    南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报
+                </div>
+            </div>
+        </div >
+    </div>
+    <div class="aui-row newsBox">
+        <div class="time">
+            <div class="timeLabel">2018-12-13</div>
+        </div>
+        <div class="new" tapmode>
+            <div>
+                <div class="aui-label aui-label-primary newLael">物业</div>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        天气预报提示&nbsp;&nbsp;
+                        <div class="aui-label newRead">已读</div>
+                    </div>
+                    <div>10:11:00</div>
+                </div>
+                <div class="aui-ellipsis-1">
+                    南昌一周天气预报
+                </div>
+            </div>
+        </div >
+        <div class="new" tapmode>
+            <div>
+                <div class="aui-label aui-label-primary newLael">物业</div>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        天气预报提示&nbsp;&nbsp;
+                        <div class="aui-label newNotRead">未读</div>
+                    </div>
+                    <div>10:11:02</div>
+                </div>
+                <div class="aui-ellipsis-1">
+                    南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报
+                    南昌一周天气预报南昌一周天气预报南昌一周天气预报南昌一周天气预报
+                </div>
+            </div>
+        </div >
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+</script>
+</html>

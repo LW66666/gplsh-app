@@ -189,21 +189,21 @@
         <div class="aui-col-xs-12 aui-list-item">
             <div class="aui-list-item-inner">
                 <div class="aui-list-item-label aui-text-center" style="height: 100%;">
-                    <div id="pwStatus">
+                    <div id="pwStatus" tapmode>
                         <!--<img src="../../image/login/hide.png" alt="">-->
                     </div>
                 </div>
                 <div class="aui-list-item-input">
                     <input type="number" id="pw" maxlength="4" placeholder="请输入验证码">
                     <div id="forGetPw">
-                        <button  onclick="getCode(this)">发送验证码</button>
+                        <button  onclick="getCode(this)" tapmode>发送验证码</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="aui-row">
-        <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn">
+        <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn" tapmode>
             下一步
         </button>
     </div>
@@ -221,6 +221,10 @@
         }, function(ret, err) {
             closeThisWin();
         });
+
+        setTimeout(function () {
+            focusInput();
+        },500);
     }
 
     /**
@@ -361,6 +365,31 @@
      */
     function getCode(dom) {
         dom.setAttribute("disabled","disabled");
+        var mac=api.deviceId;
+        var phone=document.getElementById("phone").value;
+        api.ajax({
+            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/getMobileVerificationCode',
+            method: 'post',
+            timeout: 30,
+            dataType: 'json',
+            returnAll: false,
+            data: {
+                values:{
+                    cellphone: phone,
+                    mac: mac,
+                    type: 1
+                }
+            }
+        }, function (ret, err) {
+            api.hideProgress();
+            api.toast({
+                msg: ret.message,
+                duration: 2000,
+                location: 'top'
+            });
+            if (ret.message=="发送成功") {
+            }
+        });
         var codeNum=60;
         codeTimer=setInterval(function () {
             if (codeNum<=0){
@@ -375,6 +404,17 @@
 
     function closeThisWin() {
         api.closeWin();
+    }
+
+    /**
+     * 电话输入框获得焦点，并且弹起软键盘
+     */
+    function focusInput(){
+        // 使用模块弹出键盘
+        var softInput = api.require('softInputMgr');
+        softInput.toggleKeyboard();
+        // 将相应的输入框获取焦点
+        document.getElementById("phone").focus()
     }
 </script>
 </html>

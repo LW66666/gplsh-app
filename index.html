@@ -196,6 +196,24 @@
             $api.addCls(domAll[index], 'aui-active');
             $api.removeCls(domAll[1 - index], 'aui-active');
         });
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+
+            api.closeWidget({
+                id: 'A6098458444100',
+                retData: {
+                    name: 'closeWidget'
+                },
+                silent:false,
+                animation: {
+                    type: 'flip',
+                    subType: 'from_bottom',
+                    duration: 500
+                }
+            });
+        });
     };
 
     var tab = new auiTab({

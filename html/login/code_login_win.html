@@ -257,7 +257,7 @@
 <body>
 <section class="aui-content">
     <div class="aui-row">
-        <div>
+        <div tapmode>
             <img src="../../image/login/header2.png" alt="">
         </div>
         <div class="aui-row aui-text-center">
@@ -287,22 +287,22 @@
                 <div class="aui-list-item-input">
                     <input type="number" id="pw" maxlength="4" placeholder="请输入验证码">
                     <div id="forGetPw">
-                        <button  onclick="getCode(this)">发送验证码</button>
+                        <button  onclick="getCode(this)" tapmode>发送验证码</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="aui-row">
-        <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn">
+        <button class="aui-btn aui-btn-primary aui-btn-block" disabled="disabled" id="loginBtn" tapmode>
             登录
         </button>
     </div>
     <div class="aui-row">
         <div class="aui-col-xs-12">
-            <span onclick="pwLogin()">密码登录</span>
+            <span onclick="pwLogin()"tapmode>密码登录</span>
             <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <span onclick="openRegister()">用户注册</span>
+            <span onclick="openRegister()" tapmode>用户注册</span>
         </div>
     </div>
     <div class="aui-row">
@@ -315,13 +315,13 @@
             </div>
             <div>
                 <div class="aui-text-center">
-                    <i class="aui-iconfont aui-icon-qq" onclick="otherLogin(this)" data-type="qq"></i>
+                    <i class="aui-iconfont aui-icon-qq" onclick="otherLogin(this)" data-type="qq" tapmode  ></i>
                 </div>
                 <div class="aui-text-center">
-                    <i class="aui-iconfont aui-icon-wechat" onclick="otherLogin(this)" data-type="wechat"></i>
+                    <i class="aui-iconfont aui-icon-wechat" onclick="otherLogin(this)" data-type="wechat" tapmode  ></i>
                 </div>
                 <div class="aui-text-center">
-                    <i class="aui-iconfont aui-icon-weibo" onclick="otherLogin(this)" data-type="weibo"></i>
+                    <i class="aui-iconfont aui-icon-weibo" onclick="otherLogin(this)" data-type="weibo" tapmode  ></i>
                 </div>
             </div>
         </div>
@@ -346,7 +346,9 @@
             closeThisWin();
         });
 
-        document.getElementById("phone").focus();
+        setTimeout(function () {
+            focusInput();
+        },500);
     }
 
     /**
@@ -511,6 +513,17 @@
 
     function closeThisWin() {
         api.closeWin();
+    }
+
+    /**
+     * 电话输入框获得焦点，并且弹起软键盘
+     */
+    function focusInput(){
+        // 使用模块弹出键盘
+        var softInput = api.require('softInputMgr');
+        softInput.toggleKeyboard();
+        // 将相应的输入框获取焦点
+        document.getElementById("phone").focus()
     }
 </script>
 </html>

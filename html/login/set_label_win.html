@@ -136,45 +136,45 @@
     <div class="aui-row">
         <div>
             <div>
-                <div class="dialog" style="width: 67.5px;height: 43.5px;margin-left: 15px;margin-top: 10%;">老板</div>
+                <div class="dialog" style="width: 67.5px;height: 43.5px;margin-left: 15px;margin-top: 10%;" tapmode>老板</div>
             </div>
         </div>
         <div>
             <div>
-                <div class="dialog" style="width: 82.5px;height: 56px;margin-top: 14px;line-height: 56px;margin-left: 7.5px;">爱运动</div>
+                <div class="dialog" style="width: 82.5px;height: 56px;margin-top: 14px;line-height: 56px;margin-left: 7.5px;" tapmode>爱运动</div>
             </div>
             <div>
-                <div class="dialog" style="width: 83px;height: 56px;margin-top: 8px;line-height: 56px;margin-left: 21px">爱旅行</div>
+                <div class="dialog" style="width: 83px;height: 56px;margin-top: 8px;line-height: 56px;margin-left: 21px" tapmode>爱旅行</div>
             </div>
             <div>
-                <div class="dialog" style="width: 70px;height: 48px;margin-top: 14px;line-height: 48px;margin-left: 23px">白领</div>
+                <div class="dialog" style="width: 70px;height: 48px;margin-top: 14px;line-height: 48px;margin-left: 23px" tapmode>白领</div>
             </div>
         </div>
         <div>
             <div>
-                <div class="dialog" style="width: 98px;height: 67px;margin-top: 3px;line-height: 67px;margin-left: 2px;">物业经理</div>
+                <div class="dialog" style="width: 98px;height: 67px;margin-top: 3px;line-height: 67px;margin-left: 2px;" tapmode>物业经理</div>
             </div>
             <div>
-                <div class="dialog dialogActive" style="width: 98px;height: 67px;margin-top: 21px;line-height: 67px;margin-left: 15px">有车一族</div>
+                <div class="dialog dialogActive" style="width: 98px;height: 67px;margin-top: 21px;line-height: 67px;margin-left: 15px" tapmode>有车一族</div>
             </div>
             <div>
-                <div class="dialog" style="width: 72px;height: 48px;margin-top: 14px;line-height: 48px;margin-left: 13px">爱宠物</div>
-            </div>
-        </div>
-        <div>
-            <div style="text-align: right">
-                <div class="dialog" style="width: 98px;height: 67px;margin-top: 3px;line-height: 67px;margin-left: 2px;">辣妈</div>
-            </div>
-            <div style="text-align: left">
-                <div class="dialog" style="width: 98px;height: 67px;margin-top: 21px;line-height: 67px;margin-left: 15px;">单身</div>
+                <div class="dialog" style="width: 72px;height: 48px;margin-top: 14px;line-height: 48px;margin-left: 13px" tapmode>爱宠物</div>
             </div>
         </div>
         <div>
             <div style="text-align: right">
-                <div class="dialog" style="width: 98px;height: 67px;margin-top: 3px;line-height: 67px;margin-right: 22px;">奶爸</div>
+                <div class="dialog" style="width: 98px;height: 67px;margin-top: 3px;line-height: 67px;margin-left: 2px;" tapmode>辣妈</div>
             </div>
             <div style="text-align: left">
-                <div class="dialog" style="width: 88px;height: 65px;margin-top: 21px;line-height: 65px;margin-left: 15px;">爱购物</div>
+                <div class="dialog" style="width: 98px;height: 67px;margin-top: 21px;line-height: 67px;margin-left: 15px;" tapmode>单身</div>
+            </div>
+        </div>
+        <div>
+            <div style="text-align: right">
+                <div class="dialog" style="width: 98px;height: 67px;margin-top: 3px;line-height: 67px;margin-right: 22px;" tapmode>奶爸</div>
+            </div>
+            <div style="text-align: left">
+                <div class="dialog" style="width: 88px;height: 65px;margin-top: 21px;line-height: 65px;margin-left: 15px;" tapmode>爱购物</div>
             </div>
         </div>
     </div>
@@ -182,7 +182,7 @@
 
     </div>
     <div class="aui-row">
-        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn">
+        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn" tapmode>
             保存
         </button>
     </div>
@@ -226,9 +226,25 @@
      */
     function openIndex() {
         api.closeWin({
+            name: 'pw_login_win'
+        });
+        api.closeWin({
+            name: 'code_login_win'
+        });
+        api.closeWin({
+            name: 'register_win'
+        });
+        api.closeWin({
+            name: 'set_pw_win'
+        });
+        api.closeWin({
+            name: 'set_sex_win'
+        });
+        api.closeWin({
             name: 'my_birthday_win'
         });
         closeThisWin();
+        openIndex();
         api.openWin({
             name: 'index',
             url: '../../index.html',
