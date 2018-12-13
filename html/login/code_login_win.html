@@ -153,7 +153,7 @@
         .aui-row:nth-child(3) button {
             border-radius: 50px;
             border: none;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
             -ms-transition: background-color 0.2s;
@@ -302,7 +302,7 @@
         <div class="aui-col-xs-12">
             <span onclick="pwLogin()">密码登录</span>
             <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <span>用户注册</span>
+            <span onclick="openRegister()">用户注册</span>
         </div>
     </div>
     <div class="aui-row">
@@ -339,6 +339,14 @@
         }else if (systemType=="ios"){
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            closeThisWin();
+        });
+
+        document.getElementById("phone").focus();
     }
 
     /**
@@ -346,6 +354,18 @@
      */
     function pwLogin() {
         api.closeWin();
+    }
+
+    /**
+     * 打开注册页面
+     */
+    function openRegister() {
+        api.openWin({
+            name: 'register_win',
+            url: 'register_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
     }
 
     document.getElementById("phone").onchange=function(){

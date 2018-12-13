@@ -8,6 +8,9 @@
     <title>设置性别</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
+        html{
+            overflow: hidden;
+        }
         body {
             padding: 0;
             margin: 0;
@@ -38,7 +41,6 @@
 
         section {
             width: 100%;
-            height: 100%;
             display: flex;
             flex: 1;
             box-sizing: border-box;
@@ -82,14 +84,14 @@
         }
 
         .aui-row:nth-child(2) {
-            height: 42.5px;
-            padding: 0 10.5px;
+            height: 55px;
+            padding: 0 48px;
         }
         .aui-row:nth-child(2) button{
             border-radius: 50px;
             border: none;
             background: #2f4b65;
-            font-size: 0.9375rem;
+            font-size: 0.8125rem;
             -webkit-transition: background-color 0.2s;
             -moz-transition: background-color 0.2s;
             -ms-transition: background-color 0.2s;
@@ -99,9 +101,6 @@
             color: #fff;
             display: block;
             width: 100%;
-            height: 2rem;
-            line-height: 2rem;
-            font-size: 0.75rem;
         }
         .aui-row:nth-child(2) button[disabled="disabled"] {
             background: #367590;
@@ -174,35 +173,48 @@
         <div></div>
     </div>
     <div class="aui-row">
-        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn">
+        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn" onclick="openMyBirthday()">
             下一步
         </button>
     </div>
     <div class="aui-row aui-text-center">
-        <span>返回首页</span>
+        <span onclick="openIndex()">返回首页</span>
     </div>
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script>
-    var pwStatus=false;
     apiready=function () {
         api.parseTapmode();
-        var systemType=api.systemType;
-        if (systemType=="android"){
-            document.querySelector("body").setAttribute("style", "padding-top:25px");
-        }else if (systemType=="ios"){
-            document.querySelector("body").setAttribute("style", "padding-top:20px");
-        }
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            api.closeWin({
+                name: 'pw_login_win'
+            });
+            api.closeWin({
+                name: 'code_login_win'
+            });
+            api.closeWin({
+                name: 'register_win'
+            });
+            api.closeWin({
+                name: 'set_pw_win'
+            });
+            closeThisWin();
+            openIndex();
+        });
     }
 
     /**
-     * 打开忘记密码页面
+     * 打开设置生日页面
      */
-    function forgetPw() {
+    function openMyBirthday() {
         api.openWin({
-            name: 'forget_pw_win',
-            url: 'forget_pw_win.html',
+            name: 'my_birthday_win',
+            url: 'my_birthday_win.html',
             pageParam: {name: 'pageparamname'},
             bgColor:"#fff",
         });
@@ -212,13 +224,25 @@
         document.querySelector(".sexActive").setAttribute("class","sex");
         this.setAttribute("class", "sexActive");
     })
-    document.querySelector(".sexActive").addEventListener("click",function () {console.log("click")
+    document.querySelector(".sexActive").addEventListener("click",function () {
         document.querySelector(".sexActive").setAttribute("class","sex");
         this.setAttribute("class", "sexActive");
     })
 
     function closeThisWin() {
         api.closeWin();
+    }
+
+    /**
+     * 打开密码登录页面
+     */
+    function openIndex() {
+        api.openWin({
+            name: 'index',
+            url: '../../index.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
     }
 </script>
 </html>
