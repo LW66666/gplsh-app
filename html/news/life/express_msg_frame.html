@@ -111,7 +111,7 @@
 </head>
 <body style="background: rgba(255,255,255,0);">
 <section class="aui-content">
-    <div class="new" tapmode>
+    <div class="new" tapmode onclick="openExpressDetails()">
         <div>
             <div>
                 <img src="../../../image/news/life/ytkd.png" alt="">
@@ -135,7 +135,7 @@
             </div>
         </div>
     </div >
-    <div class="new" tapmode>
+    <div class="new" tapmode  onclick="openExpressDetails()">
         <div>
             <div>
                 <img src="../../../image/news/life/ytkd.png" alt="">
@@ -167,5 +167,16 @@
         api.parseTapmode();
     }
 
+    /**
+     * 打开快递详情
+     */
+    function openExpressDetails() {
+        api.openWin({
+            name: 'express_details_win',
+            url: 'express_details_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
 </script>
 </html>

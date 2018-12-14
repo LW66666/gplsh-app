@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>促销详情win</title>
+    <title>体验详情win</title>
     <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
     <style>
         body{
@@ -21,7 +21,10 @@
             height: 40px !important;
             line-height: 40px !important;
             font-size: 0.9375rem !important;
-            color: #4f4f4f !important;
+            background: url(../../../image/news/life/b1.jpg) no-repeat !important;
+            background-size: 100% !important;
+            background-position: 0 0;
+            border-bottom: none !important;
         }
         header a:nth-child(1) span{
             color: #565656 !important;
@@ -30,11 +33,11 @@
     </style>
 </head>
 <body>
-    <header class="aui-bar aui-bar-nav" style="background: #ff7779;border-bottom: none;">
+    <header class="aui-bar aui-bar-nav">
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left" style="color: #fff !important;"></span>
         </a>
-        <div class="aui-title">促销详情</div>
+        <div class="aui-title">老人体验</div>
     </header>
 </body>
 <script type="text/javascript" src="../../../script/api.js"></script>
@@ -51,8 +54,8 @@
         });
 
         api.openFrame({
-            name: "sales_details_frame",
-            url: "sales_details_frame.html",
+            name: "oldman_taste_details_frame",
+            url: "oldman_taste_details_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
@@ -68,7 +71,7 @@
 
     function closeThisWin() {
         api.closeFrame({
-            name: 'sales_details_frame'
+            name: 'oldman_taste_details_frame'
         });
         api.closeWin();
     }

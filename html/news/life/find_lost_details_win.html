@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>促销详情win</title>
+    <title>失物招领win</title>
     <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
     <style>
         body{
@@ -30,11 +30,11 @@
     </style>
 </head>
 <body>
-    <header class="aui-bar aui-bar-nav" style="background: #ff7779;border-bottom: none;">
+    <header class="aui-bar aui-bar-nav" style="background: #84c3fd;border-bottom: none;">
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left" style="color: #fff !important;"></span>
         </a>
-        <div class="aui-title">促销详情</div>
+        <div class="aui-title">失物详情</div>
     </header>
 </body>
 <script type="text/javascript" src="../../../script/api.js"></script>
@@ -51,8 +51,8 @@
         });
 
         api.openFrame({
-            name: "sales_details_frame",
-            url: "sales_details_frame.html",
+            name: "find_lost_details_frame",
+            url: "find_lost_details_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
@@ -68,7 +68,7 @@
 
     function closeThisWin() {
         api.closeFrame({
-            name: 'sales_details_frame'
+            name: 'find_lost_details_frame'
         });
         api.closeWin();
     }

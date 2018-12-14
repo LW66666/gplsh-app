@@ -161,9 +161,20 @@
         .aui-row:nth-child(3) button:active{
             background: #00c2dd;
         }
+        .aui-tips{
+            position: fixed;
+            transition: all 0.5s;
+            transform: translateY(-200%);
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
+<div class="aui-tips aui-margin-b-15 aui-bg-danger" id="tips-1">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title">网络不给力，请检查网络设置</div>
+    <i class="aui-iconfont aui-icon-close" id="closeTip" style="opacity: 0;"></i>
+</div>
 <header class="aui-bar aui-bar-nav">
     <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
         <span class="aui-iconfont aui-icon-left"></span>
@@ -225,6 +236,15 @@
         setTimeout(function () {
             focusInput();
         },500);
+
+        setInterval(function () {
+            var networkType=api.connectionType;
+            if (networkType=="none" || networkType=="unknown" || networkType=="2g" ){
+                document.querySelector(".aui-tips").style.transform="translateY(-0%)";
+            }else {
+                document.querySelector(".aui-tips").style.transform="translateY(-200%)";
+            }
+        },3000)
     }
 
     /**
@@ -235,13 +255,14 @@
     }
 
     /**
+     * @phone 手机号
      * 打开设置密码页面
      */
-    function openSetPw() {
+    function openSetPw(phone) {
         api.openWin({
             name: 'set_pw_win',
             url: 'set_pw_win.html',
-            pageParam: {name: 'pageparamname'},
+            pageParam: {phone: phone},
             bgColor:"#fff",
         });
     }
@@ -277,7 +298,43 @@
 
     document.getElementById("loginBtn").onclick=function () {
         checkFromByType();
-        openSetPw();
+        api.showProgress({
+            title: '验证中',
+            modal: false
+        });
+        var phone=document.getElementById("phone").value;
+        var pw=document.getElementById("pw").value;
+        var mac=api.deviceId;
+        api.ajax({
+            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/cellphoneVerification',
+            method: 'get',
+            timeout: 30,
+            dataType: 'json',
+            returnAll: false,
+            data: {
+                values: {
+                    cellphone: phone,
+                    mac: mac,
+                    verificationCode: pw
+                },
+            }
+        }, function (ret, err) {
+            api.hideProgress();
+            if (ret.resultStatus){
+                openSetPw(phone);
+                api.toast({
+                    msg: ret.message,
+                    duration: 2000,
+                    location: 'top'
+                });
+            }else {
+                api.toast({
+                    msg: ret.message,
+                    duration: 2000,
+                    location: 'top'
+                });
+            }
+        });
     }
 
     /**
@@ -367,39 +424,56 @@
         dom.setAttribute("disabled","disabled");
         var mac=api.deviceId;
         var phone=document.getElementById("phone").value;
-        api.ajax({
-            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/getMobileVerificationCode',
-            method: 'post',
-            timeout: 30,
-            dataType: 'json',
-            returnAll: false,
-            data: {
-                values:{
-                    cellphone: phone,
-                    mac: mac,
-                    type: 1
-                }
-            }
-        }, function (ret, err) {
-            api.hideProgress();
+        var chackStu=checkFrame();
+        if (chackStu==-1 || chackStu==-4 || chackStu==-7 || chackStu==-3 || chackStu==0) {
             api.toast({
-                msg: ret.message,
+                msg: "手机号码错误",
                 duration: 2000,
                 location: 'top'
             });
-            if (ret.message=="发送成功") {
-            }
-        });
-        var codeNum=60;
-        codeTimer=setInterval(function () {
-            if (codeNum<=0){
-                dom.removeAttribute("disabled");
-                dom.innerHTML="重新发送";
-                clearInterval(codeTimer);
-            }else {
-                dom.innerHTML=codeNum--+"s";
-            }
-        },1000);
+        }else {
+            api.ajax({
+                url: 'http://192.168.1.222:9765/api/app/communitywanli/login/getMobileVerificationCode',
+                method: 'get',
+                timeout: 30,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac: mac,
+                        type: 1
+                    }
+                }
+            }, function (ret, err) {
+                api.hideProgress();
+                if (err!=""){
+                    api.toast({
+                        msg: err.msg.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }
+                if (ret!="") {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }
+            });
+
+            var codeNum=60;
+            codeTimer=setInterval(function () {
+                if (codeNum<=0){
+                    dom.removeAttribute("disabled");
+                    dom.innerHTML="重新发送";
+                    clearInterval(codeTimer);
+                }else {
+                    dom.innerHTML=codeNum--+"s";
+                }
+            },1000);
+        }
     }
 
     function closeThisWin() {

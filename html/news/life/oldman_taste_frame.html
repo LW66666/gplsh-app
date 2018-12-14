@@ -93,7 +93,7 @@
 </head>
 <body style="background: rgba(255,255,255,0);">
 <section class="aui-content">
-    <div class="new" tapmode>
+    <div class="new" onclick="openOldmanDetails()" tapmode>
         <div>
             <div class="">
                 2018年度老人体验通知
@@ -107,7 +107,7 @@
             <img src="../../../image/news/life/overdue.png" alt="">
         </div>
     </div >
-    <div class="new" tapmode>
+    <div class="new" onclick="openOldmanDetails()" tapmode>
         <div>
             <div class="">
                 2018年度老人体验通知
@@ -129,5 +129,17 @@
         api.parseTapmode();
     }
 
+
+    /**
+     * 打开快递详情
+     */
+    function openOldmanDetails() {
+        api.openWin({
+            name: 'oldman_taste_details_win',
+            url: 'oldman_taste_details_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
 </script>
 </html>

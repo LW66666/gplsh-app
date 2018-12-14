@@ -150,9 +150,20 @@
         .aui-row:nth-child(4) button:active{
             background: #00c2dd;
         }
+        .aui-tips{
+            position: fixed;
+            transition: all 0.5s;
+            transform: translateY(-200%);
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
+<div class="aui-tips aui-margin-b-15 aui-bg-danger" id="tips-1">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title">网络不给力，请检查网络设置</div>
+    <i class="aui-iconfont aui-icon-close" id="closeTip" style="opacity: 0;"></i>
+</div>
 <header class="aui-bar aui-bar-nav">
     <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
         <span class="aui-iconfont aui-icon-left"></span>
@@ -221,6 +232,16 @@
             closeThisWin();
             openIndex();
         });
+
+
+        setInterval(function () {
+            var networkType=api.connectionType;
+            if (networkType=="none" || networkType=="unknown" || networkType=="2g" ){
+                document.querySelector(".aui-tips").style.transform="translateY(-0%)";
+            }else {
+                document.querySelector(".aui-tips").style.transform="translateY(-200%)";
+            }
+        },3000);
     }
 
     /**
@@ -230,7 +251,7 @@
         api.openWin({
             name: 'set_label_win',
             url: 'set_label_win.html',
-            pageParam: {name: 'pageparamname'},
+            pageParam: {phone: phone},
             bgColor:"#fff",
         });
         closeThisWin();
@@ -258,7 +279,47 @@
 
     document.getElementById("loginBtn").onclick=function () {
         checkFromByType();
-        openSetLabel();
+
+        api.showProgress({
+            title: '设置中',
+            modal: false
+        });
+        var phone=api.pageParam.phone;
+        var name=document.getElementById("name").value;
+        var birthday=document.getElementById("birthday").value;
+        var mac=api.deviceId;
+
+        api.ajax({
+                url: 'http://192.168.1.222:9765/api/app/communitywanli/login/updateBirthdayAndNick',
+                method: 'post',
+                timeout: 30,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values: {
+                        cellphone: phone,
+                        birthday: birthday,
+                        nickName:name
+                    },
+                }
+            },
+            function (ret, err) {
+                api.hideProgress();
+                if (ret.resultStatus){
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                    openSetLabel(phone);
+                }else {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }
+            });
     }
 
     /**

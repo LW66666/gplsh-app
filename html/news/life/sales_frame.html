@@ -114,7 +114,7 @@
 </head>
 <body style="background: rgba(255,255,255,0);">
 <section class="aui-content">
-    <div class="new" tapmode>
+    <div class="new" onclick="openSalesDetails()" tapmode>
         <div>
             <img src="../../../image/news/life/street.png" alt="">
         </div>
@@ -133,7 +133,7 @@
             <img src="../../../image/news/life/find.png" alt="">
         </div>
     </div >
-    <div class="new" tapmode>
+    <div class="new" onclick="openSalesDetails()" tapmode>
         <div>
             <img src="../../../image/news/life/street.png" alt="">
         </div>
@@ -158,6 +158,18 @@
 <script>
     apiready = function () {
         api.parseTapmode();
+    }
+
+    /**
+     * 打开快递详情
+     */
+    function openSalesDetails() {
+        api.openWin({
+            name: 'sales_details_win',
+            url: 'sales_details_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
     }
 
 </script>

@@ -159,9 +159,20 @@
         .aui-row:nth-child(4)>div>span{
             color: #91cf60;
         }
+        .aui-tips{
+            position: fixed;
+            transition: all 0.5s;
+            transform: translateY(-200%);
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
+<div class="aui-tips aui-margin-b-15 aui-bg-danger" id="tips-1">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title">网络不给力，请检查网络设置</div>
+    <i class="aui-iconfont aui-icon-close" id="closeTip" style="opacity: 0;"></i>
+</div>
 <header class="aui-bar aui-bar-nav">
     <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
         <span class="aui-iconfont aui-icon-left"></span>
@@ -208,16 +219,25 @@
         setTimeout(function () {
             focusInput();
         },500);
+
+        setInterval(function () {
+            var networkType=api.connectionType;
+            if (networkType=="none" || networkType=="unknown" || networkType=="2g" ){
+                document.querySelector(".aui-tips").style.transform="translateY(-0%)";
+            }else {
+                document.querySelector(".aui-tips").style.transform="translateY(-200%)";
+            }
+        },3000)
     }
 
     /**
-     * 打开设置性别页面
-     */
-    function forgetSetSex() {
+     *
+     * */
+    function forgetSetSex(phone) {
         api.openWin({
             name: 'set_sex_win',
             url: 'set_sex_win.html',
-            pageParam: {name: 'pageparamname'},
+            pageParam: {phone: phone},
             bgColor:"#fff",
         });
     }
@@ -236,7 +256,60 @@
 
     document.getElementById("loginBtn").onclick=function () {
         checkFromByType();
-        forgetSetSex();
+        api.showProgress({
+            title: '注册中',
+            modal: false
+        });
+        var phone=api.pageParam.phone;
+        var pw=document.getElementById("pw").value;
+        var mac=api.deviceId;
+
+        api.ajax({
+            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/register',
+            method: 'post',
+            timeout: 30,
+            dataType: 'json',
+            returnAll: false,
+            data: {
+                values: {
+                    cellphone: phone,
+                    password: pw
+                },
+            }
+        }, function (ret, err) {
+            console.log(JSON.stringify(ret));
+            console.log(JSON.stringify(err));
+            api.hideProgress();
+            if (err!=""){
+                api.toast({
+                    msg: err.msg.message,
+                    duration: 2000,
+                    location: 'top'
+                });
+            }
+            if (ret!="") {
+                api.toast({
+                    msg: ret.message,
+                    duration: 2000,
+                    location: 'top'
+                });
+
+                if (ret.resultStatus){
+                    forgetSetSex(phone);
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }else {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }
+            }
+        });
     }
 
     document.getElementById("pwStatus").onclick=function (){

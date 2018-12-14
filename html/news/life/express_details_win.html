@@ -30,11 +30,11 @@
     </style>
 </head>
 <body>
-    <header class="aui-bar aui-bar-nav" style="background: #ff7779;border-bottom: none;">
+    <header class="aui-bar aui-bar-nav" style="background: #64acff;border-bottom: none;">
         <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
             <span class="aui-iconfont aui-icon-left" style="color: #fff !important;"></span>
         </a>
-        <div class="aui-title">促销详情</div>
+        <div class="aui-title">快递详情</div>
     </header>
 </body>
 <script type="text/javascript" src="../../../script/api.js"></script>
@@ -51,8 +51,8 @@
         });
 
         api.openFrame({
-            name: "sales_details_frame",
-            url: "sales_details_frame.html",
+            name: "express_details_frame",
+            url: "express_details_frame.html",
             bgColor:"rgba(255,255,255,0)",
             rect: {
                 x: 0,
@@ -63,12 +63,13 @@
             pageParam: {name: 'pageparam'},
             overScrollMode: "scrolls",
             bounces: false,
+            vScrollBarEnabled:true
         });
     }
 
     function closeThisWin() {
         api.closeFrame({
-            name: 'sales_details_frame'
+            name: 'express_details_frame'
         });
         api.closeWin();
     }

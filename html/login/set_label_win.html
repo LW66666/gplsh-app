@@ -121,9 +121,20 @@
             background: url("../../image/login/dialogActive.png") no-repeat;
             background-size: 100% 100%;
         }
+        .aui-tips{
+            position: fixed;
+            transition: all 0.5s;
+            transform: translateY(-200%);
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
+<div class="aui-tips aui-margin-b-15 aui-bg-danger" id="tips-1">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title">网络不给力，请检查网络设置</div>
+    <i class="aui-iconfont aui-icon-close" id="closeTip" style="opacity: 0;"></i>
+</div>
 <header class="aui-bar aui-bar-nav">
     <a class="aui-pull-left aui-btn" onclick="closeThisWin()" tapmode>
         <span class="aui-iconfont aui-icon-left"></span>
@@ -195,6 +206,15 @@
         $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         api.parseTapmode();
 
+        setInterval(function () {
+            var networkType=api.connectionType;
+            if (networkType=="none" || networkType=="unknown" || networkType=="2g" ){
+                document.querySelector(".aui-tips").style.transform="translateY(-0%)";
+            }else {
+                document.querySelector(".aui-tips").style.transform="translateY(-200%)";
+            }
+        },3000);
+
         api.addEventListener({
             name: 'keyback'
         }, function(ret, err) {
@@ -254,7 +274,48 @@
     }
 
     document.getElementById("loginBtn").onclick=function () {
-        openIndex();
+        var activeArray=document.querySelectorAll(".dialogActive");
+        var labelArray=new Array();
+        for (var label of activeArray){
+            labelArray.push(label.innerHTML);
+        }
+        api.showProgress({
+            title: '设置中',
+            modal: false
+        });
+        var phone=api.pageParam.phone;
+        var mac=api.deviceId;
+
+        api.ajax({
+                url: 'http://192.168.1.222:9765/api/app/communitywanli/login/chooseLabelList',
+                method: 'post',
+                timeout: 30,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values: {
+                        cellphone: phone,
+                        labelList: labelArray
+                    },
+                }
+            },
+            function (ret, err) {
+                api.hideProgress();
+                if (ret.resultStatus){
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                    openIndex();
+                }else {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }
+            });
     }
 
     function closeThisWin() {
@@ -266,6 +327,7 @@
             dom.onclick=function () {
                 if (this.getAttribute("class")=="dialog"){
                     this.setAttribute("class","dialog dialogActive")
+
                 }else {
                     this.setAttribute("class","dialog")
                 }
