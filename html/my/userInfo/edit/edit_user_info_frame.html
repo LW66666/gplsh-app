@@ -189,56 +189,9 @@
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
-    var UIMultiSelector;
-    var style={
-        mask: 'rgba(0,0,0,.2)',
-        title: {
-            bg: '#fff',
-            color: '#000',
-            size: 16,
-            h: 50
-        },
-        leftButton: {
-            w: 80,
-            h: 35,
-            marginT: 5,
-            marginL: 8,
-            color: '#000',
-            bg: '#fff',
-            size: 14
-        },
-        rightButton: {
-            w: 80,
-            h: 35,
-            marginT: 5,
-            marginR: 8,
-            color: '#4298fd',
-            bg: '#fff',
-            size: 14
-        },
-        item: {
-            h: 50,
-            bg: '#fff',
-            // bgActive: '#dbdbdb',
-            // bgHighlight: '#f6f6f6',
-            color: '#000',
-            active: '#4298fd',
-            highlight: '#000',
-            size: 18,
-            lineColor: '#f6f6f6',
-            textAlign: 'center'
-        },
-        icon: {
-            w: 0,
-            h: 0,
-            marginT: 11,
-            marginH: 8,
-            bg: '#fff',
-            align: 'left'
-        }
-    }
+    var UIActionSelector;
     apiready = function () {
-        UIMultiSelector = api.require('UIMultiSelector');
+        UIActionSelector = api.require('UIActionSelector');
     };
 
     /**
@@ -250,42 +203,66 @@
         if (!val || val === '未知') {
             val = '男';
         }
-        var items = [
+        var datas = [
             {
-                text: '男',
-                status: 'selected'
+                name: '男',
             }, {
-                text: '女',
-                status: 'normal'
+                name: '女'
             }
         ];
-        if (val === '男') {
-            items[0].status = 'selected';
-        }
         if (val === '女') {
-            items[0].status = 'normal';
-            items[1].status = 'selected';
+            var tmp=datas[0];
+            datas[0] = datas[1];
+            datas[1] = tmp;
         }
-
-        UIMultiSelector.open({
-            rect: {
-                h: 160
+        UIActionSelector.open({
+            datas:datas,
+            layout: {
+                row: 3,
+                col: 1,
+                height: 30,
+                size: 16,
+                sizeActive: 16,
+                rowSpacing: 5,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#878787',
+                colorActive: '#4298fd',
+                colorSelected: '#4298fd'
             },
-            text: {
-                title: '请选择性别',
-                leftBtn: '取消',
-                rightBtn: '确认',
-                selectAll: 'ALL'
-            },
-            max: 1,
-            singleSelection: true,
-            styles: style,
             animation: true,
-            items: items
+            cancel: {
+                text: '取消',
+                size: 16,
+                w: 90,
+                h: 35,
+                bg: '#fff',
+                bgActive: '#fff',
+                color: '#000000',
+                colorActive: '#000000'
+            },
+            ok: {
+                text: '确定',
+                size: 16,
+                w: 90,
+                h: 35,
+                bg: '#fff',
+                bgActive: '#fff',
+                color: '#4298fd',
+                colorActive: '#4298fd'
+            },
+            title: {
+                text: '请选择性别',
+                size: 18,
+                h: 40,
+                bg: '#fff',
+                color: '#000000'
+            },
+            fixedOn: api.frameName
         }, function (ret, err) {
-            if (ret && ret.items) {
-                $input.value = ret.items[0].text;
-                UIMultiSelector.close();
+            if (ret && ret.eventType && ret.selectedInfo) {
+                $input.value = ret.selectedInfo[0].name;
             }
         });
     }
@@ -296,51 +273,69 @@
     function clickBloodType($this) {
         var $input = $api.dom($this, '#bloodType');
         var val = $input.value;
-        var items = [
-            {
-                text: 'A',
-                status:'normal'
-            }, {
-                text: 'B',
-                status: 'normal'
-            }, {
-                text: 'AB',
-                status: 'normal'
-            }
-            , {
-                text: 'O',
-                status: 'normal'
-            }, {
-                text: '其它',
-                status: 'normal'
-            }
+        var datas = [
+            {name:'A'},
+            {name:'B'},
+            {name:'AB'},
+            {name:'O'},
+            {name:'其它'}
         ];
 
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].text===val){
-                items[i].status='selected';
+        for (var i = 0; i < datas.length; i++) {
+            if (datas[i].name === val) {
+                var tmp = datas[i];
+                datas.splice(i,1);
+                datas.unshift(tmp);
             }
         }
-
-        UIMultiSelector.open({
-            rect: {
-                h: 250
+        UIActionSelector.open({
+            datas:datas,
+            layout: {
+                row: 7,
+                col: 1,
+                height: 30,
+                size: 16,
+                sizeActive: 16,
+                rowSpacing: 15,
+                colSpacing: 10,
+                maskBg: 'rgba(0,0,0,0.2)',
+                bg: '#fff',
+                color: '#878787',
+                colorActive: '#4298fd',
+                colorSelected: '#4298fd'
             },
-            text: {
-                title: '请选择血型',
-                leftBtn: '取消',
-                rightBtn: '确认',
-                selectAll: 'ALL'
-            },
-            max: 1,
-            singleSelection: true,
-            styles: style,
             animation: true,
-            items: items
+            cancel: {
+                text: '取消',
+                size: 16,
+                w: 90,
+                h: 35,
+                bg: '#fff',
+                bgActive: '#fff',
+                color: '#000000',
+                colorActive: '#000000'
+            },
+            ok: {
+                text: '确定',
+                size: 16,
+                w: 90,
+                h: 35,
+                bg: '#fff',
+                bgActive: '#fff',
+                color: '#4298fd',
+                colorActive: '#4298fd'
+            },
+            title: {
+                text: '请选择血型',
+                size: 18,
+                h: 40,
+                bg: '#fff',
+                color: '#000000'
+            },
+            fixedOn: api.frameName
         }, function (ret, err) {
-            if (ret && ret.items) {
-                $input.value = ret.items[0].text;
-                UIMultiSelector.close();
+            if (ret && ret.eventType && ret.selectedInfo) {
+                $input.value = ret.selectedInfo[0].name;
             }
         });
     }
@@ -378,7 +373,7 @@
     function getConstellation(m, d) {
         var s = "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
         var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
-        return s.substr(m * 2 - (d < arr[m - 1] ? 2 : 0), 2);
+        return s.substr(m * 2 - (d < arr[m - 1] ? 2 : 0), 2)+'座';
     }
 
     /**

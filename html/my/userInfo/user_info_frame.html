@@ -172,7 +172,22 @@
 <script>
     apiready = function () {
         initStaticEvent();
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#3ea6be',
+            images: [
+                'widget://image/my/header_refresh.jpg'
+            ],
+            tips: {
+                pull: '',
+                threshold: '',
+                load: ''
+            }
+        }, function () {
+            //这只是隐藏了白色背景，没有运用其下来刷新的功能
+            api.refreshHeaderLoadDone()
+        });
     };
+
     function initStaticEvent() {
         //给标签上色
         var colorArr = ['#4298fd', '#c39bfc', '#f1a68e', '#fe8294', '#fe76bc', '#899efa', '#8de25a'];
