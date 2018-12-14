@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>单元的通行记录</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+
+    <style>
+        body, html {
+            position: relative;
+            background-color: #fff;
+            font-size: 20px;
+        }
+        .time-block{
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+        .left-time{
+            float: left;
+            width: 25%;
+            height: 500px;
+            background: skyblue;
+        }
+        .time-node{
+            float: left;
+            width: 15px;
+            height: 500px;
+            /*background: pink;*/
+        }
+        .time-info{
+            float: left;
+            width: 65%;
+            height: 500px;
+            background: palegreen;
+        }
+        .round::before{
+            content: "";
+            display: block;
+            width: 6px;
+            height: 6px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background-color: #4298fd;
+        }
+        .round-nice::before{
+            content: "";
+            background: transparent url("../../../../image/my/traffic/round_nice.png") no-repeat;
+            background-size: 100% 100%;
+            width: 12px;
+            height: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="time-block">
+    <div class="left-time"></div>
+    <div class="time-node">
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+        <i class="round round-nice"></i>
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+    </div>
+    <div class="time-info"></div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+
+</script>
