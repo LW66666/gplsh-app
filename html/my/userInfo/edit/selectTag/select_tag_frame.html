@@ -51,20 +51,14 @@
 
         .btn-tag {
             float: left;
-            color: #4298fd;
+            color: #ffffff;
             background-color: #ffffff;
             border-radius: 1rem;
             border: 1px #2779c4 solid;
             box-sizing: border-box;
         }
 
-        .btn-tag:active {
-            background-color: #2779c4;
-            color: #ffffff;
-        }
-
         .btn-tag-position {
-            /*width: 85.5px;*/
             width: 90px;
             height: 30px;
             line-height: 30px;
@@ -93,6 +87,94 @@
             background-color: #4298fd;
         }
     </style>
+
+    <style>
+        .edit-tag {
+            text-align: right;
+        }
+
+        .edit-tag span {
+            color: #4298fd;
+            font-size: 0.625rem;
+        }
+
+        .add-tag-bar {
+            position: relative;
+            width: 100%;
+            height: 2rem;
+            border-radius: 4rem;
+            border: 1px solid #4298fd;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .add-tag-bar .add-tag-input {
+            display: inline-block;
+            width: calc(100% - 3.5rem);
+            font-size: 0.6875rem;
+            text-indent: 1.25rem;
+            height: 2rem;
+        }
+
+        .add-tag-bar .add-tag-btn {
+            position: absolute;
+            top: 50%;
+            right: .2rem;
+            transform: translate(0, -50%);
+            display: inline-block;
+            width: 3rem;
+            height: 1.6rem;
+            border-radius: 2rem;
+            font-size: 0.6875rem;
+            background-color: #a0cbfe;
+            color: #ffffff;
+        }
+
+        .add-tag-bar .add-tag-btn:active {
+            background-color: #83a4d3;
+        }
+
+        .add-tag-group {
+            width: 100%;
+            padding-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .btn-tag-add {
+            float: left;
+            color: #ffffff;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            border: 1px #2779c4 solid;
+            box-sizing: border-box;
+            width: 6rem;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 0.6875rem;
+            position: relative;
+            margin-right: 1rem;
+            margin-top: .8rem;
+        }
+
+        .btn-tag-add .del::before {
+            position: absolute;
+            top: 50%;
+            right: 0.2rem;
+            transform: translate(0, -50%);
+            width: .8rem;
+            height: .8rem;
+            line-height: 0.8rem;
+            text-align: center;
+            content: "×";
+            border-radius: 50%;
+            background-color: #2779c4;
+        }
+
+        .add-tag-group[isEdit='0'] .btn-tag-add .del {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -106,13 +188,27 @@
 
         </div>
         <div class="round-group">
-            <!--<i class="round active"></i>-->
-            <!--<i class="round"></i>-->
-            <!--<i class="round"></i>-->
             <!--<i class="round"></i>-->
         </div>
     </div>
 
+    <div class="title">
+        <h4>添加自定义标签</h4>
+    </div>
+    <div class="info-body">
+        <div class="edit-tag">
+            <span onclick="editAddTag();">编辑</span>
+        </div>
+        <div class="add-tag-bar">
+            <input id="addTagText" maxlength="5" class="add-tag-input" type="text" placeholder="输入您的标签，最多5个字">
+            <input class="add-tag-btn" type="button" onclick="clickAddTag()" value="添加">
+        </div>
+
+        <div class="add-tag-group" isEdit="0">
+
+
+        </div>
+    </div>
 </div>
 
 
@@ -121,40 +217,45 @@
 </html>
 <script type="text/javascript" src="../../../../../script/api.js"></script>
 <script>
-
-    apiready = function () {
-
-    };
-
+    var selectTagNum = 0;
     var tag = [
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族'},
-        {text: '有车一族d'},
-        {text: '有车一族z'}
+        {text: '有车一族', isSelect: 1},
+        {text: '白富美', isSelect: 0},
+        {text: '有房', isSelect: 0},
+        {text: '有道', isSelect: 0},
+        {text: '我爸是李刚', isSelect: 0},
+        {text: '高富帅', isSelect: 0},
+        {text: '皮肤好', isSelect: 0},
+        {text: '小可爱', isSelect: 0},
+        {text: '逗比', isSelect: 0},
+        {text: '奶爸', isSelect: 0},
+        {text: '骨灰级懒虫', isSelect: 0},
+        {text: '辣妈', isSelect: 0},
+        {text: '神经大条', isSelect: 0},
+        {text: '完美主义', isSelect: 0},
+        {text: '夜店一族', isSelect: 0},
+        {text: '修仙党', isSelect: 0},
+        {text: '共和党', isSelect: 0},
+        {text: '纳粹党', isSelect: 0},
+        {text: '有为青年', isSelect: 0},
+        {text: '有车青年', isSelect: 0},
+        {text: '国家栋梁', isSelect: 0},
+        {text: 'IT民工', isSelect: 0},
+        {text: '白领', isSelect: 0},
+        {text: '萝莉', isSelect: 1},
+        {text: '正太', isSelect: 1}
     ];
-    initLayout(tag);
-
+    var couTag = [
+        {text: '有爱心', isSelect: 1},
+        {text: '有钱', isSelect: 0},
+        {text: '会吃饭', isSelect: 1},
+        {text: '会睡觉', isSelect: 0}
+    ];
+    var colorArr = ['#4298fd', '#c39bfc', '#c39bfc', '#f1a68e', '#fe8294', '#fe76bc', '#899efa', '#8de25a', '#d4b5fd', '#FFCC66'];
+    apiready = function () {
+        initLayout(tag);
+        initCouTagInBottom(couTag);
+    };
 
     function initLayout(tag) {
         //每个条目的宽
@@ -172,7 +273,7 @@
             n = 2;
         } else if (infoWidth >= btnW * 3 + 10 && infoWidth <= btnW * 4 + 15) {
             //能够显示三条
-            mr = (infoWidth - btnW * 3) / 2;
+            mr = (infoWidth - btnW * 3) / 3;
             n = 3;
         } else {
             //能够显示更多
@@ -185,23 +286,12 @@
             //一共能显示几个
             n = parseInt(infoWidth / btnW);
             mr = (infoWidth - btnW * n) / n;
-            if (mr < 10) {
-                mr = btnW / (n - 2);
-                n = n - 1;
-            }
-
         }
+        //添加元素
         addTag(tag, n);
-        var row =  parseInt(tag.length % 3 ? tag.length / 3 + 1 : tag.length / 3);
-        if (row <= 0) row = 1;
-        if (row > 3) n = row;
         var $btnTag = $api.domAll('.btn-tag');
-        //TODO 有个bug明天解决注意i
         for (var i = 0; i < $btnTag.length; i++) {
-            if (i === 0 || (i-1)% n !== 0) {
-                console.log(i);
-                $btnTag[i].style.marginRight = mr + 'px';
-            }
+            $btnTag[i].style.marginRight = mr + 'px';
             if (itemW) {
                 $btnTag[i].style.width = itemW + 'px';
             }
@@ -214,7 +304,7 @@
         //看下这东西一行显示几个
         var row = parseInt(len % 3 ? len / 3 + 1 : len / 3);
         if (row <= 0) row = 1;
-        console.log('row:'+row);
+        //添加滑动事件
         addSlideEvent(len, n);
         if (row > 3) {
             n = row;
@@ -227,7 +317,16 @@
                 innerRow++;
                 html.push('</div><div class="row">');
             }
-            html.push('<div class="btn-tag btn-tag-position">' + tag[i].text + '</div>');
+            var color = colorArr[i];
+            if (i >= colorArr.length) {
+                color = colorArr[i % colorArr.length];
+            }
+            if (tag[i].isSelect) {
+                selectTagNum++;
+                html.push('<div isTag="' + tag[i].isSelect + '" onclick="clickTag(this)" class="btn-tag btn-tag-position" style="background-color:' + color + ';border:1px solid ' + color + '">' + tag[i].text + '</div>');
+            } else {
+                html.push('<div isTag="' + tag[i].isSelect + '" onclick="clickTag(this)" class="btn-tag btn-tag-position" style="color:' + color + ';border:1px solid ' + color + '">' + tag[i].text + '</div>');
+            }
         }
         html.push('</div>');
         $api.dom('.tag-group-inner').innerHTML = html.join('');
@@ -241,7 +340,7 @@
     function addSlideEvent(len, n) {
         var infoWidth = $api.dom('.tag-group').offsetWidth;
         var $inner = $api.dom('.tag-group-inner');
-        var x = parseInt((len % n * 3) ? len / (n * 3) + 1 : len / n * 3);
+        var x = parseInt((len % (n * 3)) ? len / (n * 3) + 1 : len / (n * 3));
         $inner.style.width = infoWidth * x + 'px';
         //加点
         var $roundGroup = $api.dom('.round-group');
@@ -281,12 +380,145 @@
                 }
             }
             if (Math.abs(left) > 10) {
-                left = left / 5;
+                left = left / 3;
                 if (Math.abs(left) > 10) {
-                    left = left / 4;
+                    left = left / 3;
                 }
                 this.style.marginLeft = eval(nowLeft - left) + 'px';
             }
         });
+    }
+
+    /**
+     * 增加标签上点击编辑
+     */
+    function editAddTag() {
+        var dom = $api.dom('.add-tag-group');
+        var isEdit = parseInt($api.attr(dom, 'isEdit'));
+        if (isEdit) {
+            $api.attr(dom, 'isEdit', '0');
+        } else {
+            $api.attr(dom, 'isEdit', '1');
+        }
+    }
+
+    /**
+     * 点击添加标签
+     */
+    function clickAddTag() {
+        var maxAddTag = 20;
+        $api.dom('#addTagText').focus();
+        var value = $api.trim($api.dom('#addTagText').value);
+        if (value && value.length > 0) {
+            var length = value.length;
+            //这小子输入了东西
+            if (length > 5) {
+                //这小子乱来
+                api.toast({
+                    msg: '自定义标签不能多于5个字',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+                return false;
+            }
+
+            // 1.查看是不是已经超出上限了
+            var len = $api.domAll(document.querySelector('.add-tag-group'), '.btn-tag-add').length;
+            if (len < maxAddTag) {
+                //没有超出上限
+                //生成按钮给你看
+                var color = colorArr[parseInt(Math.random() * colorArr.length)];
+                var width = length + 1;
+                if (length <= 3) {
+                    width += 1.1;
+                }
+                var html = [
+                    '<div class="btn-tag-add" onclick="clickTag(this)" style="width:' + width + 'rem;color:' + color + ';border:1px solid ' + color + '">',
+                    value,
+                    '<i onclick="clickDelTag(this);event.stopPropagation()" class="del"></i>',
+                    '</div>'
+                ];
+                $api.prepend(document.querySelector('.add-tag-group'), html.join(''));
+            } else {
+                // 超出了上限
+                api.toast({
+                    msg: '自定义标签最多添加20个',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+            }
+        } else {
+            //这小子没输东西
+            api.toast({
+                msg: '您没有输入标签内容',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    }
+
+    /**
+     * 点击标签为选中和非选中间切换
+     * @param $this
+     */
+    function clickTag($this) {
+        var isTag = parseInt($api.attr($this, 'isTag'));
+        if (isTag) {
+            selectTagNum--;
+            $api.attr($this, 'isTag', 0);
+            $this.style.color = $this.style.backgroundColor;
+            $this.style.backgroundColor = '#fff';
+        } else {
+            if (selectTagNum > 9) {
+                api.toast({
+                    msg: '您最多选择10个个性标签',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+                return;
+            }
+            selectTagNum++;
+            $this.style.backgroundColor = $this.style.color;
+            $this.style.color = '#fff';
+            $api.attr($this, 'isTag', 1);
+        }
+    }
+
+    /**
+     * 删除标签
+     * @param $this
+     */
+    function clickDelTag($this,e) {
+        var $btn = $api.closest($this, 'div');
+        if (parseInt($api.attr($btn,'isTag'))) {
+            selectTagNum--;
+        }
+        $api.remove($btn);
+        return false;
+    }
+
+    function initCouTagInBottom(tag) {
+        for (var i = 0; i < tag.length; i++) {
+            var color = colorArr[parseInt(Math.random() * colorArr.length)];
+            var length = tag[i].text.length;
+            var width = length + 1;
+            if (length <= 3) {
+                width += 1.1;
+            }
+
+            var html = [];
+            if (parseInt(tag[i].isSelect)) {
+                selectTagNum++;
+                html.push('<div class="btn-tag-add" isTag="1" onclick="clickTag(this)" style="width:' + width + 'rem;color:#ffffff; background-color: ' + color + ';border:1px solid ' + color + '">');
+            } else {
+                html.push('<div class="btn-tag-add" onclick="clickTag(this)" style="width:' + width + 'rem;color:' + color + ';border:1px solid ' + color + '">');
+            }
+            html.push(
+                tag[i].text +
+                '<i onclick="clickDelTag(this);event.stopPropagation()" class="del"></i>' +
+                '</div>'
+            );
+            $api.prepend(document.querySelector('.add-tag-group'), html.join(''));
+        }
     }
 </script>
