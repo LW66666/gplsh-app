@@ -306,9 +306,9 @@
         var pw=document.getElementById("pw").value;
         var mac=api.deviceId;
         api.ajax({
-            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/cellphoneVerification',
+            url: ip+'/api/app/communitywanli/login/cellphoneVerification',
             method: 'get',
-            timeout: 30,
+            timeout: 10,
             dataType: 'json',
             returnAll: false,
             data: {
@@ -320,17 +320,28 @@
             }
         }, function (ret, err) {
             api.hideProgress();
-            if (ret.resultStatus){
-                openSetPw(phone);
-                api.toast({
-                    msg: ret.message,
-                    duration: 2000,
-                    location: 'top'
-                });
+            if (ret!=""){
+                if (ret.resultStatus){
+                    setTimeout(function () {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    },1000);
+                    openSetPw(phone);
+                }
+                else {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'top'
+                    });
+                }
             }else {
                 api.toast({
-                    msg: ret.message,
-                    duration: 2000,
+                    msg: err.msg,
+                    duration: 3000,
                     location: 'top'
                 });
             }
@@ -377,7 +388,7 @@
         else if (checkStatus==0) {
             api.toast({
                 msg: '请输入正确的手机号和验证码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -385,7 +396,7 @@
         else if (checkStatus==-1) {
             api.toast({
                 msg: '请输入十一位手机号码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -393,7 +404,7 @@
         else if (checkStatus==-2) {
             api.toast({
                 msg: '请输入四位数验证码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -401,7 +412,7 @@
         else if (checkStatus==-3) {
             api.toast({
                 msg: '请输入十一位数的手机号',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -409,7 +420,7 @@
         else if (checkStatus==-4) {
             api.toast({
                 msg: '请输入四位数验证码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -433,7 +444,7 @@
             });
         }else {
             api.ajax({
-                url: 'http://192.168.1.222:9765/api/app/communitywanli/login/getMobileVerificationCode',
+                url: ip+'/api/app/communitywanli/login/getMobileVerificationCode',
                 method: 'get',
                 timeout: 30,
                 dataType: 'json',
@@ -450,14 +461,14 @@
                 if (err!=""){
                     api.toast({
                         msg: err.msg.message,
-                        duration: 2000,
+                        duration: 3000,
                         location: 'top'
                     });
                 }
                 if (ret!="") {
                     api.toast({
                         msg: ret.message,
-                        duration: 2000,
+                        duration: 3000,
                         location: 'top'
                     });
                 }

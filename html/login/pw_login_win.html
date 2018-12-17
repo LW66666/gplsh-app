@@ -350,6 +350,20 @@
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
 
+        var obj=$api.getStorage('userObj');
+        if (obj!="" && obj!=undefined){
+           api.openWin({
+                    name: 'index',
+                    url: '../../index.html',
+                    pageParam: {name: 'pageparamname'},
+                    bgColor:"#fff",
+                });
+        }else{
+            setTimeout(function () {
+                focusInput();
+            },3000)
+        }
+
         checkFromByType();
         //
         // setTimeout(function () {
@@ -361,10 +375,6 @@
         }, function(ret, err) {
             closeThisWin();
         });
-
-        setTimeout(function () {
-            focusInput();
-        },3000)
 
         setInterval(function () {
             var networkType=api.connectionType;
@@ -446,9 +456,9 @@
         var pw=document.getElementById("pw").value;
         var mac=api.deviceId;
         api.ajax({
-            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/login',
+            url: ip+'/api/app/communitywanli/login/login',
             method: 'post',
-            timeout: 30,
+            timeout: 10,
             dataType: 'json',
             returnAll: false,
             data: {
@@ -460,27 +470,31 @@
             }
         }, function (ret, err) {
             api.hideProgress();
-            if (!ret.resultStatus) {
-                api.toast({
-                    msg: ret.message,
-                    duration: 2000,
-                    location: 'top'
-                });
-            }else {
-                var obj=ret.object;
-                if (obj.cellphone!=null){
+            if (ret!=""){
+                if (!ret.resultStatus) {
                     api.toast({
-                        msg: "登录成功",
-                        duration: 2000,
+                        msg: ret.message,
+                        duration: 3000,
                         location: 'top'
                     });
-                    api.openWin({
-                        name: 'index',
-                        url: '../../index.html',
-                        pageParam: {name: 'pageparamname'},
-                        bgColor:"#fff",
-                    });
                 }
+                else {
+                    var obj=ret.object;
+                    if (obj.cellphone!=null){
+                        api.toast({
+                            msg: "登录成功",
+                            duration: 3000,
+                            location: 'top'
+                        });
+                        $api.setStorage("userObj",ret.object);
+                    }
+                }
+            }else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'top'
+                });
             }
         });
     }
@@ -550,7 +564,7 @@
         else if (checkStatus==0) {
             api.toast({
                 msg: '请输入正确的手机号和密码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -558,7 +572,7 @@
         else if (checkStatus==-1) {
             api.toast({
                 msg: '请输入十一位手机号码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -566,7 +580,7 @@
         else if (checkStatus==-2) {
             api.toast({
                 msg: '请输入6-20位密码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -574,7 +588,7 @@
         else if (checkStatus==-3) {
             api.toast({
                 msg: '请输入十一位数的手机号',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -582,7 +596,7 @@
         else if (checkStatus==-4) {
             api.toast({
                 msg: '请输入6-20位密码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");

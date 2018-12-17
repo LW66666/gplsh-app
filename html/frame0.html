@@ -212,7 +212,7 @@
                 </span>
             </div>
             <div class="aui-col-xs-4 aui-text-center">
-                <span tapmode>
+                <span tapmode onclick="openLogin()">
                     <img src="../image/traffic/shock.png"alt="">
                     <div>远程对讲</div>
                 </span>
@@ -294,8 +294,8 @@
      */
     function openLogin() {
         api.openWin({
-            name: 'pw_login_win',
-            url: 'login/pw_login_win.html',
+            name: 'set_sex_win',
+            url: 'login/set_sex_win.html',
             pageParam: {name: 'pageparamname'},
             bgColor:"#fff",
             animation:{
