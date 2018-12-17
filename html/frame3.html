@@ -273,15 +273,20 @@
 </body>
 
 </html>
-
+<script src="../script/api.js"></script>
 <script>
     apiready = function () {
+        var user= $api.getStorage('userObj');
         var systemType = api.systemType;
         if (systemType === 'android') {
             document.querySelector("header").setAttribute("style", "padding-top:-25px");
         } else if (systemType === 'ios') {
             document.querySelector("header").setAttribute("style", "padding-top:-20px");
         }
+        var headUrl=($api.getStorage("userHeadUrl")==undefined)?"../image/login/header1.png":$api.getStorage("userHeadUrl");
+        document.querySelector(".header-bg .avatar > img").setAttribute("src",headUrl)
+        document.querySelector(".nickname").innerHTML=user.nickname;
+        document.querySelector(".phone").innerHTML=user.cellphone;
     }
 
     /**
@@ -291,16 +296,6 @@
         api.openWin({
             name: 'footPrint',
             url: './my/footprint/footer_print.html'
-        });
-    }
-
-    /**
-     * 去申请钥匙
-     */
-    function openApplyKey() {
-        api.openWin({
-            name: 'applyKeyWin',
-            url: './applyKey/apply_main.html'
         });
     }
 

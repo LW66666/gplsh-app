@@ -283,7 +283,7 @@
             title: '设置中',
             modal: false
         });
-        var phone=api.pageParam.phone;
+        var phone=$api.getStorage("userObj").cellphone;
         var mac=api.deviceId;
 
         api.ajax({

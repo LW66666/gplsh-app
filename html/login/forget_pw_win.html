@@ -205,7 +205,24 @@
 
     document.getElementById("loginBtn").onclick=function () {
         checkFromByType(0);
-        inputCode();
+        var mac=api.deviceId;
+        var phone=document.getElementById("phone").value;
+        var chackStu=checkFrame();
+        if (chackStu==-1 || chackStu==-4 || chackStu==-7 || chackStu==-3 || chackStu==0) {
+            api.toast({
+                msg: "手机号码错误",
+                duration: 2000,
+                location: 'top'
+            });
+        }
+        else {
+            api.toast({
+                msg: "发送成功",
+                duration: 3000,
+                location: 'top'
+            });
+            inputCode();
+        }
     }
 
 
@@ -244,7 +261,7 @@
         api.openWin({
             name: 'forget_inputcode_win',
             url: 'forget_inputcode_win.html',
-            pageParam: {name: 'pageparamname'},
+            pageParam: {phone: document.getElementById("phone").value},
             bgColor:"#fff",
         });
     }
