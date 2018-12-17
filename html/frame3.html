@@ -262,7 +262,7 @@
     </li>
 </ul>
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickBlacklist()">
         <img src="../image/my/icon/blacklist.png">
         <div class="aui-list-item-inner">
             黑名单
@@ -401,6 +401,16 @@
         api.openWin({
             name: 'trafficRecordWin',
             url: './my/trafficRecord/traffic_record.html'
+        });
+    }
+
+    /**
+     * 点击黑名单
+     */
+    function clickBlacklist() {
+        api.openWin({
+            name: 'blacklistWin',
+            url: './my/blacklist/blacklist.html'
         });
     }
 </script>
