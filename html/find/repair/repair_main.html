@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>开门</title>
+    <title>报事保修</title>
     <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
     <style>
@@ -64,12 +64,11 @@
 
         .nav-menu .line-active {
             position: absolute;
-            width: 3.5rem;
+            width: 2.5rem;
             height: 2px;
             bottom: 0;
             background: #4298fd;
             z-index: 2;
-            left: calc(25% - 1.75rem);
             -webkit-transition: left .4s;
             -moz-transition: left .4s;
             -ms-transition: left .4s;
@@ -78,11 +77,11 @@
         }
 
         .nav-menu .line-active[is-complete='0'] {
-            left: calc(25% - 1.75rem);
+            left: calc(25% - 1.25rem);
         }
 
         .nav-menu .line-active[is-complete='1'] {
-            left: calc(75% - 1.75rem);
+            left: calc(75% - 1.25rem);
         }
     </style>
 </head>
@@ -92,7 +91,7 @@
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
     <div class="aui-title">我的报事</div>
-    <div class="aui-pull-right aui-btn">
+    <div class="aui-pull-right aui-btn" tapmode onclick="clickMyRepair()">
         申请报事
     </div>
 </header>
@@ -141,7 +140,6 @@
                 x: 0,
                 y: y + 3,
                 w: api.winWidth,
-                // w: 240,
                 h: 'auto'
             },
             frames: [{
@@ -193,6 +191,16 @@
         var btn = $api.domAll('.menu-btn');
         $api.addCls(btn[isComplete], 'menu-active');
         $api.removeCls(btn[1 - isComplete], 'menu-active');
+    }
+
+    /**
+     * 点击我的报事
+     */
+    function clickMyRepair() {
+        api.openWin({
+            name:'addRepairWin',
+            url:'./addRepair/add_repair.html'
+        })
     }
 </script>
 </html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>单元的通行记录</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+
+    <style>
+        body, html {
+            position: relative;
+            background-color: #fff;
+            font-size: 20px;
+        }
+
+        .time-block {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .time-block:first-child{
+            padding-top: 20px;
+        }
+
+        .left-time {
+            float: left;
+            width: 20%;
+        }
+
+        .time-node {
+            float: left;
+            position: relative;
+            overflow: hidden;
+            width: 15px;
+            height: auto;
+            z-index: 0;
+        }
+
+        .time-node::before {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            height: 100%;
+            width: 2px;
+            background-color: #b1b1b1;
+        }
+
+        .time-info {
+            float: left;
+            width: 70%;
+        }
+
+        .time-node .round:first-child {
+            display: block;
+            padding-top: 10px;
+            background-color: #fff;
+        }
+
+        .time-node .round:first-child {
+            background-color: #fff;
+        }
+
+        .time-node .round:first-child::after {
+            margin-top: 0;
+        }
+
+        .round::after {
+            content: "";
+            z-index: 1;
+            display: block;
+            width: 6px;
+            height: 6px;
+            margin: 62.4px auto 0;
+            border-radius: 50%;
+            background-color: #4298fd;
+        }
+
+        .round-nice::after {
+            content: "";
+            background: #ffffff url("../../../../image/my/traffic/round_nice.png") no-repeat;
+            background-size: 100% 100%;
+            width: 12px;
+            height: 12px;
+        }
+
+        .round-hidden {
+            width: 100%;
+            height: 100%;
+            content: '';
+            display: block;
+            background-color: #fff;
+        }
+
+        .time-row {
+            box-sizing: border-box;
+            font-size: 0.75rem;
+            width: 100%;
+            text-align: right;
+            margin-top: 44.5px;
+            padding-right: 5px;
+        }
+
+        .time-row:first-child {
+            margin-top: 3px;
+        }
+
+        .time-row {
+            position: relative;
+            top: -2px;
+        }
+
+        .time-row.inner {
+            font-size: 0.625rem;
+            color: #6b6a6a;
+        }
+
+        .info-details:first-child {
+            height: 64px;
+        }
+
+        .info-details {
+            position: relative;
+            width: 100%;
+            height: 73px;
+        }
+
+        .info-details .info-left {
+            width: calc(100% - 85px);
+            padding-left: 5px;
+        }
+
+        .info-left div:first-child {
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        .info-left div:first-child > img {
+            position: relative;
+            top: 3px;
+            padding-left: 2px;
+            width: 0.8rem;
+        }
+
+        .info-left div:last-child {
+            font-size: 0.6875rem;
+            color: #757575;
+        }
+
+        .info-details > .avatar {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            width: 75px;
+            height: 57px;
+        }
+
+        .next-year {
+            width: 100%;
+            font-size: 0.625rem;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            color: #8b8b8b;
+        }
+    </style>
+</head>
+
+<body>
+<div class="time-block">
+    <div class="left-time">
+        <div class="time-row">
+            12-10
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">人脸开门</p>
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+        <div class="time-row">
+            12-09
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+    </div>
+    <div class="time-node">
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+        <i class="round round-nice"></i>
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+        <i class="round-hidden"></i>
+    </div>
+    <div class="time-info">
+        <div class="info-details">
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/out.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+    </div>
+</div>
+<div class="next-year">2017年</div>
+
+<div class="time-block">
+    <div class="left-time">
+        <div class="time-row">
+            12-10
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">人脸开门</p>
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+        <div class="time-row">
+            12-09
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+        <div class="time-row">
+            12-09
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+        <div class="time-row inner">
+            19:10
+            <p class="row-details">app开门</p>
+        </div>
+    </div>
+    <div class="time-node">
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+        <i class="round round-nice"></i>
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+        <i class="round"></i>
+        <i class="round round-nice"></i>
+        <i class="round round-nice"></i>
+        <i class="round round-nice"></i>
+        <i class="round round-nice"></i>
+        <i class="round-hidden"></i>
+    </div>
+    <div class="time-info">
+        <div class="info-details">
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/out.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+        <div class="info-details">
+            <div class="info-left">
+                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
+                <div>南昌外滩国际一栋二单元</div>
+            </div>
+            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+
+</script>

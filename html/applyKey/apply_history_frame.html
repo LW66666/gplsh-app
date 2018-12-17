@@ -7,15 +7,11 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>申请记录</title>
     <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-    <!--<link rel="stylesheet" type="text/css" href="../../css/aui.css"/>-->
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
 
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
         body, html {
+            font-size: 20px;
             background-color: #fff;
         }
 
@@ -35,17 +31,22 @@
             background-position: 0 bottom;
         }
 
-        .his-ul .his-font {
+        .his-ul .his-left {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(100% - 4rem - 15px);
             padding-left: 15px;
-            font-size: .75rem;
         }
 
-        .his-ul .his-title {
-            padding-top: 15px;
+        .his-ul .his-font {
+            font-size: 0.75rem;
         }
 
         .his-ul .his-time {
+            color: #d4d4d4;
             padding-top: 2px;
+            font-size: 0.625rem;
         }
 
         .his-ul .audit {
@@ -53,12 +54,12 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.6875rem;
+            font-size: 0.75rem;
             color: #f98282;
         }
 
         .his-ul .audit > img {
-            height: 50px;
+            width: 3.25rem;
         }
     </style>
 </head>
@@ -66,117 +67,40 @@
 <body>
 <ul class="his-ul">
     <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
+        <div class="his-left">
+            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+            <span class="his-font his-time">2018-12-28 17:00:20</span>
+        </div>
         <div class="audit">正在审核</div>
     </li>
     <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
+        <div class="his-left">
+            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+            <span class="his-font his-time">2018-12-28 17:00:20</span>
+        </div>
         <div class="audit">
             <img src="../../image/applyKey/applySuccess.png">
         </div>
     </li>
     <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
+        <div class="his-left">
+            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+            <span class="his-font his-time">2018-12-28 17:00:20</span>
+        </div>
         <div class="audit">
             <img src="../../image/applyKey/applySuccess.png">
         </div>
     </li>
     <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
-        <div class="audit">
-            <img src="../../image/applyKey/applyFail.png">
+        <div class="his-left">
+            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
+            <span class="his-font his-time">2018-12-28 17:00:20</span>
         </div>
-    </li>
-    <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
-        <div class="audit">
-            <img src="../../image/applyKey/applySuccess.png">
-        </div>
-    </li>
-    <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
-        <div class="audit">
-            <img src="../../image/applyKey/applyFail.png">
-        </div>
-    </li>
-    <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
-        <div class="audit">
-            <img src="../../image/applyKey/applySuccess.png">
-        </div>
-    </li>
-    <li>
-        <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-        <span class="his-font his-time">2018-12-28 17:00:20</span>
         <div class="audit">
             <img src="../../image/applyKey/applyFail.png">
         </div>
     </li>
 </ul>
-
-
-
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">正在审核</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applySuccess.png">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applySuccess.png">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applyFail.png">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applySuccess.png">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applyFail.png">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applySuccess.png">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
-        <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
-        <!--<div class="audit">-->
-            <!--<img src="../../image/applyKey/applyFail.png">-->
-        <!--</div>-->
-    <!--</div>-->
 </body>
 
 </html>

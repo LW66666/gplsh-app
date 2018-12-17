@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>更换手机号（填写验证码）</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../../css/aui.css"/>
+    <style>
+        body, html {
+            background: #fff;
+        }
+
+        .aui-bar.aui-bar-light {
+            border-bottom: solid 0.5px #f9f7f7;
+            background: none;
+        }
+
+        .aui-bar {
+            background: #fff;
+            box-sizing: border-box;
+            height: 48px;
+            color: #000000;
+        }
+
+        .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #000000;
+        }
+
+        .aui-bar-nav.aui-bar-light .aui-title {
+            font-size: 0.9375rem;
+        }
+
+    </style>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav aui-bar-light">
+    <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
+        <span class="aui-iconfont aui-icon-left"></span>
+    </div>
+    <div class="aui-title">更换手机号</div>
+</header>
+
+</body>
+</html>
+<script type="text/javascript" src="../../../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initLayout();
+        initFrameGroup();
+        initAPIEvent();
+    };
+
+    /**
+     * 初始化布局
+     */
+    function initLayout() {
+        api.parseTapmode();
+//自适应沉浸式状态栏
+        $api.fixStatusBar($api.dom('header'));
+        api.setStatusBarStyle({
+            style: 'dark'
+        });
+    }
+
+    /**
+     * 点击返回事件
+     */
+    function goBack() {
+        api.closeWin();
+    }
+
+    /**
+     * 初始化frameGroup
+     */
+    function initFrameGroup() {
+        var y = $api.dom('header').offsetHeight;
+        api.openFrame({
+            name: 'changePhoneNumStep1Frame',
+            url: './change_phone_num_step_1_frame.html',
+            bgColor: '#f6f6f6',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: 'auto'
+            },
+            bounces: true,
+            overScrollMode: "scrolls",
+            pageParam: api.pageParam
+        });
+    }
+
+    /**
+     * 初始化API的事件接收
+     */
+    function initAPIEvent() {
+//监听事件
+    }
+
+</script>

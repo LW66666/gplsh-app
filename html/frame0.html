@@ -218,7 +218,7 @@
                 </span>
             </div>
             <div class="aui-col-xs-4 aui-text-center">
-                <span tapmode>
+                <span tapmode onclick="clickCallHelp()">
                     <img src="../image/traffic/help.png" alt="">
                     <div>呼叫帮助</div>
                 </span>
@@ -304,6 +304,16 @@
                 duration:200                //动画过渡时间，默认300毫秒
             }
         });
+    }
+
+    /**
+     * 点击呼叫帮助
+     */
+    function clickCallHelp() {
+        api.openWin({
+          name:'callHelpWin',
+          url:'./callHelp/call_help.html'
+        })
     }
 </script>
 </html>

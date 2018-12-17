@@ -30,7 +30,7 @@
         }
 
         .aui-bar-nav.aui-bar-light .aui-title {
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
         }
 
     </style>
@@ -40,7 +40,7 @@
     <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
-    <div class="aui-title">报事报修</div>
+    <div class="aui-title">申请报事</div>
 </header>
 
 </body>
@@ -76,7 +76,19 @@
      */
     function initFrameGroup() {
         var y = $api.dom('header').offsetHeight;
-
+        api.openFrame({
+            name: 'addRepair',
+            url: './add_repair_frame.html',
+            bgColor: '#ffffff',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: 'auto'
+            },
+            bounces: false,
+            overScrollMode: "scrolls"
+        });
     }
 
     /**

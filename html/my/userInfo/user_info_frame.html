@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>用户信息预览的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+        body, html {
+            background-color: #ffffff;
+            font-size: 20px;
+        }
+
+        .info-top {
+            position: relative;
+            height: 150px;
+            width: 100%;
+            background: -webkit-linear-gradient(90deg, #599cca, #3ea6be) no-repeat;
+        }
+
+        .avatar {
+            position: absolute;
+            left: 50%;
+            bottom: -45px;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, .3);
+        }
+
+        .avatar-dec {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9375rem;
+        }
+
+        .avatar-dec img {
+            position: relative;
+            top: .1rem;
+            height: .85rem;
+        }
+
+        .avatar-dec p {
+            margin: 7px auto 10px;
+            font-size: 0.6875rem;
+            color: #4298fd;
+            width: 80%;
+            height: 2rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            max-width: 600px;
+        }
+
+        .ul-list {
+            padding-top: 20px;
+            padding-bottom: 40px;
+            width: 100%;
+        }
+
+        .ul-list .item {
+            display: -webkit-box;
+            display: flex;
+            flex: 1;
+            height: 2rem;
+        }
+
+        .ul-list .item .item-left, .ul-list .item .item-info {
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+            font-size: 0.75rem;
+        }
+
+        .ul-list .item .item-left {
+            padding-left: 15px;
+            -webkit-box-flex: 3;
+            -webkit-flex: 3;
+            flex: 3;
+            color: #000;
+        }
+
+        .ul-list .item .item-info {
+            color: #7f7f7f;
+            -webkit-box-flex: 5;
+            -webkit-flex: 5;
+            flex: 5;
+            padding-right: 20px;
+        }
+
+        #tag span {
+            padding-right: 5px;
+            padding-bottom: 10px;
+        }
+
+        .item-line {
+            border-bottom: 1px solid #ececec;
+            margin-bottom: 20px;
+        }
+
+        .avatar-dec .text-ha {
+            color: #949494;
+        }
+    </style>
+</head>
+
+<body>
+<div class="info-top">
+    <img class="avatar" src="../../../image/my/userInfo/header.png"/>
+</div>
+<div class="avatar-dec">
+    <span>木子</span>
+    <img src="../../../image/my/female.png"/>
+    <p class="text-ha">
+        悄悄的我来了，什么也没留下
+        悄悄的我来了，什么也没留下
+    </p>
+</div>
+<ul class="ul-list">
+    <li class="item">
+        <div class="item-left">账户</div>
+        <div class="item-info">18170041120</div>
+    </li>
+    <li class="item item-line">
+        <div class="item-left">真实姓名</div>
+        <div class="item-info">张二狗</div>
+    </li>
+    <li class="item">
+        <div class="item-left">地区</div>
+        <div class="item-info">江西南昌</div>
+    </li>
+    <li class="item">
+        <div class="item-left">小区坐标</div>
+        <div class="item-info">光明小区-1期-北区-2栋-2单元-1202</div>
+    </li>
+    <li class="item item-line">
+        <div class="item-left">小区身份</div>
+        <div class="item-info">普通业主</div>
+    </li>
+    <li class="item">
+        <div class="item-left">星座</div>
+        <div class="item-info">天蝎座</div>
+    </li>
+    <li class="item">
+        <div class="item-left">职业</div>
+        <div class="item-info">教育</div>
+    </li>
+    <li class="item">
+        <div class="item-left">标签</div>
+        <div class="item-info" id="tag">
+            <span>爱萌宠</span>
+            <span>富美</span>
+            <span>小可爱</span>
+            <span>高富帅</span>
+            <span>完美主义</span>
+            <span>傻白甜</span>
+            <span>有为青年</span>
+            <span>白领</span>
+            <span>萝莉</span>
+            <span>IT民工</span>
+        </div>
+    </li>
+</ul>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initStaticEvent();
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#3ea6be',
+            images: [
+                'widget://image/my/header_refresh.jpg'
+            ],
+            tips: {
+                pull: '',
+                threshold: '',
+                load: ''
+            }
+        }, function () {
+            //这只是隐藏了白色背景，没有运用其下来刷新的功能
+            api.refreshHeaderLoadDone()
+        });
+    };
+
+    function initStaticEvent() {
+        //给标签上色
+        var colorArr = ['#4298fd', '#c39bfc', '#f1a68e', '#fe8294', '#fe76bc', '#899efa', '#8de25a'];
+        var $tagList = $api.domAll(document.getElementById('tag'), 'span');
+        for (var i = 0; i < $tagList.length; i++) {
+            if (i >= colorArr.length) {
+                $tagList[i].style.color = colorArr[i % colorArr.length];
+                continue;
+            }
+            $tagList[i].style.color = colorArr[i];
+        }
+    }
+</script>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>关于我们的frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <style>
+        body, html {
+            background-color: #fff;
+            font-size: 20px;
+        }
+
+        .banner {
+            width: 100%;
+            padding-top: 25px;
+            text-align: center;
+        }
+
+        .banner img {
+            width: 136px;
+        }
+
+        .banner p {
+            margin-top: 6px;
+            font-size: 0.625rem;
+        }
+
+        .item-list{
+            padding-top: 45px;
+        }
+
+        .item-list .item{
+            height: 49px;
+            font-size: 0.75rem;
+            position: relative;
+        }
+        .item-list .item span:first-child{
+            position: absolute;
+            left: 15px;
+        }
+        .item-list .item span:last-child{
+            position: absolute;
+            right: 20px;
+            color: #c5c5c5;
+        }
+        .item-list .item span>img{
+            width: 18px;
+            height: 18px;
+            padding-left: 8px;
+            position: relative;
+            top: 3.5px;
+        }
+
+        footer{
+            width: 100%;
+            position: fixed;
+            bottom: 30px;
+            font-size: 0.625rem;
+            text-align: center;
+        }
+        footer p{
+            color: #c5c5c5;
+        }
+    </style>
+</head>
+
+<body>
+<div class="banner">
+    <img src="../../../image/my/about/logo.png">
+    <p>
+        当前版本：5.5.0
+    </p>
+</div>
+
+<ul class="item-list">
+    <li class="item">
+        <span>联系我们</span>
+        <span>59701884@qq.com</span>
+    </li>
+    <li class="item">
+        <span>企业官网</span>
+        <span>www.minxuanzn.com</span>
+    </li>
+    <li class="item">
+        <span>微信公众号</span>
+        <span>Mitesfor</span>
+    </li>
+    <li class="item">
+        <span>微信订阅号</span>
+        <span>珉轩智能minxuanzn</span>
+    </li>
+    <li class="item">
+        <span>客服电话</span>
+        <span>
+            400-071-9190
+        <img src="../../../image/my/about/phone.png" height="36" width="36"/></span>
+    </li>
+</ul>
+
+<footer>
+    <span>服务声明</span>
+    <p>
+        <span id="year"></span>&copy;mitesfor珉轩智能科技有限公司<br/>版权所有
+    </p>
+</footer>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    $api.text(document.getElementById('year'),new Date().getFullYear())
+</script>

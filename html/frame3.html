@@ -157,7 +157,7 @@
             box-sizing: border-box;
             background-position: bottom !important;
             padding-left: 0 !important;
-            height: 48.5px;
+            height: 49px;
         }
 
         .aui-list > li:last-child {
@@ -175,7 +175,8 @@
         }
 
         .aui-list .aui-list-item-inner {
-            font-size: .7rem;
+            font-size: .75rem;
+            line-height: 49px;
         }
 
     </style>
@@ -185,23 +186,23 @@
 <header>
     <div class="header-bg">
         <div class="header-info">
-            <div class="avatar">
-                <img src="../image/my/avatar.jpg"/>
+            <div class="avatar" tapmode onclick="clickUserInfo()">
+                <img src="../image/my/userInfo/header.png"/>
             </div>
-            <div class="info">
+            <div class="info" tapmode onclick="clickUserInfo()">
                 <div>
                     <span class="nickname">孙悟空</span>
-                    <img src="../image/my/female.png">
+                    <img src="../image/my/male.png">
                 </div>
                 <div class="phone">192****6666</div>
             </div>
         </div>
-        <span class="set">
+        <span class="set" tapmode onclick="clickOption()">
             <img src="../image/my/set.png"/>
         </span>
     </div>
     <div class="msg-list">
-        <div class="list-item">
+        <div class="list-item" tapmode onclick="clickMyKey()">
             <div class="item-title">102</div>
             <div class="item-info">钥匙</div>
         </div>
@@ -209,11 +210,11 @@
             <div class="item-title">60</div>
             <div class="item-info">报事</div>
         </div>
-        <div class="list-item">
+        <div class="list-item" tapmode onclick="clickTransaction()">
             <div class="item-title">14</div>
             <div class="item-info">办理</div>
         </div>
-        <div class="list-item">
+        <div class="list-item" tapmode onclick="clickTrafficRecord()">
             <div class="item-title">518</div>
             <div class="item-info">通行</div>
         </div>
@@ -221,13 +222,13 @@
 </header>
 
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item" tapmode onclick="openApplyKey();">
+    <li class="aui-list-item" tapmode onclick="openFootprint();">
         <img src="../image/my/icon/footer.png">
         <div class="aui-list-item-inner">
             我的足迹
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickCallDivert();">
         <img src="../image/my/icon/phone.png">
         <div class="aui-list-item-inner">
             呼叫转移
@@ -235,7 +236,7 @@
     </li>
 </ul>
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickFeedback()">
         <img src="../image/my/icon/smile.png">
         <div class="aui-list-item-inner">
             反馈意见
@@ -247,13 +248,13 @@
             分享给好友
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickHelp();">
         <img src="../image/my/icon/help.png">
         <div class="aui-list-item-inner">
             帮助中心
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickAbout();">
         <img src="../image/my/icon/plaint.png">
         <div class="aui-list-item-inner">
             关于珉轩智能
@@ -261,7 +262,7 @@
     </li>
 </ul>
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode onclick="clickBlacklist()">
         <img src="../image/my/icon/blacklist.png">
         <div class="aui-list-item-inner">
             黑名单
@@ -284,6 +285,16 @@
     }
 
     /**
+     * 打开我的足迹
+     */
+    function openFootprint() {
+        api.openWin({
+            name: 'footPrint',
+            url: './my/footprint/footer_print.html'
+        });
+    }
+
+    /**
      * 去申请钥匙
      */
     function openApplyKey() {
@@ -300,6 +311,106 @@
         api.openWin({
             name: 'repairWin',
             url: './find/repair/repair_main.html'
+        });
+    }
+
+    /**
+     * 去我的办理页面
+     */
+    function clickTransaction() {
+        api.openWin({
+            name: 'transactionWin',
+            url: './find/transaction/transaction_main.html'
+        });
+    }
+
+    /**
+     * 去我的钥匙页面
+     */
+    function clickMyKey() {
+        api.openWin({
+            name: 'myKeyWin',
+            url: './my/myKey/my_key.html'
+        });
+    }
+
+    /**
+     * 点击关于珉轩智能
+     */
+    function clickAbout() {
+        api.openWin({
+            name: 'aboutWin',
+            url: './my/about/about.html'
+        });
+    }
+
+    /**
+     * 点击反馈意见
+     */
+    function clickFeedback() {
+        api.openWin({
+            name: 'feedbackWin',
+            url: './my/feedback/feedback.html'
+        });
+    }
+
+    /**
+     * 点击帮助中心
+     */
+    function clickHelp() {
+        api.openWin({
+            name: 'helpWin',
+            url: './my/help/help.html'
+        });
+    }
+
+    /**
+     * 点击呼叫转移
+     */
+    function clickCallDivert(){
+        api.openWin({
+            name: 'callDivertWin',
+            url: './my/callDivert/call_divert.html'
+        });
+    }
+
+    /**
+     * 点击设置按钮
+     */
+    function clickOption() {
+        api.openWin({
+            name: 'optionWin',
+            url: './my/option/option.html'
+        });
+    }
+
+    /**
+     * 用户点击详情
+     */
+    function clickUserInfo() {
+        api.openWin({
+            name: 'userInfoWin',
+            url: './my/userInfo/user_info.html'
+        });
+    }
+
+    /**
+     * 用户点击通行打开通行记录给他看看
+     */
+    function clickTrafficRecord() {
+        api.openWin({
+            name: 'trafficRecordWin',
+            url: './my/trafficRecord/traffic_record.html'
+        });
+    }
+
+    /**
+     * 点击黑名单
+     */
+    function clickBlacklist() {
+        api.openWin({
+            name: 'blacklistWin',
+            url: './my/blacklist/blacklist.html'
         });
     }
 </script>
