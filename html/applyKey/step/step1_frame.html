@@ -231,6 +231,7 @@
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/static.js"></script>
 <script>
     //当前选择的city信息
     var cityInfo;
@@ -253,6 +254,7 @@
             name: 'selectCityInfo'
         }, function (ret, err) {
             cityInfo = ret.value;
+            cityInfo.city += '市';
             setCityInfo(cityInfo);
         });
 
@@ -277,7 +279,6 @@
      * 选择城市后的回调
      */
     function setCityInfo(info) {
-        console.log(info);
         var cityName = info.city;
         $api.text(document.getElementById('cityInfo'), cityName);
         checkSelectAll();
@@ -287,8 +288,7 @@
      * 选择小区后的回调
      */
     function setVillageInfo(info) {
-        console.log(info);
-        var villageName = info.village;
+        var villageName = info.communityName;
         $api.text(document.getElementById('villageInfo'), villageName);
         checkSelectAll();
     }
@@ -297,9 +297,8 @@
      * 选择房间后的回调
      */
     function setRoomInfo(info) {
-        console.log(info);
-        var roomName = info.roomNum;
-        $api.text(document.getElementById('roomInfo'), roomName);
+        var roomDetails = [info.build.buildingName,info.unit.unitName,info.room.roomNum];
+        $api.text(document.getElementById('roomInfo'), roomDetails.join(''));
         checkSelectAll();
     }
 
@@ -328,13 +327,14 @@
             });
             return;
         }
+
         api.openWin({
             name: 'selectWin',
             url: './selectWin/main_select.html',
             pageParam: {
                 name: 'village',
                 //选中的是哪个城市
-                city: cityInfo
+                city: cityInfo.city
             }
         });
     }
@@ -352,8 +352,8 @@
             return;
         }
         api.openWin({
-            name: 'selectWin',
-            url: './selectWin/main_select.html',
+            name: 'selectRoomWin',
+            url: './selectWin/selectNum/select_room_partition.html',
             pageParam: {
                 name: 'room',
                 //选中的是哪个小区
@@ -416,11 +416,11 @@
     function clickNextStep(index, $this) {
         if ($api.hasCls($this, 'btn-next-disable')) return;
         api.closeWin({
-            name:'selectWin'
+            name: 'selectWin'
         });
         api.openWin({
-            name:'stepWin2',
-            url:'./step2.html'
+            name: 'stepWin2',
+            url: './step2.html'
         });
     }
 </script>

@@ -41,7 +41,7 @@
 <body>
 <header class="aui-bar aui-bar-nav aui-bar-light">
     <div class="aui-pull-left aui-btn">
-        <span class="aui-iconfont aui-icon-left" id="back-btn" index="0" tapmode onclick="goBack()"></span>
+        <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
     </div>
     <div id="headerTitle" class="aui-title">选择城市</div>
 </header>
@@ -62,10 +62,6 @@
                 changeHeader('选择小区');
                 openVillageFrame(obj.city);
                 break;
-            case 'room':
-                changeHeader('选择楼栋');
-                openRoomFrame(obj.village);
-                break;
         }
     };
 
@@ -83,14 +79,6 @@
      */
     function changeHeader(title) {
         $api.text(document.getElementById('headerTitle'), title);
-    }
-
-    /**
-     * 更改返回按钮的index
-     */
-    function changeIndex(index) {
-        console.log('changeIndex:' + index);
-        $api.attr(document.getElementById('back-btn'), 'index', index);
     }
 
     /**
@@ -166,52 +154,9 @@
     }
 
     /**
-     * 打开选择房间的列表
-     */
-    function openRoomFrame(village) {
-        var y = $api.dom('header').offsetHeight;
-        api.openFrame({
-            name: 'selectCity',
-            url: './select_room.html',
-            bgColor: '#ffffff',
-            rect: {
-                x: 0,
-                y: y,
-                w: 'auto',
-                h: 'auto',
-                marginLeft: 0,    //相对父window左外边距的距离
-                marginTop: 0,    //相对父window上外边距的距离
-                marginBottom: 0,    //相对父window下外边距的距离
-                marginRight: 0    //相对父window右外边距的距离
-            },
-            pageParam: {
-                y: y,
-                village: village
-            },
-            animation: {
-                type: "reveal",
-                subType: "from_left",
-                duration: 300
-            },
-            bounces: false,
-            overScrollMode: "scrolls"
-        });
-    }
-
-    /**
      * 返回
      */
     function goBack() {
-        var index = Number($api.attr(document.getElementById('back-btn'), 'index')) || 0;
-        console.log('goBack:' + index);
-        if (index === 1) {
-            api.closeFrame({
-                name: 'selectRoomNum'
-            });
-            changeIndex(0);
-            changeHeader('选择楼栋');
-            return;
-        }
         api.closeWin({
             name: 'selectWin'
         });

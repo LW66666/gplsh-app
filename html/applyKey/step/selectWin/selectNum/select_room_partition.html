@@ -5,10 +5,10 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>第一步</title>
-    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../../css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <title>选择分区</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
     <style>
         header {
             background: #ffffff;
@@ -41,56 +41,23 @@
 <body>
 <header class="aui-bar aui-bar-nav aui-bar-light">
     <div class="aui-pull-left aui-btn">
-        <span class="aui-iconfont aui-icon-left" id="back-btn" index="0" tapmode onclick="goBack()"></span>
+        <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
     </div>
-    <div id="headerTitle" class="aui-title">选择城市</div>
+    <div id="headerTitle" class="aui-title">分区</div>
 </header>
 </body>
 
 </html>
-<script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../../script/api.js"></script>
 <script>
     apiready = function () {
         initLayout();
         initAPIEvent();
-        var obj = api.pageParam;
-        switch (obj.name) {
-            case 'city':
-                openCityFrame();
-                break;
-            case 'village':
-                changeHeader('选择小区');
-                openVillageFrame(obj.city);
-                break;
-            case 'room':
-                changeHeader('选择楼栋');
-                openRoomFrame(obj.village);
-                break;
-        }
+        initFrame();
     };
 
     function initAPIEvent() {
-        //监听手机的返回按钮的点击
-        api.addEventListener({
-            name: 'keyback'
-        }, function (ret, err) {
-            goBack();
-        });
-    }
 
-    /**
-     * 更改头的标题
-     */
-    function changeHeader(title) {
-        $api.text(document.getElementById('headerTitle'), title);
-    }
-
-    /**
-     * 更改返回按钮的index
-     */
-    function changeIndex(index) {
-        console.log('changeIndex:' + index);
-        $api.attr(document.getElementById('back-btn'), 'index', index);
     }
 
     /**
@@ -106,88 +73,21 @@
     }
 
     /**
-     * 打开选择城市的城市列表
-     */
-    function openCityFrame() {
-        var y = $api.dom('header').offsetHeight;
-        api.openFrame({
-            name: 'selectCity',
-            url: './select_city.html',
-            bgColor: '#ffffff',
-            rect: {
-                x: 0,
-                y: y,
-                w: 'auto',
-                h: 'auto',
-                marginLeft: 0,    //相对父window左外边距的距离
-                marginTop: 0,    //相对父window上外边距的距离
-                marginBottom: 0,    //相对父window下外边距的距离
-                marginRight: 0    //相对父window右外边距的距离
-            },
-            // pageParam: {name: 'pageparam'},
-            animation: {
-                type: "reveal",
-                subType: "from_left",
-                duration: 300
-            },
-            bounces: false,
-            overScrollMode: "scrolls"
-        });
-    }
-
-    /**
-     * 打开选择小区的列表
-     */
-    function openVillageFrame(city) {
-        var y = $api.dom('header').offsetHeight;
-        api.openFrame({
-            name: 'selectCity',
-            url: './select_village.html',
-            bgColor: '#ffffff',
-            rect: {
-                x: 0,
-                y: y,
-                w: 'auto',
-                h: 'auto',
-                marginLeft: 0,    //相对父window左外边距的距离
-                marginTop: 0,    //相对父window上外边距的距离
-                marginBottom: 0,    //相对父window下外边距的距离
-                marginRight: 0    //相对父window右外边距的距离
-            },
-            pageParam: {city: city},
-            animation: {
-                type: "reveal",
-                subType: "from_left",
-                duration: 300
-            },
-            bounces: false,
-            overScrollMode: "scrolls"
-        });
-    }
-
-    /**
      * 打开选择房间的列表
      */
-    function openRoomFrame(village) {
+    function initFrame() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'selectCity',
-            url: './select_room.html',
+            name: 'selectRoomPartition',
+            url: './select_room_partition_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
                 y: y,
                 w: 'auto',
-                h: 'auto',
-                marginLeft: 0,    //相对父window左外边距的距离
-                marginTop: 0,    //相对父window上外边距的距离
-                marginBottom: 0,    //相对父window下外边距的距离
-                marginRight: 0    //相对父window右外边距的距离
+                h: 'auto'
             },
-            pageParam: {
-                y: y,
-                village: village
-            },
+            pageParam: api.pageParam,
             animation: {
                 type: "reveal",
                 subType: "from_left",
@@ -202,17 +102,15 @@
      * 返回
      */
     function goBack() {
-        var index = Number($api.attr(document.getElementById('back-btn'), 'index')) || 0;
-        if (index === 1) {
-            api.closeFrame({
-                name: 'selectRoomNum'
-            });
-            changeIndex(0);
-            changeHeader('选择楼栋');
-            return;
-        }
         api.closeWin({
-            name: 'selectWin'
+            name: 'selectRoomBuildWin'
         });
+        api.closeWin({
+            name: 'selectRoomUnitWin'
+        });
+        api.closeWin({
+            name: 'selectRoomNumWin'
+        });
+        api.closeWin();
     }
 </script>

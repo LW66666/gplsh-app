@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>选择楼栋</title>
+    <title>选择单元</title>
     <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../../css/style.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
@@ -43,7 +43,7 @@
     <div class="aui-pull-left aui-btn">
         <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
     </div>
-    <div id="headerTitle" class="aui-title">选择楼栋</div>
+    <div id="headerTitle" class="aui-title">选择单元</div>
 </header>
 </body>
 
@@ -73,8 +73,8 @@
     function initFrame() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'selectRoomBuild',
-            url: './select_room_build_frame.html',
+            name: 'selectRoomUnitFrame',
+            url: './select_room_unit_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -82,9 +82,7 @@
                 w: 'auto',
                 h: 'auto'
             },
-            pageParam: {
-                zone: api.pageParam
-            },
+            pageParam: api.pageParam,
             animation: {
                 type: "reveal",
                 subType: "from_left",

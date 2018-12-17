@@ -272,15 +272,14 @@
      */
     function keyOpens() {
         var user = $api.getStorage(Static.USEROBJ);
-        var isKeyToken = $api.getStorage(Static.ISKEYTOKEN);
-        if (user && user.householdRoomList && isKeyToken) {
+        if (user && user.householdRoomList) {
             //申请过钥匙了
             api.openWin({
                 name: 'open_door_win',
                 url: 'traffic/onpen_door_win.html',
                 bgColor: "#fff"
             });
-        }else {
+        } else {
             //没有申请过钥匙，去申请页
             api.openWin({
                 name: 'applyKeyWin',

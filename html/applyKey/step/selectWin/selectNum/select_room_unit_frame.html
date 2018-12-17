@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>选择楼栋</title>
+    <title>选择单元</title>
     <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../../css/style.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
@@ -26,24 +26,22 @@
 <script>
     apiready = function () {
         initAPISet();
-        //获取选中的分区
-        var zone = api.pageParam.zone;
-        //这里可以请求楼栋
-        initBuild(zone);
+        var build = api.pageParam.build;
+        initUnit(build);
     };
     function initAPISet() {
         api.parseTapmode();
     }
 
-    function initBuild(zone) {
-        var zoneId = zone.zoneId;
+    function initUnit(build) {
+        var buildingId = build.buildingId;
         //查分区
         api.ajax({
-            url: Static.IP + '/api/app/communitywanli/passThrough/listBuildingByZoneId',
+            url: Static.IP + '/api/app/communitywanli/passThrough/listUnitByBuildingId',
             method: 'get',
             data:{
                 values:{
-                    zoneId:zoneId
+                    buildingId:buildingId
                 }
             },
             dataType: 'json'
@@ -60,9 +58,9 @@
                     if (list && list.length > 0) {
                         for (var i = 0; i < list.length; i++) {
                             $api.append($api.dom('#item-list'), [
-                                '<li class="aui-list-item" tapmode onclick="clickItem(this)" params="{\'buildingId\':\'' + list[i].buildingId + '\',\'buildingName\':\'' + list[i].buildingName + '\'}">',
+                                '<li class="aui-list-item" tapmode onclick="clickItem(this)" params="{\'unitId\':\'' + list[i].unitId + '\',\'unitName\':\'' + list[i].unitName + '\'}">',
                                 '<div class="aui-list-item-inner">',
-                                '<div class="aui-list-item-title">' + list[i].buildingName + '</div>',
+                                '<div class="aui-list-item-title">' + list[i].unitName + '</div>',
                                 '</div>',
                                 '</li>'].join(''))
                         }
@@ -87,13 +85,14 @@
     /**
      * 打开选择房间的列表
      */
-    function openRoomNumWin(buildInfo) {
+    function openRoomNumWin(unitInfo) {
         api.openWin({
             name: 'selectRoomNumWin',
             url: './select_room_num.html',
             pageParam: {
                 zone:api.pageParam.zone,
-                build:buildInfo
+                build:api.pageParam.build,
+                unit:unitInfo
             }
         })
 
