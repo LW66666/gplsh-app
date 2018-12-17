@@ -246,6 +246,7 @@
 </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/static.js"></script>
 <script>
     var remindStatus = true;
     apiready = function () {
@@ -270,16 +271,14 @@
      * 打开钥匙界面
      */
     function keyOpens() {
-        var user = $api.getStorage("userObj");
-        var isKeyToken = $api.getStorage('isKeyToken');
-        alert(user);
-        if (user && isKeyToken) {
+        var user = $api.getStorage(Static.USEROBJ);
+        var isKeyToken = $api.getStorage(Static.ISKEYTOKEN);
+        if (user && user.householdRoomList && isKeyToken) {
             //申请过钥匙了
             api.openWin({
                 name: 'open_door_win',
                 url: 'traffic/onpen_door_win.html',
-                pageParam: {name: 'pageparamname'},
-                bgColor: "#fff",
+                bgColor: "#fff"
             });
         }else {
             //没有申请过钥匙，去申请页
