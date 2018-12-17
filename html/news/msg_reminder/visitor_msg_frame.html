@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>访客通知frame</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+    <style>
+        body{
+            width: 100%;
+            height: 100vh;
+            background: rgba(255,255,255,0) !important;
+        }
+        section {
+            width: 100%;
+            height: 100%;
+        }
+
+        section {
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+        .new{
+            position: relative;
+            width: 100%;
+            background: #fff;
+            padding:12px 15px;
+            -webkit-transition: all 0.2s;
+            -moz-transition: all 0.2s;
+            -ms-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
+            border-top: solid 1px #f6f6f6;
+        }
+        .new:nth-child(1){
+            border-top: none;
+        }
+        .new:active{
+            background: #f6f6f6;
+        }
+        .new>div:nth-child(1) {
+            position: relative;
+            font-size: 0.6875rem;
+            color: #c9c9c9;
+        }
+        .new>div:nth-child(2) {
+            position: relative;
+            font-size: 0.75rem;
+            color: #4f4f4f;
+            padding-top: 5px;
+        }
+
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0);">
+<section class="aui-content">
+    <div class="new" tapmode>
+        <div>
+            21018-11-11 11:11:11
+        </div>
+        <div class="">
+            您有来自阿里巴巴总裁马云的呼叫，在21018-11-11 11:11:11
+        </div>
+    </div >
+    <div class="new" tapmode>
+        <div>
+            21018-11-11 11:11:11
+        </div>
+        <div class="">
+            您有来自阿里巴巴总裁马云的呼叫，在21018-11-11 11:11:11
+        </div>
+    </div >
+</section>
+</body>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+</script>
+</html>

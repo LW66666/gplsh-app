@@ -143,10 +143,21 @@
             left: 50%;
             transform: translate(-50%,-50%);
         }
+        .aui-tips{
+            position: fixed;
+            transition: all 0.5s;
+            transform: translateY(-200%);
+            color: #ffffff !important;
+        }
         
     </style>
 </head>
 <body>
+<div class="aui-tips aui-margin-b-15 aui-bg-danger" id="tips-1">
+    <i class="aui-iconfont aui-icon-info"></i>
+    <div class="aui-tips-title">网络不给力，请检查网络设置</div>
+    <i class="aui-iconfont aui-icon-close" id="closeTip" style="opacity: 0;"></i>
+</div>
 <header class="aui-bar aui-bar-nav">
     <div class="aui-title">我是</div>
 </header>
@@ -156,12 +167,12 @@
         <div>
             <div>
                 <div>
-                    <div class="sexActive" data-sex="man">
+                    <div class="sexActive" data-sex="man" tapmode>
                         <img src="../../image/login/mem.png" alt="">
                     </div>
                 </div>
                 <div>
-                    <div class="sex" data-sex="woman">
+                    <div class="sex" data-sex="woman" tapmode>
                         <img src="../../image/login/women.png" alt="">
                     </div>
                 </div>
@@ -173,17 +184,18 @@
         <div></div>
     </div>
     <div class="aui-row">
-        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn" onclick="openMyBirthday()">
+        <button class="aui-btn aui-btn-primary aui-btn-block" id="loginBtn" onclick="openMyBirthday()" tapmode>
             下一步
         </button>
     </div>
     <div class="aui-row aui-text-center">
-        <span onclick="openIndex()">返回首页</span>
+        <span onclick="openIndex()" tapmode>返回首页</span>
     </div>
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script>
+    var sex=1;
     apiready=function () {
         api.parseTapmode();
         $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
@@ -206,27 +218,75 @@
             closeThisWin();
             openIndex();
         });
+
+        setInterval(function () {
+            var networkType=api.connectionType;
+            if (networkType=="none" || networkType=="unknown" || networkType=="2g" ){
+                document.querySelector(".aui-tips").style.transform="translateY(-0%)";
+            }else {
+                document.querySelector(".aui-tips").style.transform="translateY(-200%)";
+            }
+        },3000)
     }
 
     /**
      * 打开设置生日页面
      */
     function openMyBirthday() {
-        api.openWin({
-            name: 'my_birthday_win',
-            url: 'my_birthday_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
+
+        api.showProgress({
+            title: '设置中',
+            modal: false
+        });
+        var phone=api.pageParam.phone;
+        var mac=api.deviceId;
+
+        api.ajax({
+            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/updateGender',
+            method: 'post',
+            timeout: 30,
+            dataType: 'json',
+            returnAll: false,
+            data: {
+                values: {
+                    cellphone: phone,
+                    gender: sex
+                },
+            }
+        },
+            function (ret, err) {
+            api.hideProgress();
+            if (ret.resultStatus){
+                api.toast({
+                    msg: ret.message,
+                    duration: 2000,
+                    location: 'top'
+                });
+                api.openWin({
+                    name: 'my_birthday_win',
+                    url: 'my_birthday_win.html',
+                    pageParam: {phone: phone},
+                    bgColor:"#fff",
+                });
+            }else {
+                api.toast({
+                    msg: ret.message,
+                    duration: 2000,
+                    location: 'top'
+                });
+            }
         });
     }
 
     document.querySelector(".sex").addEventListener("click",function () {
         document.querySelector(".sexActive").setAttribute("class","sex");
         this.setAttribute("class", "sexActive");
+        sex=2;
     })
     document.querySelector(".sexActive").addEventListener("click",function () {
         document.querySelector(".sexActive").setAttribute("class","sex");
-        this.setAttribute("class", "sexActive");
+        this.setAttribute("class", "sexActive");console.log(this.dataset.sex)
+        sex=1;
     })
 
     function closeThisWin() {

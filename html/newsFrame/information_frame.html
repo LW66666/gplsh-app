@@ -50,19 +50,19 @@
 <body>
 <!--消息提醒-->
 <ul class="aui-list aui-list-in" id="information">
-    <li class="aui-list-item">
+    <li class="aui-list-item" onclick="openNotice()" tapmode>
         <img src="../../image/news/informationTips/notice.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             通知通告
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode  onclick="openVisitorMsg()">
         <img src="../../image/news/informationTips/tips.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             访客提醒
         </div>
     </li>
-    <li class="aui-list-item">
+    <li class="aui-list-item" tapmode  onclick="openSysMsg()">
         <img src="../../image/news/informationTips/information.png">
         <div class="aui-list-item-inner aui-list-item-arrow font">
             系统消息
@@ -70,5 +70,47 @@
     </li>
 </ul>
 </body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    }
+
+    /**
+     * 打开通知通告页面
+     */
+    function openNotice() {
+        api.openWin({
+            name: 'notice_win',
+            url: '../news/msg_reminder/notice_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    /**
+     * 打开访客通知页面
+     */
+    function openVisitorMsg() {
+        api.openWin({
+            name: 'visitor_msg_win',
+            url: '../news/msg_reminder/visitor_msg_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+
+    /**
+     * 打开系统通知页面
+     */
+    function openSysMsg() {
+        api.openWin({
+            name: 'sys_msg_win',
+            url: '../news/msg_reminder/sys_msg_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
+</script>
 </html>
 
