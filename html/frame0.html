@@ -265,6 +265,11 @@
      * 打开钥匙界面
      */
     function keyOpens() {
+        var user = $api.getStorage("userObj");
+        alert(user);
+        if (user ){
+
+        }
         api.openWin({
             name: 'open_door_win',
             url: 'traffic/onpen_door_win.html',
