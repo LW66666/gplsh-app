@@ -114,7 +114,7 @@
             align-items: center;/*垂直居中*/
         }
         .new>div:nth-child(2)>div:nth-child(1)>div:nth-child(2) {
-            width: 55px;
+            width: 60px;
             font-size: 0.625rem;
             color: #c9c9c9;
         }
@@ -123,7 +123,7 @@
 </head>
 <body style="background: rgba(255,255,255,0);">
 <section class="aui-content">
-    <div class="aui-row newsBox">
+    <div onclick="openNoticeDetails()" class="aui-row newsBox">
         <div class="time">
             <div class="timeLabel">2018-12-13</div>
         </div>
@@ -163,7 +163,7 @@
             </div>
         </div >
     </div>
-    <div class="aui-row newsBox">
+    <div onclick="openNoticeDetails()" class="aui-row newsBox">
         <div class="time">
             <div class="timeLabel">2018-12-13</div>
         </div>
@@ -211,5 +211,16 @@
         api.parseTapmode();
     }
 
+    /**
+     * 打开公告详情
+     */
+    function openNoticeDetails() {
+        api.openWin({
+            name: 'notice_details_win',
+            url: 'notice_details_win.html',
+            pageParam: {name: 'pageparamname'},
+            bgColor:"#fff",
+        });
+    }
 </script>
 </html>

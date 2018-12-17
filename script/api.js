@@ -2,6 +2,7 @@
  * APICloud JavaScript Library
  * Copyright (c) 2014 apicloud.com
  */
+var ip="http://192.168.1.222:9765";
 (function(window){
     var u = {};
     var isAndroid = (/android/gi).test(navigator.appVersion);

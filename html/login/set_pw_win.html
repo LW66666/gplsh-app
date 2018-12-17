@@ -265,7 +265,7 @@
         var mac=api.deviceId;
 
         api.ajax({
-            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/register',
+            url: ip+'/api/app/communitywanli/login/register',
             method: 'post',
             timeout: 30,
             dataType: 'json',
@@ -283,28 +283,41 @@
             if (err!=""){
                 api.toast({
                     msg: err.msg.message,
-                    duration: 2000,
+                    duration: 3000,
                     location: 'top'
                 });
             }
             if (ret!="") {
                 api.toast({
                     msg: ret.message,
-                    duration: 2000,
+                    duration: 3000,
                     location: 'top'
                 });
 
                 if (ret.resultStatus){
-                    forgetSetSex(phone);
-                    api.toast({
-                        msg: ret.message,
-                        duration: 2000,
-                        location: 'top'
-                    });
+                    if (ret.message=="用户已经存在"){
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
+                    else {
+                        $api.setStorage("userObj",ret.object);
+
+                        setTimeout(function () {
+                            forgetSetSex(phone);
+                        },1000);
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
                 }else {
                     api.toast({
                         msg: ret.message,
-                        duration: 2000,
+                        duration: 3000,
                         location: 'top'
                     });
                 }
@@ -346,7 +359,7 @@
         }else {
             api.toast({
                 msg: '密码请设置6-20位字母、数字组合',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");

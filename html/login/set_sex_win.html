@@ -237,12 +237,12 @@
         api.showProgress({
             title: '设置中',
             modal: false
-        });
-        var phone=api.pageParam.phone;
+        });console.log(JSON.stringify($api.getStorage("userObj")))
+        var phone=$api.getStorage("userObj").cellphone;
         var mac=api.deviceId;
 
         api.ajax({
-            url: 'http://192.168.1.222:9765/api/app/communitywanli/login/updateGender',
+            url: ip+'/api/app/communitywanli/login/updateGender',
             method: 'post',
             timeout: 30,
             dataType: 'json',
@@ -256,25 +256,36 @@
         },
             function (ret, err) {
             api.hideProgress();
-            if (ret.resultStatus){
-                api.toast({
-                    msg: ret.message,
-                    duration: 2000,
-                    location: 'top'
-                });
-                api.openWin({
-                    name: 'my_birthday_win',
-                    url: 'my_birthday_win.html',
-                    pageParam: {phone: phone},
-                    bgColor:"#fff",
-                });
-            }else {
-                api.toast({
-                    msg: ret.message,
-                    duration: 2000,
-                    location: 'top'
-                });
-            }
+                if (ret != "") {
+                    if (ret.resultStatus){
+                        api.toast({
+                            msg: ret.message,
+                            duration: 2000,
+                            location: 'top'
+                        });
+                        setTimeout(function () {
+                            api.openWin({
+                                name: 'my_birthday_win',
+                                url: 'my_birthday_win.html',
+                                pageParam: {phone: phone},
+                                bgColor:"#fff",
+                            });
+                        }, 1000);
+                    }
+                    else {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 2000,
+                            location: 'top'
+                        });
+                    }
+                }else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 2000,
+                        location: 'top'
+                    });
+                }
         });
     }
 
