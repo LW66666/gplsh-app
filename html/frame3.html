@@ -222,7 +222,7 @@
 </header>
 
 <ul class="aui-list aui-list-in">
-    <li class="aui-list-item" tapmode onclick="openApplyKey();">
+    <li class="aui-list-item" tapmode onclick="openFootprint();">
         <img src="../image/my/icon/footer.png">
         <div class="aui-list-item-inner">
             我的足迹
@@ -282,6 +282,16 @@
         } else if (systemType === 'ios') {
             document.querySelector("header").setAttribute("style", "padding-top:-20px");
         }
+    }
+
+    /**
+     * 打开我的足迹
+     */
+    function openFootprint() {
+        api.openWin({
+            name: 'footPrint',
+            url: './my/footprint/footer_print.html'
+        });
     }
 
     /**
