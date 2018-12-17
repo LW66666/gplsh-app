@@ -350,14 +350,14 @@
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
 
-        var obj=$api.getStorage('userObj');
-        if (obj!="" && obj!=undefined){
+        var obj=$api.getStorage('userObj');console.log(JSON.stringify(obj))
+        if (obj!=undefined){
            api.openWin({
                     name: 'index',
                     url: '../../index.html',
                     pageParam: {name: 'pageparamname'},
                     bgColor:"#fff",
-                });
+           });
         }else{
             setTimeout(function () {
                 focusInput();
@@ -480,14 +480,20 @@
                 }
                 else {
                     var obj=ret.object;
-                    if (obj.cellphone!=null){
-                        api.toast({
-                            msg: "登录成功",
-                            duration: 3000,
-                            location: 'top'
+                    api.toast({
+                        msg: "登录成功",
+                        duration: 3000,
+                        location: 'top'
+                    });
+                    setTimeout(function () {
+                        api.openWin({
+                            name: 'index',
+                            url: '../../index.html',
+                            pageParam: {name: 'pageparamname'},
+                            bgColor:"#fff",
                         });
-                        $api.setStorage("userObj",ret.object);
-                    }
+                    },1000)
+                    $api.setStorage("userObj",ret.object);
                 }
             }else {
                 api.toast({

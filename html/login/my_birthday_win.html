@@ -284,7 +284,7 @@
             title: '设置中',
             modal: false
         });
-        var phone=api.pageParam.phone;
+        var phone=$api.getStorage("userObj").cellphone;
         var name=document.getElementById("name").value;
         var birthday=document.getElementById("birthday").value;
         var mac=api.deviceId;

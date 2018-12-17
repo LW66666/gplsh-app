@@ -443,6 +443,11 @@
                 location: 'top'
             });
         }else {
+            api.toast({
+                msg: ret.message,
+                duration: 3000,
+                location: 'top'
+            });
             api.ajax({
                 url: ip+'/api/app/communitywanli/login/getMobileVerificationCode',
                 method: 'get',
@@ -466,11 +471,6 @@
                     });
                 }
                 if (ret!="") {
-                    api.toast({
-                        msg: ret.message,
-                        duration: 3000,
-                        location: 'top'
-                    });
                 }
             });
 

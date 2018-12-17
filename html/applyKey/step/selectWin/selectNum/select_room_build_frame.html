@@ -48,9 +48,43 @@
         //获取选中的小区
         var village = api.pageParam.village;
         //这里可以请求楼栋
+        initVillage(village);
     };
     function initAPISet() {
         api.parseTapmode();
+    }
+
+    function initVillage(village) {
+        var code = village.communityCode;
+        //查分区
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/passThrough/listZoneByCommunityCode?communityCode=' + code,
+            method: 'get',
+            dataType: 'json'
+        }, function (ret, err) {
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'top'
+                    });
+                } else {
+                    var list = ret.object;
+                    if (list && list.length > 0) {
+                        $api.addCls($api.dom('.empty-info'), 'aui-hide');
+                    }
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'top'
+                });
+            }
+        });
+        //再选楼栋
+        //再选房号
     }
 
     function clickItem($this) {

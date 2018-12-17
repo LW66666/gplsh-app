@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>第一步</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
+    <style>
+        header {
+            background: #ffffff;
+            background-image: none !important;
+            border-bottom: 1px #f9f7f7 solid;
+        }
+
+        header, header > div {
+            height: 48px !important;
+        }
+
+        header .aui-pull-left .aui-iconfont {
+            color: black !important;
+        }
+
+        header .aui-title {
+            color: black;
+            font-size: 0.9375rem;
+            line-height: 48px !important;
+        }
+
+        header .aui-pull-right {
+            font-size: 0.75rem !important;
+            line-height: 48px !important;
+            padding: 0 18.5px 0 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+<header class="aui-bar aui-bar-nav aui-bar-light">
+    <div class="aui-pull-left aui-btn">
+        <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
+    </div>
+    <div id="headerTitle" class="aui-title">选择楼栋</div>
+</header>
+</body>
+
+</html>
+<script type="text/javascript" src="../../../../../script/api.js"></script>
+<script>
+    apiready = function () {
+        initLayout();
+        initFrame();
+    };
+
+    /**
+     * 初始化布局
+     */
+    function initLayout() {
+        api.parseTapmode();
+        //自适应沉浸式状态栏
+        $api.fixStatusBar($api.dom('header'));
+        api.setStatusBarStyle({
+            style: 'dark'
+        });
+    }
+
+    /**
+     * 打开选择楼栋的列表
+     */
+    function initFrame() {
+        var y = $api.dom('header').offsetHeight;
+        api.openFrame({
+            name: 'selectRoomBuild',
+            url: './select_room_build_frame.html',
+            bgColor: '#ffffff',
+            rect: {
+                x: 0,
+                y: y,
+                w: 'auto',
+                h: 'auto'
+            },
+            pageParam: {
+                zone: api.pageParam
+            },
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            bounces: false,
+            overScrollMode: "scrolls"
+        });
+    }
+
+
+    /**
+     * 返回
+     */
+    function goBack() {
+        api.closeWin();
+    }
+</script>
