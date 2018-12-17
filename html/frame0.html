@@ -17,12 +17,12 @@
             flex-direction: column;
         }
 
-        section img{
+        section img {
             display: inline-block;
         }
 
-        .boxTop,.boxBottom{
-            padding:0 18px;
+        .boxTop, .boxBottom {
+            padding: 0 18px;
         }
 
         .boxTop {
@@ -33,20 +33,20 @@
             color: #fff;
         }
 
-        .boxTop .aui-row:nth-child(1){
+        .boxTop .aui-row:nth-child(1) {
             padding-top: 32px;
             padding-left: 7px;
             font-size: 0.8125rem;
         }
 
-        .boxTop .aui-row:nth-child(2){
+        .boxTop .aui-row:nth-child(2) {
             padding-left: 7px;
             font-size: 1rem;
             margin-top: 0px;
         }
 
-        .boxTop .aui-row:nth-child(3) .aui-col-xs-6{
-            vertical-align:bottom;
+        .boxTop .aui-row:nth-child(3) .aui-col-xs-6 {
+            vertical-align: bottom;
         }
 
         .boxTop .aui-row:nth-child(3) h1 {
@@ -62,12 +62,12 @@
             font-size: 50%;
         }
 
-        .boxTop .aui-row:nth-child(4){
+        .boxTop .aui-row:nth-child(4) {
             padding-top: 50px;
             font-size: 0.7rem;
         }
 
-        .boxTop .aui-row:nth-child(4) img{
+        .boxTop .aui-row:nth-child(4) img {
             width: 28.5px;
             height: 28.5px;
             display: inline-block;
@@ -78,9 +78,9 @@
             top: 0%;
             right: 0;
             background: #fff;
-            width:5px;
-            height:5px;
-            margin:3px 9.5px 3px 7px;
+            width: 5px;
+            height: 5px;
+            margin: 3px 9.5px 3px 7px;
         }
 
         .boxBottom {
@@ -90,17 +90,17 @@
             position: relative;
         }
 
-        .boxBottom .aui-row:nth-child(1){
+        .boxBottom .aui-row:nth-child(1) {
             width: 100%;
             height: 100%;
         }
 
         .boxBottom .aui-row:nth-child(1) .keyBox {
-            position: absolute;/*貌似这里除了问题*/
+            position: absolute; /*貌似这里除了问题*/
             float: left;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
         }
 
         .boxBottom .aui-row:nth-child(1) .key {
@@ -114,53 +114,56 @@
             -ms-transform: translateX(-50%);
             -o-transform: translateX(-50%);
             transform: translateX(-50%);
-            background: rgba(3,183,248,1);
-            box-shadow: 0px 0px 6.5px 0px rgba(3,183,248,1);
+            background: rgba(3, 183, 248, 1);
+            box-shadow: 0px 0px 6.5px 0px rgba(3, 183, 248, 1);
         }
 
-        .boxBottom .aui-row:nth-child(1) .key:active{
-            box-shadow: 0px 0px 20px 0px rgba(3,183,248,1);
+        .boxBottom .aui-row:nth-child(1) .key:active {
+            box-shadow: 0px 0px 20px 0px rgba(3, 183, 248, 1);
         }
 
-        .boxBottom .aui-row:nth-child(1) .key img{
+        .boxBottom .aui-row:nth-child(1) .key img {
             display: inline-block;
             position: absolute;
-            top:50%;
-            left:50%;
-            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        #robot{
+
+        #robot {
             position: absolute;
             width: 39px;
             height: 41px;
-            -webkit-transform: translate(295.5px,0px);
-            -moz-transform: translate(295.5px,0px);
-            -ms-transform: translate(295.5px,0px);
-            -o-transform: translate(295.5px,0px);
-            transform: translate(295.5px,0px);
+            -webkit-transform: translate(295.5px, 0px);
+            -moz-transform: translate(295.5px, 0px);
+            -ms-transform: translate(295.5px, 0px);
+            -o-transform: translate(295.5px, 0px);
+            transform: translate(295.5px, 0px);
             top: 40%;
         }
-        #remind{
+
+        #remind {
             width: 30px;
             height: 30px;
             position: absolute;
             right: 0px;
-            -webkit-transform: translate(0%,-50%);
-            -moz-transform: translate(0%,-50%);
-            -ms-transform: translate(0%,-50%);
-            -o-transform: translate(0%,-50%);
-            transform: translate(0%,-50%);
+            -webkit-transform: translate(0%, -50%);
+            -moz-transform: translate(0%, -50%);
+            -ms-transform: translate(0%, -50%);
+            -o-transform: translate(0%, -50%);
+            transform: translate(0%, -50%);
         }
+
         #remind img {
             display: block;
             position: absolute;
             top: 50%;
             left: 50%;
-            -webkit-transform: translate(-50%,-50%);
-            -moz-transform: translate(-50%,-50%);
-            -ms-transform: translate(-50%,-50%);
-            -o-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
@@ -190,7 +193,8 @@
                     <small>℃</small>
                 </h1>
                 <h2>
-                    <img src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt="" style="display: inline-block;">
+                    <img src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt=""
+                         style="display: inline-block;">
                     <span style="padding-right: 15px;">阴</span>
                     <span>空气优</span>
                 </h2>
@@ -213,7 +217,7 @@
             </div>
             <div class="aui-col-xs-4 aui-text-center">
                 <span tapmode onclick="openLogin()">
-                    <img src="../image/traffic/shock.png"alt="">
+                    <img src="../image/traffic/shock.png" alt="">
                     <div>远程对讲</div>
                 </span>
             </div>
@@ -231,7 +235,8 @@
                 <div class="key" tapmode onclick="keyOpens()">
                     <img src="../image/traffic/key.png" width="25px" height="58.5px" alt="">
                 </div>
-                <div class="aui-row aui-text-center" style="color: rgba(180,180,180,1);font-size: 0.6875rem;padding-top: 18px;position:relative;">
+                <div class="aui-row aui-text-center"
+                     style="color: rgba(180,180,180,1);font-size: 0.6875rem;padding-top: 18px;position:relative;">
                     点击钥匙开门
                 </div>
             </div>
@@ -242,22 +247,22 @@
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script>
-    var remindStatus=true;
-    apiready=function () {
+    var remindStatus = true;
+    apiready = function () {
         api.parseTapmode();
-        var systemType=api.systemType;
-        if (systemType=="android"){
+        var systemType = api.systemType;
+        if (systemType == "android") {
             document.getElementById("topBox").setAttribute("style", "padding-top:25px");
-        }else if (systemType=="ios"){
+        } else if (systemType == "ios") {
             document.getElementById("topBox").setAttribute("style", "padding-top:20px");
         }
     }
-    document.getElementById("remind").onclick=function () {
-        remindStatus=!remindStatus;
-        if (remindStatus){
-            document.querySelector("#remind img").setAttribute("src","../image/traffic/news.png")
-        }else {
-            document.querySelector("#remind img").setAttribute("src","../image/traffic/mute.png")
+    document.getElementById("remind").onclick = function () {
+        remindStatus = !remindStatus;
+        if (remindStatus) {
+            document.querySelector("#remind img").setAttribute("src", "../image/traffic/news.png")
+        } else {
+            document.querySelector("#remind img").setAttribute("src", "../image/traffic/mute.png")
         }
     }
 
@@ -266,16 +271,23 @@
      */
     function keyOpens() {
         var user = $api.getStorage("userObj");
+        var isKeyToken = $api.getStorage('isKeyToken');
         alert(user);
-        if (user ){
-
+        if (user && isKeyToken) {
+            //申请过钥匙了
+            api.openWin({
+                name: 'open_door_win',
+                url: 'traffic/onpen_door_win.html',
+                pageParam: {name: 'pageparamname'},
+                bgColor: "#fff",
+            });
+        }else {
+            //没有申请过钥匙，去申请页
+            api.openWin({
+                name: 'applyKeyWin',
+                url: './applyKey/apply_main.html'
+            });
         }
-        api.openWin({
-            name: 'open_door_win',
-            url: 'traffic/onpen_door_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-        });
     }
 
     /**
@@ -286,7 +298,7 @@
             name: 'invite_guests_win',
             url: 'traffic/invite_guests_win.html',
             pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
+            bgColor: "#fff",
             bounces: false,
             vScrollBarEnabled: false,
             hScrollBarEnabled: false,
@@ -302,11 +314,11 @@
             name: 'set_sex_win',
             url: 'login/set_sex_win.html',
             pageParam: {name: 'pageparamname'},
-            bgColor:"#fff",
-            animation:{
-                type:"movein",                //动画类型（详见动画类型常量）
-                subType:"from_left",       //动画子类型（详见动画子类型常量）
-                duration:200                //动画过渡时间，默认300毫秒
+            bgColor: "#fff",
+            animation: {
+                type: "movein",                //动画类型（详见动画类型常量）
+                subType: "from_left",       //动画子类型（详见动画子类型常量）
+                duration: 200                //动画过渡时间，默认300毫秒
             }
         });
     }
@@ -316,8 +328,8 @@
      */
     function clickCallHelp() {
         api.openWin({
-          name:'callHelpWin',
-          url:'./callHelp/call_help.html'
+            name: 'callHelpWin',
+            url: './callHelp/call_help.html'
         })
     }
 </script>
