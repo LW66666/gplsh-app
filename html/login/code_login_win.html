@@ -399,7 +399,71 @@
     }
 
     document.getElementById("loginBtn").onclick=function () {
+        api.showProgress({
+            title: '验证中',
+            modal: false
+        });
         checkFromByType();
+        var phone=document.getElementById("phone").value;
+        var pw=document.getElementById("pw").value;
+        var mac=api.deviceId;
+        api.ajax({
+                url: ip+'/api/app/communitywanli/login/login',
+                method: 'post',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac: mac,
+                        verificationCode: pw
+                    }
+                }
+            },
+            function (ret, err) {
+                api.hideProgress();
+                if (ret!=""){
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
+                    else {
+                        var obj=ret.object;
+                        api.toast({
+                            msg: "登录成功",
+                            duration: 3000,
+                            location: 'top'
+                        });
+                        setTimeout(function () {
+                            api.openWin({
+                                name: 'index',
+                                url: '../../index.html',
+                                pageParam: {name: 'pageparamname'},
+                                bgColor:"#fff",
+                            });
+                        },1000)
+                        $api.setStorage("userObj",ret.object);
+                        if (ret.object.icon_url!=""){
+                            api.imageCache({
+                                url: ret.object.icon_url
+                            }, function(ret, err) {
+                                var url = ret.url;
+                                $api.setStorage("userHedUrl",url);
+                            });
+                        }
+                    }
+                }else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'top'
+                    });
+                }
+            });
     }
 
     function otherLogin(dom) {
@@ -454,7 +518,7 @@
         else if (checkStatus==0) {
             api.toast({
                 msg: '请输入正确的手机号和验证码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -462,7 +526,7 @@
         else if (checkStatus==-1) {
             api.toast({
                 msg: '请输入十一位手机号码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -470,7 +534,7 @@
         else if (checkStatus==-2) {
             api.toast({
                 msg: '请输入四位数验证码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -478,7 +542,7 @@
         else if (checkStatus==-3) {
             api.toast({
                 msg: '请输入十一位数的手机号',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -486,7 +550,7 @@
         else if (checkStatus==-4) {
             api.toast({
                 msg: '请输入四位数验证码',
-                duration: 2000,
+                duration: 3000,
                 location: 'top'
             });
             document.getElementById("loginBtn").setAttribute("disabled","disabled");
@@ -498,17 +562,66 @@
      * @param dom dom元素
      */
     function getCode(dom) {
-        dom.setAttribute("disabled","disabled");
-        var codeNum=60;
-        codeTimer=setInterval(function () {
-            if (codeNum<=0){
-                dom.removeAttribute("disabled");
-                dom.innerHTML="重新发送";
-                clearInterval(codeTimer);
-            }else {
-                dom.innerHTML=codeNum--+"s";
-            }
-        },1000);
+        var mac = api.deviceId;
+        var phone = document.getElementById("phone").value;
+        var chackStu = checkFrame();
+        if (chackStu == -1 || chackStu == -3 || chackStu == 0 ) {
+            api.toast({
+                msg: "手机号码错误",
+                duration: 2000,
+                location: 'top'
+            });
+        }
+        else if (chackStu == -4 || chackStu == -7 || chackStu==-5) {
+            api.toast({
+                msg: "手机号码为空",
+                duration: 2000,
+                location: 'top'
+            });
+        }
+        else {console.log("sssss")
+            dom.setAttribute("disabled", "disabled");
+            api.toast({
+                msg: "发送成功",
+                duration: 3000,
+                location: 'top'
+            });
+            api.ajax({
+                url: ip + '/api/app/communitywanli/login/getMobileVerificationCode',
+                method: 'get',
+                timeout: 30,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values: {
+                        cellphone: phone,
+                        mac: mac,
+                        type: 1
+                    }
+                }
+            }, function (ret, err) {
+                api.hideProgress();
+                if (err != "") {
+                    api.toast({
+                        msg: err.msg.message,
+                        duration: 3000,
+                        location: 'top'
+                    });
+                }
+                if (ret != "") {
+                }
+            });
+            var codeNum = 60;
+            codeTimer = setInterval(function () {
+                if (codeNum <= 0) {
+                    dom.removeAttribute("disabled");
+                    dom.innerHTML = "重新发送";
+                    clearInterval(codeTimer);
+                } else {
+                    dom.innerHTML = codeNum-- + "s";
+                }
+            }, 1000);
+        }
     }
 
     function closeThisWin() {

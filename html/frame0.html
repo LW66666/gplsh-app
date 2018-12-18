@@ -257,6 +257,9 @@
         } else if (systemType == "ios") {
             document.getElementById("topBox").setAttribute("style", "padding-top:20px");
         }
+        var obj=$api.getStorage("userObj");
+        document.querySelector(".aui-row:nth-child(2)>span:nth-child(1)").innerHTML=obj.nickname;
+        document.querySelector(".aui-row:nth-child(2)>span:nth-child(2)").innerHTML=(obj.gender==1)?"先生":"女士";
     }
     document.getElementById("remind").onclick = function () {
         remindStatus = !remindStatus;
@@ -309,8 +312,8 @@
      */
     function openLogin() {
         api.openWin({
-            name: 'set_sex_win',
-            url: 'login/set_sex_win.html',
+            name: 'my_birthday_win',
+            url: 'login/my_birthday_win.html',
             pageParam: {name: 'pageparamname'},
             bgColor: "#fff",
             animation: {

@@ -106,8 +106,11 @@
         .aui-row:nth-child(2)>div:nth-child(2)>span:nth-child(1) {
             color: #e3f800;
         }
-        .aui-row:nth-child(2)>div:nth-child(2)>span:nth-child(2){
+        .aui-row:nth-child(2)>div:nth-child(2)>button:nth-child(2) {
             color: #fff;
+            display: contents;
+            background: rgba(255,255,255,0);
+            border: none;
         }
 
         .aui-row:nth-child(3) {
@@ -172,10 +175,7 @@
             </div>
         </div>
         <div class="aui-col-xs-12 aui-text-center">
-            <span id="codeTime">
-                60秒
-            </span>
-            <span onclick="getCode()" tapmode>后重新发送验证码</span>
+            <span id="codeTime">60秒</span><button onclick="getCode()" tapmode>后重新发送验证码</button>
         </div>
     </div>
     <div class="aui-row">
@@ -193,12 +193,15 @@
         api.parseTapmode();
         $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
         var systemType=api.systemType;
+        getCode();
 
         api.addEventListener({
             name: 'keyback'
         }, function(ret, err) {
             closeThisWin();
         });
+
+        document.querySelector(".aui-row:nth-child(1)>div:nth-child(2) span").innerHTML=api.pageParam.phone;
 
         setTimeout(function () {
             focusInput();
@@ -218,6 +221,7 @@
             if (num!=1){
                 document.getElementById("code"+(num - 1)).focus();
             }
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
         }
         //当输入框中输入值
         else {
@@ -237,7 +241,18 @@
                 document.getElementById("code"+(num + 1)).focus();
             }else {
                 console.log("判断验证码是否正确");
+            }
+            var statuNum=0;
+            for (var i = 1; i <= 4; i++) {
+                var val=document.getElementById("code"+i).value;
+                if (val !=""){
+                    statuNum++;
+                }
+            }
+            if(statuNum==4){
                 document.getElementById("loginBtn").removeAttribute("disabled");
+            }else {
+                document.getElementById("loginBtn").setAttribute("disabled","disabled");
             }
         }
     }
@@ -248,20 +263,52 @@
      */
     function getCode() {
         document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        document.querySelector("#codeTime+button").setAttribute("disabled","disabled");
         var timeDom=document.getElementById("codeTime");
+        var phone=api.pageParam.phone;
         var codeNum=60;
+        var mac=api.deviceId;
+        api.toast({
+            msg: "发送成功",
+            duration: 3000,
+            location: 'top'
+        });
+        api.ajax({
+            url: ip+'/api/app/communitywanli/login/getMobileVerificationCode',
+            method: 'get',
+            timeout: 10,
+            dataType: 'json',
+            returnAll: false,
+            data: {
+                values:{
+                    cellphone: phone,
+                    mac: mac,
+                    type: 1
+                }
+            }
+        },
+            function (ret, err) {
+            api.hideProgress();
+            if (err!=""){
+                api.toast({
+                    msg: err.msg.message,
+                    duration: 3000,
+                    location: 'top'
+                });
+            }
+        });
 
         document.getElementById("loginBtn").innerHTML="完成验证";
         document.getElementById("loginBtn").setAttribute("disabled","disabled");
-        document.querySelector("#codeTime+span").setAttribute("style","display:inline-block");
-        document.querySelector("#codeTime+span").innerHTML="后重新发送验证码";
+        document.querySelector("#codeTime+button").innerHTML="后重新发送验证码";
         timeDom.setAttribute("style","display:inline-block");
 
         codeTimer=setInterval(function () {
             if (codeNum<=0){
                 clearInterval(codeTimer);
                 timeDom.innerHTML="收不到验证码？";
-                document.querySelector("#codeTime+span").innerHTML="点击重新发送";
+                document.querySelector("#codeTime+button").removeAttribute("disabled");
+                document.querySelector("#codeTime+button").innerHTML="点击重新发送";
             }else {
                 timeDom.innerHTML=codeNum--+"秒";
             }
@@ -273,11 +320,70 @@
      * @param dom 按钮dom
      */
     function btnClick(dom) {
-        if (dom.innerHTML=="完成验证"){
-            console.log("完成验证")
-        }else {
-            getCode();
+        var code="";
+        var codeReg=/^[0-9]{4}$/;
+        var codeArray=document.querySelectorAll(".aui-row:nth-child(2)>div:nth-child(1)>div>input");
+        for (var i=0;i<codeArray.length;i++){
+            code+=codeArray[i].value;
         }
+        if (codeReg.test(code)){
+            api.showProgress({
+                title: '验证中',
+                modal: false
+            });
+            var phone=api.pageParam.phone;
+            var pw=code;
+            var mac=api.deviceId;
+            api.ajax({
+                    url: ip+'/api/app/communitywanli/login/cellphoneVerification',
+                    method: 'get',
+                    timeout: 10,
+                    dataType: 'json',
+                    returnAll: false,
+                    data: {
+                        values: {
+                            cellphone: phone,
+                            mac: mac,
+                            verificationCode: pw
+                        },
+                    }
+                },
+                function (ret, err) {
+                    api.hideProgress();
+                    if (ret!=""){
+                        if (ret.resultStatus){
+                            setTimeout(function () {
+                                api.toast({
+                                    msg: ret.message,
+                                    duration: 3000,
+                                    location: 'top'
+                                });
+                            },1000);
+                            openSetPw(phone);
+                        }
+                        else {
+                            api.toast({
+                                msg: ret.message,
+                                duration: 3000,
+                                location: 'top'
+                            });
+                        }
+                    }else {
+                        api.toast({
+                            msg: err.msg,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
+                });
+        }else {
+            api.toast({
+                msg: "验证码格式错误",
+                duration: 3000,
+                location: 'top'
+            });
+        }
+        console.log("完成验证")
     }
 
     function closeThisWin() {
@@ -293,6 +399,19 @@
         softInput.toggleKeyboard();
         // 将相应的输入框获取焦点
         document.getElementById("code1").focus();
+    }
+
+    /**
+     * @phone 手机号
+     * 打开设置密码页面
+     */
+    function openSetPw(phone) {
+        api.openWin({
+            name: 'forget_set_pw_win',
+            url: 'forget_set_pw_win.html',
+            pageParam: {phone: phone},
+            bgColor:"#fff",
+        });
     }
 </script>
 </html>

@@ -325,6 +325,12 @@
                     title: '正在退出'
                 });
                 setTimeout(function () {
+                    $api.rmStorage("userObj");
+                    api.openWin({
+                        name: 'pw_login_win',
+                        url: '../../login/pw_login_win.html',
+                        pageParam: {name: 'pageparamname'}
+                    });
                     api.hideProgress();
                 },1000)
             }
