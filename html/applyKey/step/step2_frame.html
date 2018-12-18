@@ -216,6 +216,14 @@
             });
             return;
         }
+        if (name.length>9 || ! /^[\u4E00-\u9FA5A-Za-z]+$/.test(name)) {
+            api.toast({
+                msg: '您输入的名称不合法',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return;
+        }
 
         var idCard = document.getElementById('idCard').value;
         if (!idCard) {
