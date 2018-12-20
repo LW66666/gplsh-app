@@ -283,7 +283,7 @@
                     </span>
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="tel" id="phone"  maxlength="11" placeholder="请输入手机号">
+                    <input type="tel" id="phone"  maxlength="11" placeholder="请输入手机号" value="15770732701">
                 </div>
             </div>
         </div>
@@ -295,7 +295,7 @@
                     </div>
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="password" id="pw" maxlength="20" placeholder="请输入密码" >
+                    <input type="password" id="pw" maxlength="20" placeholder="请输入密码" value="654321">
                     <div id="forGetPw">
                         <span onclick="forgetPw()" tapmode>忘记密码？</span>
                     </div>
@@ -350,14 +350,75 @@
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
 
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+
+            api.closeWidget({
+                id: 'A6098458444100',
+                retData: {
+                    name: 'closeWidget'
+                },
+                silent:false,
+                animation: {
+                    type: 'flip',
+                    subType: 'from_bottom',
+                    duration: 500
+                }
+            });
+        });
+
+
+
         var obj=$api.getStorage('userObj');
         if (obj!=undefined){
-           api.openWin({
-                    name: 'index',
-                    url: '../../index.html',
-                    pageParam: {name: 'pageparamname'},
-                    bgColor:"#fff",
-           });
+            var mac=api.deviceId;
+            var phone=obj.cellphone;
+            api.ajax({
+                    url: ip+'/api/app/communitywanli/login/haveLogin',
+                    method: 'get',
+                    timeout: 10,
+                    dataType: 'json',
+                    returnAll: false,
+                    data: {
+                        values:{
+                            cellphone: phone,
+                            mac:mac
+                        }
+                    }
+                },
+                function (ret, err) {
+                    api.hideProgress();
+                    if (ret!=""){
+                        if (!ret.resultStatus) {
+                            api.toast({
+                                msg: "登录已过期，请重新登陆",
+                                duration: 4000,
+                                location: 'top'
+                            });
+                            setTimeout(function () {
+                                focusInput();
+                            },3000)
+                        }
+                        else {
+                            setTimeout(function () {
+                                api.openWin({
+                                    name: 'index',
+                                    url: '../../index.html',
+                                    pageParam: {name: 'pageparamname'},
+                                    bgColor:"#fff",
+                                });
+                            },1000);
+                        }
+                    }
+                    else {
+                        api.toast({
+                            msg: err.msg,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
+                });
         }else{
             setTimeout(function () {
                 focusInput();
@@ -365,16 +426,6 @@
         }
 
         checkFromByType();
-        //
-        // setTimeout(function () {
-        //     document.getElementById("loginBtn").click();
-        // },3000)
-
-        api.addEventListener({
-            name: 'keyback'
-        }, function(ret, err) {
-            closeThisWin();
-        });
 
         setInterval(function () {
             var networkType=api.connectionType;

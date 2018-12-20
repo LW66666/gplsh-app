@@ -22,8 +22,13 @@
 
         .btn-submit {
             color: #ffffff;
-            background-color: #4298fd;
+            background-color: #3f8cee;
             border-radius: 4rem;
+            -webkit-transition: background-color 0.3s;
+            -moz-transition: background-color 0.3s;
+            -ms-transition: background-color 0.3s;
+            -o-transition: background-color 0.3s;
+            transition: background-color 0.3s;
         }
 
         .btn-submit:active {
@@ -43,6 +48,10 @@
             max-height: 49px;
             line-height: 49px;
             font-size: 0.8125rem;
+        }
+
+        button[disabled]{
+            background-color:rgba(39,121,196,0.5);
         }
 
         .input-line {
@@ -74,13 +83,150 @@
     当来电呼叫失败时，设备可转移手机号
 </p>
 <div class="input-line">
-    <input type="text" id="phone" placeholder="请输入手机号码">
+    <input type="tel" maxlength="11" id="phone" placeholder="请输入手机号码">
 </div>
-<div class="aui-btn btn-submit btn-submit-position">
+<button class="aui-btn btn-submit btn-submit-position" disabled="disabled" id="loginBtn">
     立即保存
-</div>
+</button>
 </body>
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    var user;
+    apiready=function () {
+        user = $api.getStorage("userObj");
+        api.parseTapmode();
+
+        setTimeout(function () {
+            focusInput();
+        },300);
+    }
+
+    document.getElementById("phone").onchange=function(){
+        checkFromByType();
+    }
+    document.getElementById("phone").oninput=function(){
+        var checkStatus=checkFrame();
+        if (checkStatus){
+            document.getElementById("loginBtn").removeAttribute("disabled");
+        }else {
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    document.getElementById("loginBtn").onclick=function () {
+        checkFromByType(0);
+        var mac=api.deviceId;
+        var phone=document.getElementById("phone").value;
+        var chackStu=checkFrame();
+        if (chackStu==-1 || chackStu==-4 || chackStu==-7 || chackStu==-3 || chackStu==0) {
+            api.toast({
+                msg: "手机号码错误",
+                duration: 3000,
+                location: 'bottom'
+            });
+        }
+        else {
+            checkFromByType();
+            api.showProgress({
+                title: '设置中',
+                modal: false
+            });
+            var phone = user.cellphone;
+            var sipMobile= $api.dom('#phone').value;
+            var mac=api.deviceId;
+
+            api.ajax({
+                    url: ip+'/api/app/communitywanli/passThrough/callForwarding',
+                    method: 'post',
+                    timeout: 10,
+                    dataType: 'json',
+                    returnAll: false,
+                    data: {
+                        values: {
+                            cellphone: phone,
+                            sipMobile: sipMobile,
+                            mac:mac
+                        },
+                    }
+                },
+                function (ret, err) {
+                    console.log($api.jsonToStr(ret))
+                    console.log($api.jsonToStr(err))
+                    api.hideProgress();
+                    if (err!=""){
+                        api.toast({
+                            msg: err.msg.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    }
+                    if (ret!="") {
+                        api.toast({
+                            msg: ret.object.msg,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+        }
+    }
+
+
+    /**
+     * 检查表单
+     * */
+    function checkFrame() {
+        var phoneReg = /^(13[0-9]{1}|14[5|7|9]{1}|15[0-3|5-9]{1}|166|17[0-3|5-8]{1}|18[0-9]{1}|19[8-9]{1}){1}\d{8}$/;
+        var phone=document.getElementById("phone").value;
+        if (phoneReg.test(phone)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function checkFromByType() {
+        var checkStatus=checkFrame();
+        if(checkStatus){
+            document.getElementById("loginBtn").removeAttribute("disabled")
+        }
+        else{
+            api.toast({
+                msg: '请输入正确的手机号和密码',
+                duration: 2000,
+                location: 'top'
+            });
+            document.getElementById("loginBtn").setAttribute("disabled","disabled");
+        }
+    }
+
+    /**
+     * 打开输入验证码页面
+     */
+    function inputCode() {
+        api.openWin({
+            name: 'forget_inputcode_win',
+            url: 'forget_inputcode_win.html',
+            pageParam: {phone: document.getElementById("phone").value},
+            bgColor:"#fff",
+        });
+    }
+
+    function closeThisWin() {
+        api.closeWin();
+    }
+
+    /**
+     * 电话输入框获得焦点，并且弹起软键盘
+     */
+    function focusInput(){
+        // 使用模块弹出键盘
+        var softInput = api.require('softInputMgr');
+        softInput.toggleKeyboard();
+        // 将相应的输入框获取焦点
+        document.getElementById("phone").focus()
+    }
+</script>
 

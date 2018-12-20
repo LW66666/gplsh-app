@@ -85,6 +85,7 @@
             name: "application_record_frame",
             url: "application_record_frame.html",
             bgColor:"rgba(255,255,255,0)",
+            customRefreshHeader: 'UIPullRefreshMotive',
             rect: {
                 x: 0,
                 y: document.querySelector("header").offsetHeight+statusHeight,
@@ -92,14 +93,8 @@
                 h: 'auto'
             },
             pageParam: {name: 'pageparam'},
-            overScrollMode: "scrolls",
             bounces: true,
-            progress: {
-                type: "page",
-                title: "加载中",
-                text: "加载中",
-                color: "#000"
-            }
+            overScrollMode: "scrolls"
         });
     }
 

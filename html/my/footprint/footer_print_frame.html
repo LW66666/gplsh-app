@@ -154,3 +154,213 @@
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
+<script>
+    var user;
+    var mac;
+    var pageDate=new Date();
+    var pageIndex=1;
+    apiready = function () {
+        api.parseTapmode();
+        user=$api.getStorage("userObj")
+        mac=api.deviceId;
+
+        load(true,false);
+
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#eee',
+            images: [
+                'widget://image/logo.png',
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            }
+        }, function() {
+            load(false,true)
+        });
+    }
+
+    /**
+     * 加载数据
+     * @param loading 是否加loading
+     * @param refresh 是否刷新
+     */
+    function load(loading,refresh) {
+        user=$api.getStorage("userObj");
+        mac=api.deviceId;
+
+        if (loading){
+            api.showProgress({
+                title: '加载中',
+                modal: false
+            });
+        }
+        var phone=user.cellphone;
+        if (refresh){
+            pageDate=new Date();
+        }
+        var nextDate=getPreNumDate(pageDate,5);
+        api.ajax({
+                url: ip+'/api/app/communitywanli/userService/listUserTrackInfo',
+                method: 'get',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone:phone,
+                        mac: mac,
+                        endTime:pageDate.getFullYear()+"-"+(pageDate.getMonth()+1)+"-"+(pageDate.getDate()+1),
+                        startTime:nextDate.getFullYear()+"-"+(nextDate.getMonth()+1)+"-"+nextDate.getDate()
+                    }
+                }
+            },
+            function (ret, err) {
+                pageDate=nextDate;
+                api.hideProgress();
+                if (ret!=""){
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                        if (ret.message=="请重新登录") {
+                            setTimeout(function () {
+                                api.openWin({
+                                    name: 'pw_login_win',
+                                    url: '../login/pw_login_win.html',
+                                });
+                            },1000);
+                        }
+                    }
+                    else {
+                        var keyBox=document.querySelector("body");
+                        var obj=ret.object;
+                        var workedObj = getRecordArray(obj);
+                        if (refresh){
+                            api.toast({
+                                msg: "刷新成功",
+                                duration: 3000,
+                                location: 'bottom'
+                            });
+                            api.refreshHeaderLoadDone()
+                        }
+                        if (workedObj.length==0){
+                        }else {
+                            if (workedObj[0].objArr.length>=8 && (pageDate.getMonth()+1)==new Date().getDate()){
+                                api.addEventListener({
+                                    name:'scrolltobottom',
+                                    extra:{
+                                        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+                                    }
+                                }, function(ret, err){
+                                    load(false,false);
+                                });
+                            }
+
+                            //如果是刷新或者加载，则重新
+                            if (refresh || loading){
+                                keyBox.innerHTML="";
+                            }
+
+                            for (var dateData of workedObj){
+                                var divDom=document.createElement("div");
+                                var html='<section class="section">\n' +
+                                    '    <div class="left">\n' +
+                                    '        <strong>'+dateData.time.getDate()+'</strong>\n' +
+                                    '        <span>'+dateData.time.getMonth()+'月</span>\n' +
+                                    '    </div><div class="right">';
+                                for (var data of dateData.objArr){
+                                    html+='<div class="info">\n' +
+                                        '            <strong>'+data.title+' <span class="time">'+data.gmtVisit.split(" ")[1]+'</span></strong>\n' +
+                                        '            <p>'+data.content+'</p>\n' +
+                                        '</div>\n';
+                                }
+                                html+= '</div></section>';
+                                divDom.innerHTML=html;
+                                keyBox.appendChild(divDom.childNodes[0]);
+                            }
+                        }
+                    }
+                }
+                else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+    }
+
+    /**
+     * 将获得的足迹数据进行加工
+     * @param obj 请求获得的数据
+     * @returns {any[]} 返回处理好了数据对象
+     */
+    function getRecordArray(obj) {
+        var recordArray=new Array();
+
+        for (var recObj of obj){
+            var date=new Date(recObj.gmtVisit);
+            if (recordArray.length==0){
+                recordArray.push({
+                    time:date,
+                    objArr:[recObj]
+                });
+            }else {
+                var lastDate=recordArray[recordArray.length-1].time;
+                if (date.getFullYear()==lastDate.getFullYear() && date.getMonth()==lastDate.getMonth() && date.getDate()==lastDate.getDate()){
+                    recordArray[recordArray.length-1].objArr.push(recObj);
+                }else {
+                    recordArray.push({
+                        time:date,
+                        objArr:[recObj]
+                    });
+                }
+            }
+        }
+
+        return recordArray;
+    }
+
+    /**
+     * 获取后num几天的日期值
+     * @param date 当前日期
+     * @param num 后几天
+     * @returns {Date} 返回日期对象
+     */
+    function getLaterNumDate(date,num) {
+        var monthMax=new Date(date.getFullYear(),date.getMonth()+1,0).getDate();
+        if ((date.getDate()+num)>monthMax){
+            if (date.getMonth()==11){
+                return new Date(date.getFullYear()+1,0,num-(monthMax-date.getDate()));
+            }else {
+                return new Date(date.getFullYear(),date.getMonth+1,num-(monthMax-date.getDate()));
+            }
+        }else {
+            return new Date(date.getFullYear(),date.getMonth(),date.getDate()+num);
+        }
+    }
+
+    /**
+     * 获取num天之前的日期
+     * @param date 当前日期
+     * @param num num天之前
+     * @returns {Date} 返回日期对象
+     */
+    function getPreNumDate(date,num) {
+        if ((date.getDate()-num)<1){
+            if (date.getMonth()==1){
+                return new Date(date.getFullYear()-1,11,31+(date.getDate()-num));
+            }else {
+                var preMonthMax=new Date(date.getFullYear(),date.getMonth()-2,0).getDate();
+                return new Date(date.getFullYear(),date.getMonth()-1,preMonthMax+(date.getDate()-num));
+            }
+        }else {
+            return new Date(date.getFullYear(),date.getMonth(),date.getDate()-num);
+        }
+    }
+</script>

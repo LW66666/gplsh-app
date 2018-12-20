@@ -276,7 +276,7 @@
 <script src="../script/api.js"></script>
 <script>
     apiready = function () {
-        var user= $api.getStorage('userObj');
+        var user= $api.getStorage('userObj');console.log(user)
         var systemType = api.systemType;
         if (systemType === 'android') {
             document.querySelector("header").setAttribute("style", "padding-top:-25px");
