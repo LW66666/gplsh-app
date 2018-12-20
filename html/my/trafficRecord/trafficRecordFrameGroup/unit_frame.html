@@ -97,41 +97,49 @@
         }
 
         .time-row {
+            position: relative;
             box-sizing: border-box;
             font-size: 0.75rem;
             width: 100%;
+            height: 32px;
+            line-height: 32px;
             text-align: right;
-            margin-top: 44.5px;
             padding-right: 5px;
+            margin-top: 36.4px;
         }
 
         .time-row:first-child {
-            margin-top: 3px;
-        }
-
-        .time-row {
-            position: relative;
-            top: -2px;
+            margin-top: -5px;
         }
 
         .time-row.inner {
             font-size: 0.625rem;
             color: #6b6a6a;
+            line-height: 16px;
+            margin-top: 42.4px;
         }
 
         .info-details:first-child {
-            height: 64px;
+            height: 63.5px;
         }
 
         .info-details {
             position: relative;
             width: 100%;
-            height: 73px;
+            height: 74.4px;
+        }
+        .info-details.empty{
+            height: 67.4px;
+        }
+
+        .time-info .info-details.empty:first-child{
+            height: 66px;
         }
 
         .info-details .info-left {
             width: calc(100% - 85px);
             padding-left: 5px;
+
         }
 
         .info-left div:first-child {
@@ -188,188 +196,135 @@
             color: #888888;
             font-size: .75rem;
         }
+        .aui-hide{
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-<div class="time-block">
-    <div class="left-time">
-        <div class="time-row">
-            12-10
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">人脸开门</p>
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-        <div class="time-row">
-            12-09
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-    </div>
-    <div class="time-node">
-        <i class="round"></i>
-        <i class="round round-nice"></i>
-        <i class="round round-nice"></i>
-        <i class="round"></i>
-        <i class="round round-nice"></i>
-        <i class="round-hidden"></i>
-    </div>
-    <div class="time-info">
-        <div class="info-details">
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/out.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-    </div>
+<div id="app">
+
+    <!--<div class="time-block">-->
+        <!--<div class="left-time">-->
+            <!--<div class="time-row">-->
+                <!--12-10-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">人脸开门</p>-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">app开门</p>-->
+            <!--</div>-->
+            <!--<div class="time-row">-->
+                <!--12-09-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">app开门</p>-->
+            <!--</div>-->
+            <!--<div class="time-row">-->
+                <!--12-09-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">app开门</p>-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">app开门</p>-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">app开门</p>-->
+            <!--</div>-->
+            <!--<div class="time-row inner">-->
+                <!--19:10-->
+                <!--<p class="row-details">app开门</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="time-node">-->
+            <!--<i class="round"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round round-nice"></i>-->
+            <!--<i class="round-hidden"></i>-->
+        <!--</div>-->
+        <!--<div class="time-info">-->
+            <!--<div class="info-details empty">-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/out.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+            <!--<div class="info-details empty">-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+            <!--<div class="info-details empty">-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+            <!--<div class="info-details">-->
+                <!--<div class="info-left">-->
+                    <!--<div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>-->
+                    <!--<div>南昌外滩国际一栋二单元</div>-->
+                <!--</div>-->
+                <!--<img class="avatar" src="../../../../image/my/traffic/boge.png"/>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="next-year">2017年</div>-->
 </div>
-<div class="next-year">2017年</div>
-
-<div class="time-block">
-    <div class="left-time">
-        <div class="time-row">
-            12-10
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">人脸开门</p>
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-        <div class="time-row">
-            12-09
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-        <div class="time-row">
-            12-09
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-        <div class="time-row inner">
-            19:10
-            <p class="row-details">app开门</p>
-        </div>
-    </div>
-    <div class="time-node">
-        <i class="round"></i>
-        <i class="round round-nice"></i>
-        <i class="round round-nice"></i>
-        <i class="round"></i>
-        <i class="round round-nice"></i>
-        <i class="round"></i>
-        <i class="round round-nice"></i>
-        <i class="round round-nice"></i>
-        <i class="round round-nice"></i>
-        <i class="round round-nice"></i>
-        <i class="round-hidden"></i>
-    </div>
-    <div class="time-info">
-        <div class="info-details">
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/out.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-        <div class="info-details">
-            <div class="info-left">
-                <div>1栋二单元<img src="../../../../image/my/traffic/enter.png"/></div>
-                <div>南昌外滩国际一栋二单元</div>
-            </div>
-            <img class="avatar" src="../../../../image/my/traffic/boge.png"/>
-        </div>
-    </div>
-</div>
-
-
 <div class="empty-info aui-hide">
     <img src="../../../../image/applyKey/empty.png"/>
     <p id="emptyTip">
-        亲，你还没有通行记录哦~
+        亲，你还没有小区通行记录哦~
     </p>
 </div>
+
 </body>
 
 </html>
@@ -382,7 +337,7 @@
 
     function initItem() {
         var user = $api.getStorage(Static.USEROBJ);
-        api.alert({msg: JSON.stringify(user)});
+        // api.alert({msg:JSON.stringify(user)});
         if (user.householdRoomList && user.householdRoomList[0] && user.householdRoomList[0].communityCode) {
             //这是有房子的人
             api.ajax({
@@ -408,8 +363,60 @@
                     } else {
                         var list = ret.object;
                         if (list && list.length > 0) {
-                            //有记录
+                            var y = new Date().getFullYear().toString();
+                            var m = list[0].accessTime.substring(5, 7);
+                            var d = list[0].accessTime.substring(8, 10);
+                            var all = ['<div class="time-block">'];
+                            var $leftTime = ['<div class="left-time"><div class="time-row">'+ m + '-' + d + '</div>'];
+                            var $timeNode = ['<div class="time-node"><i class="round"></i>'];
+                            var $timeInfo = ['<div class="time-info"><div class="info-details empty"></div>'];
 
+                            for (var i = 0; i < list.length; i++) {
+                                var time = [
+                                    list[i].accessTime.substring(0, 4),
+                                    list[i].accessTime.substring(5, 7),
+                                    list[i].accessTime.substring(8, 10)
+                                ];
+
+                                if (m !== time[1] || d !== time[2]) {
+                                    $leftTime.push('<div class="time-row">' + time[1] + '-' + time[2] + '</div>');
+                                    $timeNode.push('<i class="round"></i>');
+                                    $timeInfo.push('<div class="info-details empty"></div>');
+                                    m = time[1];
+                                    d = time[2];
+                                }
+                                $leftTime.push('<div class="time-row inner">' + list[i].accessTime.substring(11, 16) + '<p class="row-details">' + getMsgByType(parseInt(list[i].interactiveType)) + '</p></div>');
+                                $timeNode.push('<i class="round round-nice"></i>');
+                                $timeInfo.push('<div class="info-details">' +
+                                    '<div class="info-left">' +
+                                        '<div>' + list[i].buildingName + list[i].unitName + '<img src="../../../../image/my/traffic/enter.png"/></div>' +
+                                        '<div>' + list[i].communityName + list[i].zoneName + list[i].buildingName + list[i].unitName + '</div>' +
+                                    '</div>' +
+                                        '<img class="avatar" src="' + list[i].accessImgUrl + '"/>' +
+                                    '</div>');
+
+                                if (time[0] !== y) {
+                                    all.push($leftTime.join('') + '</div>');
+                                    all.push($timeNode.join('') + '<i class="round-hidden"></i></div>');
+                                    all.push($timeInfo.join('') + '</div>');
+                                    //非今年
+                                    all.push('</div><div class="next-year">' + time[0] + '年</div>');
+                                    y = time[0];
+                                    all.push('<div class="time-block">');
+                                    $leftTime = ['<div class="left-time">'];
+                                    $timeNode = ['<div class="time-node">'];
+                                    $timeInfo = ['<div class="time-info">'];
+                                }
+
+                            }
+                            if (y === new Date().getFullYear().toString()) {
+                                all.push($leftTime.join('') + '</div>');
+                                all.push($timeNode.join('') + '<i class="round-hidden"></i></div>');
+                                all.push($timeInfo.join('') + '</div>');
+                                all.push('</div>');
+                            }
+                            api.alert({msg: JSON.stringify(all)});
+                            $api.append($api.dom('#app'), all.join(''));
                         } else {
                             $api.removeCls($api.dom('.empty-info'), 'aui-hide');
                         }
@@ -426,6 +433,38 @@
             //没房子的
             $api.removeCls($api.dom('.empty-info'), 'aui-hide');
             $api.text($api.dom('#emptyTip'), '天呐，您还木有添加住宅~');
+        }
+    }
+
+
+    function getMsgByType(type) {
+        switch (type) {
+            case 0:
+                return '其他开门';
+            case 1:
+                return '刷卡开门';
+            case 2:
+                return '密码开门';
+            case 3:
+                return 'APP开门';
+            case 4:
+                return '分机开门';
+            case 5:
+                return '二维码开门';
+            case 6:
+                return '蓝牙开门';
+            case 7:
+                return '按钮开门';
+            case 8:
+                return '手机开门';
+            case 9:
+                return '人脸识别';
+            case 10:
+                return ':固定密码';
+            case 11:
+                return 'http开门';
+            default:
+                return '其它开门';
         }
     }
 
