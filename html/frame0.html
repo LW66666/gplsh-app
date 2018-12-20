@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta-data name="com.baidu.lbsapi.API_KEY" value="VsPvNudlwsN7lNZElhyhNdnIXkM5puNN" />
     <title>通行</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
@@ -80,7 +81,7 @@
             background: #fff;
             width: 5px;
             height: 5px;
-            margin: 3px 9.5px 3px 7px;
+            margin: 1px 2px 1px 2px;
         }
 
         .boxBottom {
@@ -184,7 +185,7 @@
             </div>
         </div>
         <div class="aui-row">
-            <span>李霞</span><span>女士</span>，<span>下午好！</span>
+            <span>李霞</span><span>先生</span>，<span>下午好！</span>
         </div>
         <div class=" aui-row">
             <div class="aui-col-xs-6 aui-text-left">
@@ -193,18 +194,17 @@
                     <small>℃</small>
                 </h1>
                 <h2>
-                    <img src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt=""
-                         style="display: inline-block;">
+                    <img src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt="" style="display: inline-block;">
                     <span style="padding-right: 15px;">阴</span>
                     <span>空气优</span>
                 </h2>
             </div>
-            <div class="aui-col-xs-6 aui-text-right" style="padding-top: 45px">
-                <h2>2018年11月26日</h2>
+            <div class="aui-col-xs-6 aui-text-right" style="padding-top: 52px">
+                <h2 >2018年11月26日</h2>
                 <h2>
-                    星期一
+                    <span>星期一</span>
                     <span class="aui-dot"></span>
-                    限行2和4
+                    限行<span>2</span>和<span>4</span>
                 </h2>
             </div>
         </div>
@@ -246,11 +246,38 @@
 </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/static.js"></script>
 <script>
     var remindStatus = true;
+    var user= $api.getStorage('userObj');
     apiready = function () {
+        var bMap = api.require('bMap');
+        bMap.getLocation({
+            accuracy: '100m',
+            autoStop: true,
+            filter: 1
+        },
+            function(ret, err) {
+            if (ret.status) {
+                console.log(JSON.stringify(ret));
+                bMap.getNameFromCoords({
+                    lon: 116.384767,
+                    lat: 39.989539
+                }, function(ret, err) {
+                    console.log(JSON.stringify(ret));
+                    if (ret.status) {
+                        alert(JSON.stringify(ret));
+                    }
+                });
+            } else {
+                console.log(err.code);
+            }
+        })
+
         api.parseTapmode();
+
+        setTime();
+        setWeather("nanchang");
+
         var systemType = api.systemType;
         if (systemType == "android") {
             document.getElementById("topBox").setAttribute("style", "padding-top:25px");
@@ -259,8 +286,14 @@
         }
         var obj=$api.getStorage("userObj");
         document.querySelector(".aui-row:nth-child(2)>span:nth-child(1)").innerHTML=obj.nickname;
+        if (obj.gender==1){
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"先生");
+        }else {
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"女士");
+        }
         document.querySelector(".aui-row:nth-child(2)>span:nth-child(2)").innerHTML=(obj.gender==1)?"先生":"女士";
     }
+
     document.getElementById("remind").onclick = function () {
         remindStatus = !remindStatus;
         if (remindStatus) {
@@ -295,16 +328,31 @@
      * 打开访客邀请
      */
     function inviteGuests() {
-        api.openWin({
-            name: 'invite_guests_win',
-            url: 'traffic/invite_guests_win.html',
-            pageParam: {name: 'pageparamname'},
-            bgColor: "#fff",
-            bounces: false,
-            vScrollBarEnabled: false,
-            hScrollBarEnabled: false,
-            slidBackEnabled: false,
-        });
+        var user=$api.getStorage("userObj");
+        if (user.householdRoomList==undefined){
+            api.toast({
+                msg: "未授权app,请先申请钥匙",
+                duration: 3000,
+                location: 'bottom'
+            });
+            setTimeout(function () {
+                api.openWin({
+                    name: 'applyKeyWin',
+                    url: './applyKey/apply_main.html'
+                });
+            },1000)
+        }else {
+            api.openWin({
+                name: 'invite_guests_win',
+                url: 'traffic/invite_guests_win.html',
+                pageParam: {name: 'pageparamname'},
+                bgColor: "#fff",
+                bounces: false,
+                vScrollBarEnabled: false,
+                hScrollBarEnabled: false,
+                slidBackEnabled: false,
+            });
+        }
     }
 
     /**
@@ -332,6 +380,82 @@
             name: 'callHelpWin',
             url: './callHelp/call_help.html'
         })
+    }
+
+    /**
+     * 设置首页时间
+     */
+    function setTime() {
+        var date = new Date();
+        if (date.getHours()>=0 && date.getHours()<8){
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"早上好！");
+        }else if (date.getHours()>=8 && date.getHours()<12){
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"上午好！");
+        }else if (date.getHours()>=12 && date.getHours()<13){
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"中午好！");
+        }else if (date.getHours()>=13 && date.getHours()<18){
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"下午好！");
+        }else if (date.getHours()>=18 && date.getHours()<24){
+            $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"晚上好！");
+        }
+        $api.text($api.domAll(".boxTop .aui-row:nth-child(3) h2")[1],date.getFullYear()+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日");
+
+        if (date.getDay()==1){
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期一");
+        }else if (date.getDay()==2) {
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期二");
+        }else if (date.getDay()==3) {
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期三");
+        }else if (date.getDay()==4) {
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期四");
+        }else if (date.getDay()==5) {
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期五");
+        }else if (date.getDay()==6) {
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期六");
+        }else if (date.getDay()==0) {
+            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(1)"),"星期日");
+        }
+    }
+
+    function setWeather(region) {
+        var phone=user.cellphone;
+        var mac=api.deviceId;
+        api.ajax({
+                url: ip+'/api/app/communitywanli/passThrough/getWeather',
+                method: 'get',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac: mac,
+                        region:region
+                    }
+                }
+            },
+            function (ret, err) {
+            console.log(JSON.stringify(ret))
+                if (ret!=""){
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
+                    else {
+                        var obj=ret.object;
+
+                    }
+                }else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'top'
+                    });
+                }
+            });
     }
 </script>
 </html>

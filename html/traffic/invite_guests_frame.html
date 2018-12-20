@@ -19,7 +19,6 @@
         }
         section{
             width: 100%;
-            height: 100%;
         }
         section .aui-row:nth-child(1){
             padding: 16px  30.5px 16px 22.5px;
@@ -361,16 +360,16 @@
                     <div class="aui-list-item">
                         <div class="aui-list-item-inner">
                             <div class="aui-list-item-input">
-                                <label tapmode><input class="aui-radio" type="radio" name="demo1" checked><span> 今天 &nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-                                <label tapmode><input class="aui-radio" type="radio" name="demo1"><span> 明天</span></label>
+                                <label tapmode><input class="aui-radio" data-time="0" type="radio" name="demo1" checked><span> 今天 &nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+                                <label tapmode><input class="aui-radio" data-time="1" type="radio" name="demo1"><span> 明天</span></label>
                             </div>
                         </div>
                     </div>
                     <div class="aui-list-item">
                         <div class="aui-list-item-inner">
                             <div class="aui-list-item-input">
-                                <label tapmode><input class="aui-radio" type="radio" name="demo2" checked><span> 仅一次&nbsp;&nbsp;</span></label>
-                                <label tapmode><input class="aui-radio" type="radio" name="demo2"><span> 无限次数</span></label>
+                                <label tapmode><input class="aui-radio" data-num="1" type="radio" name="demo2" checked><span> 仅一次&nbsp;&nbsp;</span></label>
+                                <label tapmode><input class="aui-radio" data-num="0" type="radio" name="demo2"><span> 无限次数</span></label>
                             </div>
                         </div>
                     </div>
@@ -386,7 +385,7 @@
                         <div class="aui-list-item-title">选择门锁</div>
                     </div>
                     <div class="aui-col-xs-6 aui-text-right">
-                        <div class="aui-list-item-title" style="color: #8c8c8c;" id="selectKey">公共钥匙</div>
+                        <div class="aui-list-item-title" style="color: #8c8c8c;" id="selectKey">请选择门锁</div>
                     </div>
                 </div>
             </li>
@@ -404,28 +403,28 @@
         </div>
         <div class="aui-col-xs-12" id="keyMsg">
             <div class="aui-text-center">
-                <span>公共钥匙</span>
+                <span id="keyType">公共钥匙</span>
             </div>
             <div class="aui-text-center">
-                <span>1241</span>
+                <span id="keyCode">1241</span>
             </div>
             <div class="aui-text-center">
                 <span>2018-12-04 10:46:12</span>
             </div>
             <div class="shareBox">
-                <div class="aui-text-center" tapmode>
+                <div class="aui-text-center" tapmode onclick="shareToQQ()">
                     <i class="aui-iconfont aui-icon-qq" style="background: #4298fd;border: none;"></i>
                     <div>QQ</div>
                 </div>
-                <div class="aui-text-center" tapmode>
+                <div class="aui-text-center" tapmode onclick="shareToWechat()">
                     <i class="aui-iconfont aui-icon-wechat" style="border: #06b043 solid 1px;color: #06b043;"></i>
                     <div>微信</div>
                 </div>
-                <div class="aui-text-center" tapmode>
-                    <i class="aui-iconfont aui-icon-comment" style="border: #069eb0 solid 1px;color: #069eb0;"></i>
+                <div class="aui-text-center" tapmode onclick="shareToText()">
+                    <i class="aui-iconfont aui-icon-comment" onclick="shareToText()" style="border: #069eb0 solid 1px;color: #069eb0;"></i>
                     <div>短信</div>
                 </div>
-                <div class="aui-text-center" tapmode>
+                <div class="aui-text-center" tapmode  onclick="copyKey()">
                     <i style="border: #ed7c03 solid 1px;color: #ed7c03;">
                         <img src="../../image/traffic/copy.png" alt="">
                     </i>
@@ -439,9 +438,13 @@
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/aui-dialog.js" ></script>
 <script>
-    var checkStatus=1;
+    var mac;
+    var user;
+    var groupid;
     apiready = function () {
         api.parseTapmode();
+        mac=api.deviceId;
+        user=$api.getStorage("userObj");
     }
 
     /**
@@ -449,49 +452,77 @@
      * */
     function chooseKey() {
         var dialog = new auiDialog({});
-        var msg="";
-        if (checkStatus==1){
-            msg='<div class="aui-list-item">\n' +
-                '    <div class="aui-list-item-inner">\n' +
-                '        <div class="aui-list-item-input">\n' +
-                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(1)" checked><span> 公共钥匙 &nbsp;&nbsp;&nbsp;&nbsp;</span></label>\n' +
-                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(2)"><span> 单元钥匙</span></label>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</div>';
-        }else {
-            msg='<div class="aui-list-item">\n' +
-                '    <div class="aui-list-item-inner">\n' +
-                '        <div class="aui-list-item-input">\n' +
-                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(1)" ><span> 公共钥匙 &nbsp;&nbsp;&nbsp;&nbsp;</span></label>\n' +
-                '            <label tapmode><input class="aui-radio" type="radio" name="key" onchange="alertKeyChange(2)" checked><span> 单元钥匙</span></label>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</div>';
+        var phone=user.cellphone;
+        var msg='';
+        api.ajax({
+                url: ip+'/api/app/communitywanli/passThrough/getDeviceGroup',
+                method: 'get',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac: mac,
+                        communityCode:user.householdRoomList[0].communityCode,
+                    }
+                }
+            },
+            function (ret, err) {
+                if (ret!=""){
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'top'
+                        });
+                    }
+                    else {
+                        var objArray=ret.object;
+                        var checked="";
+                        for (var obj of objArray){
+                            if (obj.deviceGroupId==groupid){
+                                checked = 'checked  ';
+                            }
+                            msg+='<div class="aui-list-item">\n' +
+                                '    <div class="aui-list-item-inner">\n' +
+                                '        <div class="aui-list-item-input">\n' +
+                                '            <label tapmode><input class="aui-radio" type="radio" name="key" ' +checked +
+                                'data-groupid="'+obj.deviceGroupId+'" onchange="alertKeyChange(this)"' +
+                                'data-groupname="'+obj.deviceGroupName+'" />&nbsp;&nbsp;'+
+                                '<span>'+obj.deviceGroupName+'</span></label>\n' +
+                                '        </div>\n' +
+                                '    </div>\n' +
+                                '</div>';
+                        }
+                        dialog.alert({
+                            title:"访客邀请",
+                            msg:msg,
+                            buttons:['取消','确定']
+                        },function(ret){
+                            if(ret){
+                                var index=ret.buttonIndex;
+                            }
+                        })
+                    }
+                }else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'top'
+                    });
+                }
+            });
 
-        }
-        dialog.alert({
-            title:"访客邀请",
-            msg:msg,
-            buttons:['取消','确定']
-        },function(ret){
-            if(ret){
-                var index=ret.buttonIndex;
-            }
-        })
     }
 
     /**
      * 弹出框改变事件
      * @param num 当前选中的数值
      */
-    function alertKeyChange(num) {
-        checkStatus=num;
-        if (num ==1){
-            document.getElementById("selectKey").innerHTML="公共钥匙";
-        }else {
-            document.getElementById("selectKey").innerHTML="单元钥匙";
-        }
+    function alertKeyChange(dom) {
+        groupid=dom.dataset.groupid;
+        document.getElementById("selectKey").innerHTML=dom.dataset.groupname;
     }
 
     /**
@@ -510,14 +541,158 @@
         });
     }
 
-
+    /**
+     * 申请访客钥匙
+     **/
     function openKeyMsg() {
-        document.querySelector(".keyMsg").setAttribute("style","display: block;background: rgba(0,0,0,0.5);")
-        document.querySelector(".keyMsgBox").setAttribute("style","transform: translateX(0%)");
+        var user=$api.getStorage("userObj");
+        if (groupid == undefined || groupid == "") {
+            api.toast({
+                msg: "请选择门锁",
+                duration: 3000,
+                location: 'top'
+            });
+        }else {
+            //待解决，申请钥匙选择中的communityCode应该为首页中设置的小区的communityCode
+            api.showProgress({
+                title: '申请中',
+                modal: false
+            });
+            var phone=user.cellphone;
+            var dateTag=document.querySelector("input[name='demo1']:checked").dataset.time;
+            var times=document.querySelector("input[name='demo2']:checked").dataset.num;
+            api.ajax({
+                    url: ip+'/api/app/communitywanli/passThrough/getInviteCode',
+                    method: 'post',
+                    timeout: 10,
+                    dataType: 'json',
+                    returnAll: false,
+                    data: {
+                        values:{
+                            cellphone: phone,
+                            dateTag: dateTag,
+                            times:times,
+                            deviceGroupId:groupid,
+                            communityCode: user.householdRoomList[0].communityCode
+                        }
+                    }
+                },
+                function (ret, err) {
+                    api.hideProgress();
+                    if (ret!=""){
+                        if (!ret.resultStatus) {
+                            api.toast({
+                                msg: ret.message,
+                                duration: 3000,
+                                location: 'bottom'
+                            });
+                            if (ret.message=="请重新登录") {
+                                setTimeout(function () {
+                                    api.openWin({
+                                        name: 'pw_login_win',
+                                        url: '../login/pw_login_win.html',
+                                    });
+                                },1000);
+                            }
+                        }
+                        else {
+                            var obj=ret.object;
+                            api.toast({
+                                msg: "申请成功",
+                                duration: 3000,
+                                location: 'top'
+                            });
+                            document.querySelector(".keyMsg").setAttribute("style","display: block;background: rgba(0,0,0,0.5);");
+                            document.querySelector(".keyMsgBox").setAttribute("style","transform: translateX(0%)");
+                            document.getElementById("keyCode").innerText=obj.inviteCode;
+                            document.getElementById("keyType").innerText=document.getElementById("selectKey").innerText;
+                        }
+                    }else {
+                        api.toast({
+                            msg: err.msg,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+        }
     }
+
+    /**
+     * 关闭钥匙信息窗
+     * */
     function closeKeyMsg() {
         document.querySelector(".keyMsg").setAttribute("style","display: none;background: rgba(0,0,0,0);")
         document.querySelector(".keyMsgBox").setAttribute("style","transform: translateX(100%)");
+    }
+
+    /**
+     *复制钥匙嘛到剪贴板
+     **/
+    function copyKey() {
+        var code=document.getElementById("keyCode").innerText;var clipBoard = api.require('clipBoard');
+        clipBoard.set({
+            value: code
+        }, function(ret, err) {
+            if (ret) {
+                if (ret.status){
+                    api.toast({
+                        msg: "成功复制到粘贴板",
+                        duration: 3000,
+                        location: 'top'
+                    });
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'top'
+                });
+            }
+        });
+    }
+
+    /**
+     * 分享到qq
+     */
+    function shareToQQ() {
+        api.toast({
+            msg: "模块开发中",
+            duration: 3000,
+            location: 'top'
+        });
+    }
+
+    /**
+     * 分享到微信
+     */
+    function shareToWechat() {
+        api.toast({
+            msg: "模块开发中",
+            duration: 3000,
+            location: 'top'
+        });
+    }
+
+    /**
+     * 分享到短信
+     */
+    function shareToText() {
+        var code=document.getElementById("keyCode").innerText;var clipBoard = api.require('clipBoard');
+        var dateTag=document.querySelector("input[name='demo1']:checked").dataset.time;
+        var times=document.querySelector("input[name='demo2']:checked").dataset.num;
+        var date=(dateTag==0)?"今天":"明天";
+        var time=(times==0)?"无限次":"一次";
+        api.sms({
+            numbers: [],
+            text: '嘿，我申请了一个到我小区的临时开锁密码，有效期为：'+date+'，使用次数为：'+time+"。开锁密码为："+code+"。记得使用哦",
+        }, function(ret, err) {
+            api.toast({
+                msg: "发送成功",
+                duration: 3000,
+                location: 'top'
+            });
+        });
     }
 </script>
 </html>

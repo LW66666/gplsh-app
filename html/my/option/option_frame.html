@@ -320,19 +320,55 @@
             buttons: ['确认', '取消']
         }, function (ret, err) {
             if (ret.buttonIndex === 1) {
+                var mac=api.deviceId;
+                var phone=$api.getStorage("userObj");
+
                 //点击了确认
                 api.showProgress({
                     title: '正在退出'
                 });
-                setTimeout(function () {
-                    $api.rmStorage("userObj");
-                    api.openWin({
-                        name: 'pw_login_win',
-                        url: '../../login/pw_login_win.html',
-                        pageParam: {name: 'pageparamname'}
+                api.ajax({
+                        url: ip+'/api/app/communitywanli/login/loginOut',
+                        method: 'get',
+                        timeout: 10,
+                        dataType: 'json',
+                        returnAll: false,
+                        data: {
+                            values:{
+                                cellphone: phone,
+                                mac:mac
+                            }
+                        }
+                    },
+                    function (ret, err) {
+                        api.hideProgress();
+                        if (ret!=""){
+                            api.toast({
+                                msg: "已退出登录",
+                                duration: 4000,
+                                location: 'top'
+                            });
+                            $api.rmStorage("userObj");
+                            api.closeWin({
+                                name:"index"
+                            });
+                            setTimeout(function () {
+                                $api.rmStorage("userObj");
+                                api.openWin({
+                                    name: 'pw_login_win',
+                                    url: '../../login/pw_login_win.html',
+                                    pageParam: {name: 'pageparamname'}
+                                });
+                            },300)
+                        }
+                        else {
+                            api.toast({
+                                msg: err.msg,
+                                duration: 3000,
+                                location: 'top'
+                            });
+                        }
                     });
-                    api.hideProgress();
-                },1000)
             }
         });
     }

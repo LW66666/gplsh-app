@@ -267,10 +267,12 @@
             data: {
                 values: {
                     cellphone: phone,
-                    newPassword: pw
+                    newPassword: pw,
+                    mac:mac
                 },
             }
-        }, function (ret, err) {
+        },
+            function (ret, err) {
             api.hideProgress();
             if (err!=""){
                 api.toast({

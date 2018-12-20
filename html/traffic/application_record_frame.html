@@ -8,6 +8,10 @@
     <title>申请记录frame</title>
     <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
     <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
         body{
             width: 100%;
             height: 100vh;
@@ -15,26 +19,20 @@
         }
         section {
             width: 100%;
-            height: 100%;
-        }
-
-        section {
             flex: 1;
             position: relative;
             width: 100%;
         }
 
         section .keyWarp {
-            position: absolute;
+            position: relative;
             width: 100%;
-            height: 100%;
-            padding: 25px 15px 0;
+            padding: 25px 15px;
             transition: all 0.6s;
         }
 
         section .keyWarp:nth-child(1) {
             width: 100%;
-            height: 100%;
         }
 
         section .keyWarp:nth-child(2) {
@@ -92,44 +90,194 @@
 <body style="background: rgba(255,255,255,0);">
 <section class="aui-content">
     <div class="keyWarp">
-        <div class="aui-row key" tapmode>
-            <div class="aui-col-xs-6 aui-text-left">
-                <h2>4120</h2>
-                <div>高级设置</div>
-            </div>
-            <div class="aui-col-xs-6 aui-text-right">
-                <h3 class="keyNotUse">未使用</h3>
-                <div>2018-12-01 08:30</div>
-            </div>
-        </div>
-        <div class="aui-row key" tapmode>
-            <div class="aui-col-xs-6 aui-text-left">
-                <h2>4120</h2>
-                <div>高级设置</div>
-            </div>
-            <div class="aui-col-xs-6 aui-text-right">
-                <h3 class="keyUsed">已使用</h3>
-                <div>2018-12-01 08:30</div>
-            </div>
-        </div>
-        <div class="aui-row key" tapmode>
-            <div class="aui-col-xs-6 aui-text-left">
-                <h2>4120</h2>
-                <div>今日无限次数</div>
-            </div>
-            <div class="aui-col-xs-6 aui-text-right">
-                <h3 class="keyOverdue">已过期</h3>
-                <div>2018-12-01 08:30</div>
-            </div>
-        </div>
+        <!--<div class="aui-row key" tapmode>-->
+            <!--<div class="aui-col-xs-6 aui-text-left">-->
+                <!--<h2>4120</h2>-->
+                <!--<div>高级设置</div>-->
+            <!--</div>-->
+            <!--<div class="aui-col-xs-6 aui-text-right">-->
+                <!--<h3 class="keyNotUse">未使用</h3>-->
+                <!--<div>2018-12-01 08:30</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="aui-row key" tapmode>-->
+            <!--<div class="aui-col-xs-6 aui-text-left">-->
+                <!--<h2>4120</h2>-->
+                <!--<div>高级设置</div>-->
+            <!--</div>-->
+            <!--<div class="aui-col-xs-6 aui-text-right">-->
+                <!--<h3 class="keyUsed">已使用</h3>-->
+                <!--<div>2018-12-01 08:30</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="aui-row key" tapmode>-->
+            <!--<div class="aui-col-xs-6 aui-text-left">-->
+                <!--<h2>4120</h2>-->
+                <!--<div>今日无限次数</div>-->
+            <!--</div>-->
+            <!--<div class="aui-col-xs-6 aui-text-right">-->
+                <!--<h3 class="keyOverdue">已过期</h3>-->
+                <!--<div>2018-12-01 08:30</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script>
+    var user;
+    var mac;
+    var pageIndex=1;
+    var pageSize=20;
     apiready = function () {
         api.parseTapmode();
+        user=$api.getStorage("userObj")
+        mac=api.deviceId;
+
+        load(true,pageIndex++);
+
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#eee',
+            images: [
+                'widget://image/logo.png',
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            }
+        }, function() {
+            load(false,1,true)
+        });
     }
 
+    /**
+     * 加载数据
+     * @param loading 是否加loading
+     * @param pageindex 分页编号
+     * @param refresh 是否刷新
+     */
+    function load(loading,pageindex,refresh) {
+        api.parseTapmode();
+        user=$api.getStorage("userObj");
+        mac=api.deviceId;
+
+        if (loading){
+            api.showProgress({
+                title: '加载中',
+                modal: false
+            });
+        }
+        var phone=user.cellphone;
+        var mac=api.deviceId;
+        api.ajax({
+                url: ip+'/api/app/communitywanli/passThrough/openHistory',
+                method: 'get',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac: mac,
+                        pageNum: pageindex,
+                        pageSize:pageSize
+                    }
+                }
+            },
+            function (ret, err) {
+                api.hideProgress();
+                if (ret!=""){
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                        if (ret.message=="请重新登录") {
+                            setTimeout(function () {
+                                api.openWin({
+                                    name: 'pw_login_win',
+                                    url: '../login/pw_login_win.html',
+                                });
+                            },1000);
+                        }
+                    }
+                    else {
+                        var keyBox=document.querySelector(".keyWarp");
+                        var obj=ret.object;
+                        if (obj.list.length>=8 && pageindex==1){
+                            api.addEventListener({
+                                name:'scrolltobottom',
+                                extra:{
+                                    threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+                                }
+                            }, function(ret, err){
+                                load(false,pageIndex++,false);
+                            });
+                        }
+                        if (refresh){
+                            api.toast({
+                                msg: "刷新成功",
+                                duration: 3000,
+                                location: 'bottom'
+                            });
+                            api.refreshHeaderLoadDone()
+                        }
+
+                        //如果是刷新或者加载，则重新
+                        if (refresh || loading){
+                            keyBox.innerHTML="";
+                        }
+
+                        for (var key of obj.list){
+                            var useClass;
+                            var useStatus;
+                            var type;
+                            var divDom=document.createElement("div");
+                            if (key.useTimes==0) {
+                                useClass="keyNotUse";
+                                useStatus="未使用";
+                            }else if (key.useTimes>0 && key.dataStatus ==1){
+                                useClass="keyUsed";
+                                useStatus="已使用";
+                            }else if (key.dataStatus ==0){
+                                useClass="keyOverdue";
+                                useStatus="已过期";
+                            }
+                            if (key.inviteCodeType==1 ){
+                                type="今天无限次";
+                            }else if (key.inviteCodeType==2 ){
+                                type="今天仅一次";
+                            }else if (key.inviteCodeType==3 ){
+                                type="明天无限次";
+                            }else if (key.inviteCodeType==4 ){
+                                type="明天仅一次";
+                            }else if (key.inviteCodeType==5 ){
+                                type="高级设置";
+                            }
+                            var html='<div class="aui-row key" tapmode>\n' +
+                                '         <div class="aui-col-xs-6 aui-text-left">\n' +
+                                '             <h2>'+key.inviteCode+'</h2>\n' +
+                                '             <div>'+type+'</div>\n' +
+                                '         </div>\n' +
+                                '         <div class="aui-col-xs-6 aui-text-right">\n' +
+                                '             <h3 class="'+useClass+'">'+useStatus+'</h3>\n' +
+                                '             <div>'+key.validityEndTime+'</div>\n' +
+                                '         </div>\n' +
+                                '     </div>';
+                            divDom.innerHTML=html;
+                            keyBox.appendChild(divDom.childNodes[0]);
+                        }
+                    }
+                }else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+    }
 </script>
 </html>

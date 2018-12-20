@@ -51,6 +51,17 @@
         initLayout();
         initFrameGroup();
         initAPIEvent();
+
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            api.closeFrame({
+                name: 'callDivertFrame'
+            });
+            setTimeout(function () {
+                api.closeWin();
+            },100)
+        });
     };
 
     /**
