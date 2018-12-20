@@ -5,7 +5,6 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <meta-data name="com.baidu.lbsapi.API_KEY" value="VsPvNudlwsN7lNZElhyhNdnIXkM5puNN" />
     <title>通行</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
@@ -250,28 +249,19 @@
     var remindStatus = true;
     var user= $api.getStorage('userObj');
     apiready = function () {
-        var bMap = api.require('bMap');
-        bMap.getLocation({
-            accuracy: '100m',
-            autoStop: true,
-            filter: 1
-        },
-            function(ret, err) {
-            if (ret.status) {
-                console.log(JSON.stringify(ret));
-                bMap.getNameFromCoords({
-                    lon: 116.384767,
-                    lat: 39.989539
-                }, function(ret, err) {
-                    console.log(JSON.stringify(ret));
-                    if (ret.status) {
-                        alert(JSON.stringify(ret));
-                    }
-                });
-            } else {
-                console.log(err.code);
-            }
-        })
+        var map = api.require('bMap');
+        setTimeout(function () {
+            map.getNameFromCoords({
+                lon: 116.384767,
+                lat: 39.989539
+            }, function(ret, err) {
+                console.log(JSON.stringify(ret))
+                console.log(JSON.stringify(err))
+                if (ret.status) {
+                    alert(JSON.stringify(ret));
+                }
+            });
+        },3000)
 
         api.parseTapmode();
 
@@ -437,7 +427,7 @@
                 }
             },
             function (ret, err) {
-            console.log(JSON.stringify(ret))
+                console.log(JSON.stringify(ret))
                 if (ret!=""){
                     if (!ret.resultStatus) {
                         api.toast({
