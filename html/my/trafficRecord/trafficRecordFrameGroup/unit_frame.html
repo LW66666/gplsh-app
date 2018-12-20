@@ -20,7 +20,7 @@
             overflow: hidden;
         }
 
-        .time-block:first-child{
+        .time-block:first-child {
             padding-top: 20px;
         }
 
@@ -166,6 +166,27 @@
             line-height: 50px;
             text-align: center;
             color: #8b8b8b;
+        }
+
+        .empty-info {
+            padding-top: 40%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .empty-info img {
+            width: 70%;
+        }
+
+        .empty-info p {
+            padding-top: 10px;
+            text-align: center;
+            color: #888888;
+            font-size: .75rem;
         }
     </style>
 </head>
@@ -341,10 +362,71 @@
         </div>
     </div>
 </div>
+
+
+<div class="empty-info aui-hide">
+    <img src="../../../../image/applyKey/empty.png"/>
+    <p id="emptyTip">
+        亲，你还没有通行记录哦~
+    </p>
+</div>
 </body>
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
 <script>
+    apiready = function () {
+        initItem();
+    };
+
+    function initItem() {
+        var user = $api.getStorage(Static.USEROBJ);
+        api.alert({msg: JSON.stringify(user)});
+        if (user.householdRoomList && user.householdRoomList[0] && user.householdRoomList[0].communityCode) {
+            //这是有房子的人
+            api.ajax({
+                url: Static.IP + '/api/app/communitywanli/passThrough/listAccessControlByHouseHoldId',
+                method: 'get',
+                dataType: 'json',
+                data: {
+                    values: {
+                        type: 'M',
+                        cellphone: user.cellphone,
+                        communityCode: user.householdRoomList[0].communityCode,
+                        mac: api.deviceId
+                    }
+                }
+            }, function (ret, err) {
+                if (ret) {
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    } else {
+                        var list = ret.object;
+                        if (list && list.length > 0) {
+                            //有记录
+
+                        } else {
+                            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+                        }
+                    }
+                } else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+        } else {
+            //没房子的
+            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+            $api.text($api.dom('#emptyTip'), '天呐，您还木有添加住宅~');
+        }
+    }
 
 </script>
