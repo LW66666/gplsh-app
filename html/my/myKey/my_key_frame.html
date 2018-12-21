@@ -123,6 +123,13 @@
             line-height: 49px;
             font-size: 0.8125rem;
         }
+
+        #info {
+            display: none;
+        }
+        .aui-hide{
+            display: none;
+        }
     </style>
 </head>
 
@@ -165,12 +172,12 @@
         <!--</li>-->
     </ul>
 </div>
-<div class="empty-info">
+<div class="empty-info aui-hide">
     <img id="emptyImg" src="../../../image/empty/item-empty.png"/>
     <p id="emptyTip">
         亲，你还没有小区通行记录哦~
     </p>
-    <div class="aui-btn btn-submit btn-submit-position" tapmode onclick="clickSubmit();">
+    <div class="aui-btn btn-submit btn-submit-position aui-hide" tapmode onclick="clickApply();">
         立即申请
     </div>
 </div>
@@ -185,8 +192,11 @@
     };
 
     function initLayout() {
+        api.showProgress({
+            title: '加载中',
+            modal: true
+        });
         var user = $api.getStorage(Static.USEROBJ);
-        api.alert({msg:JSON.stringify(user)});
         if (user.householdRoomList && user.householdRoomList[0] && user.householdRoomList[0].communityCode) {
             //这是有房子的人
             api.ajax({
@@ -201,7 +211,8 @@
                     }
                 }
             }, function (ret, err) {
-                api.alert({msg: JSON.stringify(ret)});
+                api.hideProgress();
+                api.alert({msg:JSON.stringify(ret)});
                 if (ret) {
                     if (!ret.resultStatus) {
                         api.toast({
@@ -210,42 +221,25 @@
                             location: 'bottom'
                         });
                     } else {
-                        api.alert({msg: JSON.stringify(ret.object)});
-                        var units = ret.object.unitKeys;
-                        var communitys = ret.object.CommunityKeys;
-                        if ((units && units.length > 0) || (communitys && communitys.length > 0)) {
-
+                        if (ret.object && ret.object.length) {
+                            $api.dom('#info').style.display = 'block';
+                            var units = ret.object;
                             for (var i = 0; i < units.length; i++) {
                                 $api.append($api.dom('#item-list'), '' +
                                     ' <li class="item">\n' +
-                                    '<div class="item-title">金谷苑</div>\n' +
+                                    '<div class="item-title">'+units[i].communityName+'</div>\n' +
                                     '<div class="item-inner">\n' +
                                     '<img src="../../../image/my/myKey/house.png"/>\n' +
-                                    '<span>8栋-2-0211</span>\n' +
+                                    '<span>'+units[i].zoneName+'-'+units[i].buildingName+'-'+units[i].unitName+'-'+units[i].roomNum+'</span>\n' +
                                     '</div>\n' +
                                     '<div class="item-inner">\n' +
                                     '<img src="../../../image/my/myKey/lock.png"/>\n' +
-                                    '<span>钥匙有效期：'+units.dueDate+'</span>\n' +
+                                    '<span>钥匙有效期：' + units[i].dueDate.substring(0,10) + '</span>\n' +
                                     '</div>\n' +
                                     '</li>')
                             }
-
-                            for (var j = 0; j < communitys.length; j++) {
-                                $api.append($api.dom('#item-list'), '' +
-                                    ' <li class="item">\n' +
-                                    '<div class="item-title">金谷苑</div>\n' +
-                                    '<div class="item-inner">\n' +
-                                    '<img src="../../../image/my/myKey/house.png"/>\n' +
-                                    '<span>8栋-2-0211</span>\n' +
-                                    '</div>\n' +
-                                    '<div class="item-inner">\n' +
-                                    '<img src="../../../image/my/myKey/lock.png"/>\n' +
-                                    '<span>钥匙有效期：'+units.dueDate+'</span>\n' +
-                                    '</div>\n' +
-                                    '</li>')
-                            }
-
                         } else {
+                            //没有记录
                             $api.addCls($api.dom('#info'), 'aui-hide');
                             $api.removeCls($api.dom('.empty-info'), 'aui-hide');
                         }
@@ -264,6 +258,7 @@
             $api.removeCls($api.dom('.empty-info'), 'aui-hide');
             $api.text($api.dom('#emptyTip'), '天呐，您还未申请钥匙~');
             $api.attr($api.dom('#emptyImg'), 'src', '../../../image/empty/not-token.png');
+            $api.removeCls($api.dom('.empty-info aui-btn'), 'aui-hide');
         }
     }
 </script>
