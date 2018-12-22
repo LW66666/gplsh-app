@@ -226,12 +226,23 @@
                             $api.dom('#info').style.display = 'block';
                             var units = ret.object;
                             for (var i = 0; i < units.length; i++) {
+                                var keyInfo = [
+                                    units[i].zoneName,
+                                    units[i].buildingName,
+                                    units[i].unitName,
+                                    units[i].roomNum
+                                ];
+
+                                if (!units[i].unitName) {
+                                    keyInfo = [];
+                                }
+
                                 $api.append($api.dom('#item-list'),
                                     ' <li class="item">\n' +
                                     '<div class="item-title">' + units[i].communityName + '</div>\n' +
                                     '<div class="item-inner">\n' +
                                     '<img src="../../../image/my/myKey/house.png"/>\n' +
-                                    '<span>' + units[i].zoneName + '-' + units[i].buildingName + '-' + units[i].unitName + '-' + units[i].roomNum + '</span>\n' +
+                                    '<span>' + keyInfo.join('-') + '</span>\n' +
                                     '</div>\n' +
                                     '<div class="item-inner">\n' +
                                     '<img src="../../../image/my/myKey/lock.png"/>\n' +
