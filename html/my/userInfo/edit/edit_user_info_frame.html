@@ -79,6 +79,16 @@
         .aui-pull-left .text-black {
             color: black;
         }
+        .prop {
+            position: relative;
+            width: 100%;
+            height: 0px;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -ms-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
     </style>
 </head>
 
@@ -140,7 +150,8 @@
         <div class="aui-list-item-inner font">
             <div class="aui-pull-left">
                 <label for="occupation">职业</label>
-                <input id="occupation" type="text" value="铲屎官"/>
+                <input id="occupation" type="text" value="铲屎官"
+                       onblur="$api.css($api.dom('.prop'),'height:0px;');" onfocus="foucs(100)" onclick="foucs(100)" />
             </div>
         </div>
     </li>
@@ -169,7 +180,8 @@
         <div class="aui-list-item-inner font">
             <div class="aui-pull-left">
                 <label for="autograph">签名</label>
-                <input id="autograph" type="text" placeholder="悄悄的我来了，什么也没留下！" value=""/>
+                <input id="autograph" type="text" placeholder="悄悄的我来了，什么也没留下！"
+                       onblur="$api.css($api.dom('.prop'),'height:0px;');" onfocus="foucs(300)" onclick="foucs(300)" value=""/>
             </div>
         </div>
     </li>
@@ -183,15 +195,20 @@
         </div>
     </li>
 </ul>
+<div class="prop"></div>
 
 </body>
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
+    var user=$api.getStorage("userObj");
+    var mac=$api.deviceId;
     var UIActionSelector;
     apiready = function () {
         UIActionSelector = api.require('UIActionSelector');
+
+        setUserInfo();
     };
 
     /**
@@ -384,5 +401,260 @@
             name: 'selectTagWin',
             url: './selectTag/select_tag.html'
         })
+    }
+
+    /**
+     * 设置用户数据
+     */
+    function setUserInfo() {
+        var phone=user.cellphone;
+        api.ajax({
+                url: ip+'/api/app/communitywanli/user/getDetail',
+                method: 'get',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac:mac
+                    }
+                }
+            },
+            function (ret, err) {
+                api.refreshHeaderLoadDone();
+                api.hideProgress();
+                if (ret!=""){
+                    if (ret.message=="请重新登录") {
+                        setTimeout(function () {
+                            api.openWin({
+                                name: 'pw_login_win',
+                                url: '../../login/pw_login_win.html',
+                            });
+                        },1000);
+                    }
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    }
+                    else {
+                        var obj=ret.object;
+                        var signature=(obj.user.signature=="")?"悄悄的我来了，什么也没留下":obj.user.signature;
+                        var sex=(obj.user.gender==0)?"女":"男";
+
+                        $api.val($api.dom("bloodType"),obj.user.bloodType);
+                        $api.val($api.dom("#nickname"),obj.user.nickname);
+                        $api.val($api.dom("#gender"),sex);
+                        $api.val($api.dom("#birthday"),obj.user.birthday);
+                        $api.val($api.dom("#constellation"),obj.household.constellation);
+                        $api.val($api.dom("#occupation"),obj.user.profession);
+                        $api.val($api.dom("#autograph"),signature);
+                        if (obj.community==undefined){
+                            $api.val($api.dom("#identity"),"");
+                            $api.val($api.dom(".aui-pull-left span"),"");
+                            $api.val($api.dom("#region"),"");
+                        }else {
+                            $api.val($api.dom("#identity"),obj.user.role);
+                            $api.val($api.dom("#region"),obj.community.provinceName+obj.community.cityName);
+                            $api.val($api.dom(".aui-pull-left span"),obj.householdRooms[0].communityName+"-"+
+                                obj.householdRooms[0].zoneName+"-"+obj.householdRooms[0].buildingName+"-"+obj.householdRooms[0].unitName
+                                +"-"+obj.householdRooms[0].roomNum);
+                        }
+                        if(obj.label.length==0){
+                            $api.html($api.dom("#tag"),"");
+                        }else {
+                            api.ajax({
+                                    url: ip+'/api/app/communitywanli/label/listLabelByUserId',
+                                    method: 'get',
+                                    timeout: 10,
+                                    dataType: 'json',
+                                    returnAll: false,
+                                    data: {
+                                        values:{
+                                            cellphone: phone,
+                                            mac:mac
+                                        }
+                                    }
+                                },
+                                function (ret, err) {
+                                    if (ret!=""){
+                                        if (ret.message=="请重新登录") {
+                                            setTimeout(function () {
+                                                api.openWin({
+                                                    name: 'pw_login_win',
+                                                    url: '../../login/pw_login_win.html',
+                                                });
+                                            },1000);
+                                        }
+                                        if (!ret.resultStatus) {
+                                            api.toast({
+                                                msg: ret.message,
+                                                duration: 3000,
+                                                location: 'bottom'
+                                            });
+                                        }
+                                        else {
+                                            var label="";
+                                            var objArr=ret.object;
+                                            for(var obj of objArr){
+                                                label+=obj.name+" ";
+                                            }
+                                            $api.attr($api.dom("#tag"),"placeholder",label);
+                                        }
+                                    }
+                                    else {
+                                        api.toast({
+                                            msg: err.msg,
+                                            duration: 3000,
+                                            location: 'bottom'
+                                        });
+                                    }
+                                });
+                        }
+
+                    }
+                }
+                else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+    }
+
+    /**
+     * 保存用户信息
+     */
+    function saveUserInfo() {
+        var checkStatus=true;
+        var pat=/^[\u4e00-\u9fa5_a-zA-Z0-9,，。！；‘’“”\.;\:"'!]+$/;
+        var phone=user.cellphone;
+        var nickname= $api.val($api.dom("#nickname"));
+        var gender= ($api.val($api.dom("#gender"))=="男")?1:0;
+        var birthday= $api.val($api.dom("#birthday"));
+        var bloodType= $api.val($api.dom("#bloodType"));
+        var profession= $api.val($api.dom("#occupation"));//职业
+        var signature= $api.val($api.dom("#autograph"));
+        var constellation= $api.val($api.dom("#constellation"));
+        if (!pat.test(nickname)){
+            api.toast({
+                msg: "昵称中含有非法字符",
+                duration: 3000,
+                location: 'bottom'
+            });
+            checkStatus=false;
+        }else if (nickname.length>10){
+            api.toast({
+                msg: "昵称过长",
+                duration: 3000,
+                location: 'bottom'
+            });
+            checkStatus=false;
+        } else {
+            if (!pat.test(profession)){
+                api.toast({
+                    msg: "职业中含有非法字符",
+                    duration: 3000,
+                    location: 'bottom'
+                });
+                checkStatus=false;
+            }else if (profession.length>10){
+                api.toast({
+                    msg: "职业过长",
+                    duration: 3000,
+                    location: 'bottom'
+                });
+                checkStatus=false;
+            }else {
+                if (!pat.test(signature)){
+                    api.toast({
+                        msg: "签名中含有非法字符",
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                    checkStatus=false;
+                }else if (signature.length>40){
+                    api.toast({
+                        msg: "签名过长",
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                    checkStatus=false;
+                }else {
+                    checkStatus=true;
+                }
+            }
+        }
+
+        if (checkStatus){
+            api.ajax({
+                    url: ip+'/api/app/communitywanli/login/updateUserInfo',
+                    method: 'patch',
+                    timeout: 10,
+                    dataType: 'json',
+                    returnAll: false,
+                    data: {
+                        values:{
+                            nickname: nickname,
+                            gender: gender,
+                            cellphone: phone,
+                            birthday: birthday,
+                            bloodType: bloodType,
+                            profession: profession,
+                            signature: signature,
+                            constellation: constellation,
+                            mac:mac
+                        }
+                    }
+                },
+                function (ret, err) {
+                    console.log(JSON.stringify(ret))
+                    console.log(JSON.stringify(err))
+                    api.refreshHeaderLoadDone();
+                    api.hideProgress();
+                    if (ret!=""){
+                        if (ret.message=="请重新登录") {
+                            setTimeout(function () {
+                                api.openWin({
+                                    name: 'pw_login_win',
+                                    url: '../../login/pw_login_win.html',
+                                });
+                            },1000);
+                        }
+                        if (!ret.resultStatus) {
+                            api.toast({
+                                msg: ret.message,
+                                duration: 3000,
+                                location: 'bottom'
+                            });
+                        }
+                        else {
+                            api.toast({
+                                msg: "保存成功",
+                                duration: 3000,
+                                location: 'bottom'
+                            });
+                        }
+                    }
+                    else {
+                        api.toast({
+                            msg: err.msg,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+        }
+    }
+
+    function foucs(h) {
+        $api.css($api.dom(".prop"),"height:"+h+"px;");
+        window.scrollTo(0, 100) // 并且最好使用 window.scrollTo 方法
+        setTimeout(() => window.scrollTo(0, 10000), 500) // 还可以延迟一会执行
     }
 </script>
