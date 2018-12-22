@@ -127,7 +127,8 @@
         #info {
             display: none;
         }
-        .aui-hide{
+
+        .aui-hide {
             display: none;
         }
     </style>
@@ -212,7 +213,7 @@
                 }
             }, function (ret, err) {
                 api.hideProgress();
-                api.alert({msg:JSON.stringify(ret)});
+                api.alert({msg: JSON.stringify(ret)});
                 if (ret) {
                     if (!ret.resultStatus) {
                         api.toast({
@@ -225,18 +226,17 @@
                             $api.dom('#info').style.display = 'block';
                             var units = ret.object;
                             for (var i = 0; i < units.length; i++) {
-                                $api.append($api.dom('#item-list'), '' +
+                                $api.append($api.dom('#item-list'),
                                     ' <li class="item">\n' +
-                                    '<div class="item-title">'+units[i].communityName+'</div>\n' +
+                                    '<div class="item-title">' + units[i].communityName + '</div>\n' +
                                     '<div class="item-inner">\n' +
                                     '<img src="../../../image/my/myKey/house.png"/>\n' +
-                                    '<span>'+units[i].zoneName+'-'+units[i].buildingName+'-'+units[i].unitName+'-'+units[i].roomNum+'</span>\n' +
+                                    '<span>' + units[i].zoneName + '-' + units[i].buildingName + '-' + units[i].unitName + '-' + units[i].roomNum + '</span>\n' +
                                     '</div>\n' +
                                     '<div class="item-inner">\n' +
                                     '<img src="../../../image/my/myKey/lock.png"/>\n' +
-                                    '<span>钥匙有效期：' + units[i].dueDate.substring(0,10) + '</span>\n' +
-                                    '</div>\n' +
-                                    '</li>')
+                                    '<span>钥匙有效期：' + units[i].dueDate.substring(0, 10) + '</span>\n' +
+                                    '</div>\n' + '</li>')
                             }
                         } else {
                             //没有记录
