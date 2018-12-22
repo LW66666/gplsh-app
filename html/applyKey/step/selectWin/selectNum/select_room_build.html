@@ -5,23 +5,15 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>申请钥匙填写真实姓名</title>
-    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
-
+    <title>选择楼栋</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
     <style>
         header {
             background: #ffffff;
             background-image: none !important;
-            border-bottom: .5px #f9f7f7 solid !important;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        header {
-            border-bottom: solid .5px #f9f7f7;
+            border-bottom: 1px #f9f7f7 solid;
         }
 
         header, header > div {
@@ -43,34 +35,24 @@
             line-height: 48px !important;
             padding: 0 18.5px 0 0 !important;
         }
-
-        header .aui-pull-right:active {
-            color: #0385c5;
-        }
     </style>
 </head>
 
 <body>
 <header class="aui-bar aui-bar-nav aui-bar-light">
-    <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
-        <span class="aui-iconfont aui-icon-left" id="back-btn"></span>
+    <div class="aui-pull-left aui-btn">
+        <span class="aui-iconfont aui-icon-left" id="back-btn" tapmode onclick="goBack()"></span>
     </div>
-    <div class="aui-title">申请钥匙</div>
-    <div class="aui-pull-right aui-btn" tapmode onclick="clickApplyHis()">
-        申请记录
-    </div>
+    <div id="headerTitle" class="aui-title">选择楼栋</div>
 </header>
-
-
 </body>
 
 </html>
-<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../../script/api.js"></script>
 <script>
     apiready = function () {
         initLayout();
         initFrame();
-        initAPIEvent();
     };
 
     /**
@@ -86,13 +68,13 @@
     }
 
     /**
-     * 初始化frameGroup
+     * 打开选择楼栋的列表
      */
     function initFrame() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
-            name: 'applyStep2',
-            url: './step2_frame.html',
+            name: 'selectRoomBuild',
+            url: './select_room_build_frame.html',
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -100,31 +82,22 @@
                 w: 'auto',
                 h: 'auto'
             },
-            pageParam: api.pageParam,
-            bounces: true,
+            pageParam: {
+                zone: api.pageParam
+            },
+            animation: {
+                type: "reveal",
+                subType: "from_left",
+                duration: 300
+            },
+            bounces: false,
             overScrollMode: "scrolls"
         });
     }
 
-    /**
-     * 初始化API的事件接收
-     */
-    function initAPIEvent() {
-
-    }
 
     /**
-     * 查看申请记录
-     */
-    function clickApplyHis() {
-        api.openWin({
-            name: 'applyHistoryWin',
-            url: '../apply_history.html'
-        })
-    }
-
-    /**
-     * 点击返回事件
+     * 返回
      */
     function goBack() {
         api.closeWin();

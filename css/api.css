@@ -65,17 +65,21 @@ td,th {
 	height:0;
 }
 .loading_more{
-	display: block;
-	height: 1.5em;
 	width: 100%;
+	text-align: center;
+	height: 40px;
+	display: none;
 }
 .loading_more:before {
-	display: inline-block; vertical-align: text-bottom;
+	display: inline-block;
+	vertical-align: middle;
 	content: ' '; height: 16px; width: 16px; margin-right: 6px;
 	background: url(../image/loading_more.gif) no-repeat center;
 	-webkit-background-size: contain;
 	background-size: contain;
-} 
+}
 .loading_more:after {
-	content: '加载更多';	
+	content: '加载中';
+	font-size: 16px;
+	line-height: 21px;
 }

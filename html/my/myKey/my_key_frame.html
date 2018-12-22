@@ -13,7 +13,7 @@
             font-size: 20px;
         }
 
-        .title{
+        .title {
             font-size: .9375rem;
             padding-top: 25px;
             padding-left: 15px;
@@ -30,84 +30,246 @@
             margin-right: 3.5px;
         }
 
-        .item-list{
+        .item-list {
             padding-top: 15px;
             padding-bottom: 20px;
         }
-        .item-list .item{
+
+        .item-list .item {
             height: 120px;
             width: 90.41%;
-            background:url("../../../image/my/myKey/bg-item.png") no-repeat;
+            background: url("../../../image/my/myKey/bg-item.png") no-repeat;
             -webkit-background-size: 100% 100%;
             background-size: 100% 100%;
             border-radius: 10px;
             margin: 0 auto 12px;
-            box-shadow:  2px 2px 5px .5px #e9e9e9,-2px -2px 5px .5px #e9e9e9;
+            box-shadow: 2px 2px 5px .5px #e9e9e9, -2px -2px 5px .5px #e9e9e9;
         }
-        .item .item-title{
+
+        .item .item-title {
             padding-left: 12px;
             padding-top: 11px;
             font-size: 0.75rem;
         }
-        .item .item-inner{
+
+        .item .item-inner {
             font-size: 0.6875rem;
             color: #838282;
             padding-top: 14px;
         }
-        .item .item-inner:last-child{
+
+        .item .item-inner:last-child {
             padding-top: 10px;
         }
-        .item .item-inner img{
+
+        .item .item-inner img {
             position: relative;
             top: 2px;
             width: 17.5px;
             height: 17.5px;
             padding-left: 12px;
         }
-        .item .item-inner span{
+
+        .item .item-inner span {
             padding-left: 8px;
+        }
+
+        .empty-info {
+            padding-top: 40%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .empty-info img {
+            width: 70%;
+        }
+
+        .empty-info p {
+            padding-top: 10px;
+            text-align: center;
+            color: #888888;
+            font-size: .75rem;
+        }
+
+        .btn-submit {
+            /*color: #ffffff;*/
+            /*background-color: #4298fd;*/
+            color: #2779c4;
+            background-color: #fff;
+            border: 1px solid #2779c4;
+            box-sizing: border-box;
+            border-radius: 4rem;
+        }
+
+        .btn-submit:active {
+            background-color: #2779c4;
+            color: #ffffff;
+        }
+
+        .btn-submit-position {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 29px;
+            margin-bottom: 30px;
+            width: 80%;
+            height: 49px;
+            max-width: 250px;
+            max-height: 49px;
+            line-height: 49px;
+            font-size: 0.8125rem;
+        }
+
+        #info {
+            display: none;
+        }
+
+        .aui-hide {
+            display: none;
         }
     </style>
 </head>
 
 <body>
-<div class="title">公共区域钥匙</div>
-<ul class="item-list">
-    <li class="item">
-        <div class="item-title">金谷苑</div>
-        <div class="item-inner">
-            <img src="../../../image/my/myKey/house.png"/>
-            <span>8栋-2-0211</span>
-        </div>
-        <div class="item-inner">
-            <img src="../../../image/my/myKey/lock.png"/>
-            <span>钥匙有效期：永久</span>
-        </div>
-    </li>
-    <li class="item">
-        <div class="item-title">金谷苑</div>
-        <div class="item-inner">
-            <img src="../../../image/my/myKey/house.png"/>
-            <span>8栋-2-0211</span>
-        </div>
-        <div class="item-inner">
-            <img src="../../../image/my/myKey/lock.png"/>
-            <span>钥匙有效期：永久</span>
-        </div>
-    </li>
-    <li class="item">
-        <div class="item-title">金谷苑</div>
-        <div class="item-inner">
-            <img src="../../../image/my/myKey/house.png"/>
-            <span>8栋-2-0211</span>
-        </div>
-        <div class="item-inner">
-            <img src="../../../image/my/myKey/lock.png"/>
-            <span>钥匙有效期：永久</span>
-        </div>
-    </li>
-</ul>
+<div id="info">
+    <div class="title">公共区域钥匙</div>
+    <ul id="item-list" class="item-list">
+        <!--<li class="item">-->
+        <!--<div class="item-title">金谷苑</div>-->
+        <!--<div class="item-inner">-->
+        <!--<img src="../../../image/my/myKey/house.png"/>-->
+        <!--<span>8栋-2-0211</span>-->
+        <!--</div>-->
+        <!--<div class="item-inner">-->
+        <!--<img src="../../../image/my/myKey/lock.png"/>-->
+        <!--<span>钥匙有效期：永久</span>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="item">-->
+        <!--<div class="item-title">金谷苑</div>-->
+        <!--<div class="item-inner">-->
+        <!--<img src="../../../image/my/myKey/house.png"/>-->
+        <!--<span>8栋-2-0211</span>-->
+        <!--</div>-->
+        <!--<div class="item-inner">-->
+        <!--<img src="../../../image/my/myKey/lock.png"/>-->
+        <!--<span>钥匙有效期：永久</span>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="item">-->
+        <!--<div class="item-title">金谷苑</div>-->
+        <!--<div class="item-inner">-->
+        <!--<img src="../../../image/my/myKey/house.png"/>-->
+        <!--<span>8栋-2-0211</span>-->
+        <!--</div>-->
+        <!--<div class="item-inner">-->
+        <!--<img src="../../../image/my/myKey/lock.png"/>-->
+        <!--<span>钥匙有效期：永久</span>-->
+        <!--</div>-->
+        <!--</li>-->
+    </ul>
+</div>
+<div class="empty-info aui-hide">
+    <img id="emptyImg" src="../../../image/empty/item-empty.png"/>
+    <p id="emptyTip">
+        亲，你还没有小区通行记录哦~
+    </p>
+    <div class="aui-btn btn-submit btn-submit-position aui-hide" tapmode onclick="clickApply();">
+        立即申请
+    </div>
+</div>
 </body>
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/static.js"></script>
+<script>
+    apiready = function () {
+        initLayout();
+    };
+
+    function initLayout() {
+        api.showProgress({
+            title: '加载中',
+            modal: true
+        });
+        var user = $api.getStorage(Static.USEROBJ);
+        if (user.householdRoomList && user.householdRoomList[0] && user.householdRoomList[0].communityCode) {
+            //这是有房子的人
+            api.ajax({
+                url: Static.IP + '/api/app/communitywanli/passThrough/getMyKey',
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    values: {
+                        cellphone: user.cellphone,
+                        communityCode: user.householdRoomList[0].communityCode,
+                        mac: api.deviceId
+                    }
+                }
+            }, function (ret, err) {
+                api.hideProgress();
+                api.alert({msg: JSON.stringify(ret)});
+                if (ret) {
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    } else {
+                        if (ret.object && ret.object.length) {
+                            $api.dom('#info').style.display = 'block';
+                            var units = ret.object;
+                            for (var i = 0; i < units.length; i++) {
+                                var keyInfo = [
+                                    units[i].zoneName,
+                                    units[i].buildingName,
+                                    units[i].unitName,
+                                    units[i].roomNum
+                                ];
+
+                                if (!units[i].unitName) {
+                                    keyInfo = [units[i].deviceName];
+                                }
+
+                                $api.append($api.dom('#item-list'),
+                                    ' <li class="item">\n' +
+                                    '<div class="item-title">' + units[i].communityName + '</div>\n' +
+                                    '<div class="item-inner">\n' +
+                                    '<img src="../../../image/my/myKey/house.png"/>\n' +
+                                    '<span>' + keyInfo.join('-') + '</span>\n' +
+                                    '</div>\n' +
+                                    '<div class="item-inner">\n' +
+                                    '<img src="../../../image/my/myKey/lock.png"/>\n' +
+                                    '<span>钥匙有效期：' + units[i].dueDate.substring(0, 10) + '</span>\n' +
+                                    '</div>\n' + '</li>')
+                            }
+                        } else {
+                            //没有记录
+                            $api.addCls($api.dom('#info'), 'aui-hide');
+                            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+                        }
+                    }
+                } else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+        } else {
+            //没房子的，你为什么没有房子啊
+            $api.addCls($api.dom('#info'), 'aui-hide');
+            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+            $api.text($api.dom('#emptyTip'), '天呐，您还未申请钥匙~');
+            $api.attr($api.dom('#emptyImg'), 'src', '../../../image/empty/not-token.png');
+            $api.removeCls($api.dom('.empty-info aui-btn'), 'aui-hide');
+        }
+    }
+</script>

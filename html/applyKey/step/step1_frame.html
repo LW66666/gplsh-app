@@ -71,6 +71,7 @@
         .aui-list-item .aui-list-item-right {
             margin-right: 12px;
             font-size: .6875rem;
+            max-width: 80%;
         }
 
         .add-certificate {
@@ -215,7 +216,7 @@
     <div class="add-certificate">
         <div class="bar">上传证件</div>
         <span class="byline">(购房合同/租房合同/不动产证/其他)</span>
-        <button class="btn_upImg" tapmode onclick="clickSelectImg()">
+        <button class="btn_upImg" tapmode onclick="selectImg()">
             <img id="image" src="../../../image/applyKey/add.png">
         </button>
         <label id="isSelectImg" class="aui-hide">
@@ -231,6 +232,7 @@
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/static.js"></script>
 <script>
     //当前选择的city信息
     var cityInfo;
@@ -239,7 +241,7 @@
     //当前选择的房间信息
     var roomInfo;
     //是否选择了图片
-    var isSelectImg;
+    var imgPath = '';
     apiready = function () {
         initAPIEvent();
     };
@@ -253,6 +255,7 @@
             name: 'selectCityInfo'
         }, function (ret, err) {
             cityInfo = ret.value;
+            cityInfo.city += '市';
             setCityInfo(cityInfo);
         });
 
@@ -277,9 +280,12 @@
      * 选择城市后的回调
      */
     function setCityInfo(info) {
-        console.log(info);
         var cityName = info.city;
         $api.text(document.getElementById('cityInfo'), cityName);
+        $api.text(document.getElementById('villageInfo'), '请选择小区');
+        villageInfo = '';
+        $api.text(document.getElementById('roomInfo'), '请选择房号');
+        roomInfo = '';
         checkSelectAll();
     }
 
@@ -287,9 +293,10 @@
      * 选择小区后的回调
      */
     function setVillageInfo(info) {
-        console.log(info);
-        var villageName = info.village;
+        var villageName = info.communityName;
         $api.text(document.getElementById('villageInfo'), villageName);
+        $api.text(document.getElementById('roomInfo'), '请选择房号');
+        roomInfo = '';
         checkSelectAll();
     }
 
@@ -297,9 +304,8 @@
      * 选择房间后的回调
      */
     function setRoomInfo(info) {
-        console.log(info);
-        var roomName = info.roomNum;
-        $api.text(document.getElementById('roomInfo'), roomName);
+        var roomDetails = [info.zone.zoneName, info.build.buildingName, info.unit.unitName, info.room.roomNum];
+        $api.text(document.getElementById('roomInfo'), roomDetails.join(''));
         checkSelectAll();
     }
 
@@ -328,13 +334,14 @@
             });
             return;
         }
+
         api.openWin({
             name: 'selectWin',
             url: './selectWin/main_select.html',
             pageParam: {
                 name: 'village',
                 //选中的是哪个城市
-                city: cityInfo
+                city: cityInfo.city
             }
         });
     }
@@ -352,8 +359,8 @@
             return;
         }
         api.openWin({
-            name: 'selectWin',
-            url: './selectWin/main_select.html',
+            name: 'selectRoomWin',
+            url: './selectWin/selectNum/select_room_partition.html',
             pageParam: {
                 name: 'room',
                 //选中的是哪个小区
@@ -363,44 +370,11 @@
     }
 
     /**
-     * 点击选择图片
-     */
-    function clickSelectImg() {
-        api.getPicture({
-            sourceType: 'library',
-            encodingType: 'jpg',
-            mediaValue: 'pic',
-            destinationType: 'url',
-            allowEdit: true,
-            quality: 50,
-            targetWidth: 100,
-            targetHeight: 100,
-            saveToPhotoAlbum: false
-        }, function (ret, err) {
-            if (err) alert('未知错误，请重新启动后重试！');
-            var $img = document.getElementById('image');
-            var $isSelectImg = document.getElementById('isSelectImg');
-            if (!ret.data) {
-                $api.attr($img, 'src', '../../../image/applyKey/add.png');
-                $api.removeCls($api.closest($img, 'button'), 'btn_upImg_inner');
-                isSelectImg = false;
-                $api.addCls($isSelectImg, 'aui-hide');
-            } else {
-                $api.attr($img, 'src', ret.data);
-                $api.addCls($api.closest($img, 'button'), 'btn_upImg_inner');
-                isSelectImg = true;
-                $api.removeCls($isSelectImg, 'aui-hide');
-            }
-            checkSelectAll();
-        });
-    }
-
-    /**
      * 检查是不是全部都有值
      * 有值就改变按钮样式
      */
     function checkSelectAll() {
-        if (cityInfo && villageInfo && roomInfo && isSelectImg) {
+        if (cityInfo && villageInfo && roomInfo && imgPath) {
             $api.removeCls(document.getElementById('btnNext'), 'btn-next-disable');
             $api.addCls(document.getElementById('btnNext'), 'btn-next-active');
         } else {
@@ -416,11 +390,75 @@
     function clickNextStep(index, $this) {
         if ($api.hasCls($this, 'btn-next-disable')) return;
         api.closeWin({
-            name:'selectWin'
+            name: 'selectWin'
         });
         api.openWin({
-            name:'stepWin2',
-            url:'./step2.html'
+            name: 'stepWin2',
+            url: './step2.html',
+            pageParam: {
+                city: cityInfo,
+                village: villageInfo,
+                room: roomInfo,
+                image: imgPath
+            }
         });
+    }
+
+    /**
+     * 选择图片
+     */
+    function selectImg() {
+        var UIAlbumBrowser = api.require('UIAlbumBrowser');
+        UIAlbumBrowser.imagePicker({
+            max: 1,
+            styles: {
+                bg: '#000000',
+                mark: {
+                    position: 'top_right',
+                    size: 20
+                },
+                nav: {
+                    bg: '#000000',
+                    cancelColor: '#fff',
+                    cancelSize: 16,
+                    nextStepColor: '#7fff00',
+                    nextStepSize: 16
+                },
+                thumbnail: { //（可选项）返回的缩略图配置，**建议本图片不要设置过大** 若已有缩略图，则使用已有的缩略图。若要重新生成缩略图，可先调用清除缓存接口api.clearCache()。
+                    w: 100, //（可选项）数字类型；返回的缩略图的宽；默认：原图的宽度
+                    h: 100 //（可选项）数字类型；返回的缩略图的宽；默认：原图的高度
+                }
+            },
+            animation: true,
+        }, function (ret) {
+            if (!ret.eventType) {
+                setImgPath(ret.originalPath);
+                checkSelectAll();
+                return;
+            }
+            if (ret.eventType === 'nextStep') {
+                if (ret.list && ret.list.length > 0) {
+                    setImgPath(ret.list[0].path);
+                }
+                checkSelectAll();
+                UIAlbumBrowser.closePicker();
+            }
+        });
+    }
+
+    function setImgPath(path) {
+        var $img = document.getElementById('image');
+        var $isSelectImg = document.getElementById('isSelectImg');
+        if (!path) {
+            $api.attr($img, 'src', '../../../image/applyKey/add.png');
+            $api.removeCls($api.closest($img, 'button'), 'btn_upImg_inner');
+            imgPath = '';
+            $api.addCls($isSelectImg, 'aui-hide');
+        } else {
+            $api.attr($img, 'src', path);
+            $api.addCls($api.closest($img, 'button'), 'btn_upImg_inner');
+            imgPath = path;
+            $api.removeCls($isSelectImg, 'aui-hide');
+        }
     }
 </script>

@@ -113,6 +113,38 @@
             line-height: 49px;
             font-size: 0.8125rem;
         }
+
+        .input-text-div {
+            position: relative;
+            margin-top: 15px;
+            width: 100%;
+            height: 110px;
+        }
+
+        .input-text-div textarea {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 80px;
+            font-size: .75rem;
+            line-height: 1rem;
+            outline: none;
+            resize: none;
+        }
+
+        .input-text-div .font-num {
+            display: block;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .input-text-div .font-num span {
+            font-size: 0.6875rem;
+            color: #9d9d9d;
+        }
     </style>
 </head>
 
@@ -128,16 +160,26 @@
     <div class="center-text">
         <span>完善信息</span>
         <br/>
-        <span>南昌保利金香槟-1栋-1-0101</span>
+        <span id="roomInfo"></span>
 
         <div class="input-line">
             申请人姓名：
-            <input type="text" placeholder="">
+            <input id="name" type="text" placeholder="">
         </div>
-        <div class="input-line" style="width: 14rem">
+        <div class="input-line" style="width: 10rem">
             身份证：
-            <input type="text" placeholder="" style="width: 11rem">
+            <input id="idCard" type="text" placeholder="" style="width: 7rem">
         </div>
+
+        <div class="input-text-div">
+            <textarea id="textInfo" maxlength="100" placeholder="请输入申请描述..."></textarea>
+            <span class="font-num">
+                <span>
+                    <label id="textLen">0</label>/100
+                </span>
+            </span>
+        </div>
+
         <div class="aui-btn btn-next btn-next-position" tapmode onclick="clickNextStep()">
             下一步
         </div>
@@ -147,11 +189,131 @@
 
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/static.js"></script>
 <script>
+    apiready = function () {
+        initEvent();
+    };
+
+    function initEvent() {
+        var info = api.pageParam;
+        var roomDetails = [info.village.communityName, info.room.zone.zoneName, info.room.build.buildingName, info.room.unit.unitName, info.room.room.roomNum];
+        $api.text(document.getElementById('roomInfo'), roomDetails.join(''));
+        //申请描述
+        document.getElementById("textInfo").oninput = function () {
+            var text = this.value;
+            $api.text(document.getElementById('textLen'), text.length)
+        };
+    }
+
     function clickNextStep() {
-        api.openWin({
-            name: 'applySuccess',
-            url: './success.html'
+        var name = document.getElementById('name').value;
+        if (!name) {
+            api.toast({
+                msg: '您还没有填写您的名字呢',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return;
+        }
+        if (name.length>9 || ! /^[\u4E00-\u9FA5A-Za-z]+$/.test(name)) {
+            api.toast({
+                msg: '您输入的名称不合法',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return;
+        }
+
+        var idCard = document.getElementById('idCard').value;
+        if (!idCard) {
+            api.toast({
+                msg: '您还没有填写您的身份证号呢',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return;
+        }
+        var idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if (!idCardReg.test(idCard)) {
+            api.toast({
+                msg: '您输入的身份证号不合法',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return;
+        }
+
+        var content = document.getElementById('textInfo').value;
+        if (!content) {
+            api.toast({
+                msg: '请添加您的申请描述',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return;
+        }
+
+        var pageParam = api.pageParam;
+        var user = $api.getStorage(Static.USEROBJ);
+
+        api.showProgress({
+            title: '数据正在提交',
+            text: '请稍后...',
+            modal: true
         });
+
+        //这里应该做提交
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/passThrough/applyKey',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                values: {
+                    cellphone: user.cellphone,
+                    communityCode: pageParam.village.communityCode,
+                    communityName: pageParam.village.communityName,
+                    zoneId: pageParam.room.zone.zoneId,
+                    zoneName: pageParam.room.zone.zoneName,
+                    buildingId: pageParam.room.build.buildingId,
+                    buildingName: pageParam.room.build.buildingName,
+                    unitId: pageParam.room.unit.unitId,
+                    unitName: pageParam.room.unit.unitName,
+                    roomId: pageParam.room.room.roomId,
+                    roomNum: pageParam.room.room.roomNum,
+                    contactPerson: name,
+                    contactCellphone: user.cellphone,
+                    content: content,
+                    idCard: idCard,
+                    mac:api.deviceId
+                },
+                files: {
+                    images: [pageParam.image]
+                }
+            }
+        }, function (ret, err) {
+            api.hideProgress();
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    api.openWin({
+                        name: 'applySuccess',
+                        url: './success.html'
+                    });
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'top'
+                });
+            }
+        });
+
     }
 </script>

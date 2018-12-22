@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择楼栋</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../../css/aui.css"/>
+    <style>
+        li {
+            background-position: 0 bottom !important;
+        }
+    </style>
+</head>
+<body>
+<ul id="item-list" class="aui-list aui-list-in">
+</ul>
+
+</body>
+</html>
+<script type="text/javascript" src="../../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../../script/static.js"></script>
+<script>
+    apiready = function () {
+        initAPISet();
+        var zone = api.pageParam.zone;
+        var build = api.pageParam.build;
+        var unit = api.pageParam.unit;
+        initRoomNum(unit);
+    };
+
+    function initAPISet() {
+        api.parseTapmode();
+    }
+
+    function initRoomNum(unit) {
+        var unitId = unit.unitId;
+        //查分区
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/passThrough/listRoomByUnitId',
+            method: 'get',
+            data: {
+                values: {
+                    unitId: unitId
+                }
+            },
+            dataType: 'json'
+        }, function (ret, err) {
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    var list = ret.object;
+                    if (list && list.length > 0) {
+                        for (var i = 0; i < list.length; i++) {
+                            $api.append($api.dom('#item-list'), [
+                                '<li class="aui-list-item" tapmode onclick="clickItem(this)" params="{\'roomId\':\'' + list[i].roomId + '\',\'roomNum\':\'' + list[i].roomNum + '\'}">',
+                                '<div class="aui-list-item-inner">',
+                                '<div class="aui-list-item-title">' + list[i].roomNum + '</div>',
+                                '</div>',
+                                '</li>'].join(''))
+                        }
+                    }
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+    }
+
+    function clickItem($this) {
+        //    获取选中的楼栋
+        var info = eval("(" + $api.attr($this, 'params') + ")");
+        openRoomNumWin(info)
+    }
+
+    /**
+     * 打开选择房间的列表
+     */
+    function openRoomNumWin(roomInfo) {
+        api.closeWin({
+            name: 'selectRoomWin'
+        });
+        api.closeWin({
+            name: 'selectRoomBuildWin'
+        });
+        api.closeWin({
+            name: 'selectRoomUnitWin'
+        });
+
+        api.sendEvent({
+            name: 'selectRoomInfo',
+            extra: {
+                zone: api.pageParam.zone,
+                build: api.pageParam.build,
+                unit: api.pageParam.unit,
+                room: roomInfo
+            }
+        });
+        api.closeWin();
+    }
+
+</script>

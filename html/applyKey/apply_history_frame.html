@@ -61,47 +61,156 @@
         .his-ul .audit > img {
             width: 3.25rem;
         }
+
+        .empty-info {
+            padding-top: 40%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .empty-info img {
+            display: inline-block;
+            width: 60%;
+        }
+
+        .empty-info p {
+            padding-top: 10px;
+            text-align: center;
+            color: #888888;
+            font-size: .75rem;
+        }
     </style>
 </head>
 
 <body>
-<ul class="his-ul">
-    <li>
-        <div class="his-left">
-            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-            <span class="his-font his-time">2018-12-28 17:00:20</span>
-        </div>
-        <div class="audit">正在审核</div>
-    </li>
-    <li>
-        <div class="his-left">
-            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-            <span class="his-font his-time">2018-12-28 17:00:20</span>
-        </div>
-        <div class="audit">
-            <img src="../../image/applyKey/applySuccess.png">
-        </div>
-    </li>
-    <li>
-        <div class="his-left">
-            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-            <span class="his-font his-time">2018-12-28 17:00:20</span>
-        </div>
-        <div class="audit">
-            <img src="../../image/applyKey/applySuccess.png">
-        </div>
-    </li>
-    <li>
-        <div class="his-left">
-            <div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>
-            <span class="his-font his-time">2018-12-28 17:00:20</span>
-        </div>
-        <div class="audit">
-            <img src="../../image/applyKey/applyFail.png">
-        </div>
-    </li>
+<ul id="item-list" class="his-ul">
+    <!--<li>-->
+    <!--<div class="his-left">-->
+    <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
+    <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
+    <!--</div>-->
+    <!--<div class="audit">正在审核</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="his-left">-->
+    <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
+    <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
+    <!--</div>-->
+    <!--<div class="audit">-->
+    <!--<img src="../../image/applyKey/applySuccess.png">-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="his-left">-->
+    <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
+    <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
+    <!--</div>-->
+    <!--<div class="audit">-->
+    <!--<img src="../../image/applyKey/applySuccess.png">-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="his-left">-->
+    <!--<div class="his-font his-title">光明小区-1期-北区-2栋-1单元-1302</div>-->
+    <!--<span class="his-font his-time">2018-12-28 17:00:20</span>-->
+    <!--</div>-->
+    <!--<div class="audit">-->
+    <!--<img src="../../image/applyKey/applyFail.png">-->
+    <!--</div>-->
+    <!--</li>-->
 </ul>
+<div class="empty-info aui-hide">
+    <img src="../../image/empty/item-empty.png"/>
+    <p>
+        天呐！您还没有申请记录~
+    </p>
+</div>
 </body>
 
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/static.js"></script>
+<script>
+    apiready = function () {
+        initItemList();
+    };
+
+    function initItemList() {
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/passThrough/listAppKeyByStatus',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                values: {
+                    cellphone: $api.getStorage(Static.USEROBJ).cellphone,
+                    pageNum: 1,
+                    pageSize: 30,
+                    mac:api.deviceId
+                }
+            }
+        }, function (ret, err) {
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    var list = ret.object;
+                    if (list && list.length > 0) {
+                        for (var i = 0; i < list.length; i++) {
+                            var title = [
+                                list[i].communityName,
+                                list[i].zoneName,
+                                list[i].buildingName,
+                                list[i].unitName,
+                                list[i].roomNum
+                            ];
+
+                            $api.append($api.dom('#item-list'), [
+                                '<li><div class="his-left">',
+                                '<div class="his-font his-title">' + title.join('-') + '</div>',
+                                '<span class="his-font his-time">' + list[i].gmtCreate + '</span>',
+                                '</div>',
+                                '<div class="audit">',
+                                getInfoByStatus(list[i].status),
+                                '</div></li>'
+                            ].join(''))
+                        }
+                    } else {
+                        $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+                    }
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+    }
+
+    /**
+     * 根据状态返回对应显示的内容
+     *
+     * TODO 后台需要返回审批没通过，鄙人就把它没通过的定义成3吧
+     *
+     * @param status  1、申请中，2、审批通过 ,[3、审批失败]
+     */
+    function getInfoByStatus(status) {
+        switch (status) {
+            case 1:
+                return '正在审核';
+            case 2:
+                return '<img src="../../image/applyKey/applySuccess.png">';
+            case 3:
+                return '<img src="../../image/applyKey/applyFail.png">';
+        }
+    }
+</script>
