@@ -62,9 +62,62 @@
             padding-top: 10px;
         }
 
-        .btn-type-group .btn-type img {
+        .btn-type-group .btn-type .btn-type-img {
+            display: block;
             width: 2.5rem;
+            height: 2.5rem;
             margin: 0 auto;
+            /*background: url("../../../../image/find/repair/icon/water_un.png") no-repeat;*/
+        }
+
+        .btn-type:nth-child(1) .btn-type-img {
+            background: url("../../../../image/find/repair/icon/water_un.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(2) .btn-type-img {
+            background: url("../../../../image/find/repair/icon/electricity_un.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(3) .btn-type-img {
+            background: url("../../../../image/find/repair/icon/fire_un.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(4) .btn-type-img {
+            background: url("../../../../image/find/repair/icon/lock_un.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(5) .btn-type-img {
+            background: url("../../../../image/find/repair/icon/other_un.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(1) .btn-type-img.active {
+            background: url("../../../../image/find/repair/icon/water.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(2) .btn-type-img.active {
+            background: url("../../../../image/find/repair/icon/electricity.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(3) .btn-type-img.active {
+            background: url("../../../../image/find/repair/icon/fire.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(4) .btn-type-img.active {
+            background: url("../../../../image/find/repair/icon/lock.png") no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .btn-type:nth-child(5) .btn-type-img.active {
+            background: url("../../../../image/find/repair/icon/other.png") no-repeat;
+            background-size: 100% 100%;
         }
 
         .btn-type-group .btn-type span {
@@ -287,7 +340,7 @@
                     报事地点
                 </div>
                 <div class="aui-list-item-input">
-                    <input disabled="disabled" type="text" value="保利香槟金1期-H2栋-1单元-3103"/>
+                    <input id="place" disabled="disabled" type="text" value="保利香槟金1期-H2栋-1单元-3103"/>
                 </div>
             </div>
         </li>
@@ -297,7 +350,7 @@
                     联系人
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="text" value="吕布"/>
+                    <input id="contacts" type="text" value="吕布"/>
                 </div>
             </div>
         </li>
@@ -307,31 +360,36 @@
                     联系电话
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="text" value="18170041111"/>
+                    <input id="phoneNum" type="number" value="18170041111"/>
                 </div>
             </div>
         </li>
     </ul>
     <div class="title-type">维修类型</div>
     <div class="btn-type-group">
-        <div class="btn-type">
-            <img src="../../../../image/find/repair/icon/water_un.png" alt="">
+        <div type="1" class="btn-type" tapmode onclick="clickTypeImg(this)">
+            <!--<img src="../../../../image/find/repair/icon/water_un.png" alt="">-->
+            <span class="btn-type-img"></span>
             <span>水</span>
         </div>
-        <div class="btn-type">
-            <img src="../../../../image/find/repair/icon/electricity_un.png" alt="">
+        <div type="2" class="btn-type" tapmode onclick="clickTypeImg(this)">
+            <!--<img src="../../../../image/find/repair/icon/electricity_un.png" alt="">-->
+            <span class="btn-type-img"></span>
             <span>电</span>
         </div>
-        <div class="btn-type">
-            <img src="../../../../image/find/repair/icon/fire_un.png" alt="">
+        <div type="3" class="btn-type" tapmode onclick="clickTypeImg(this)">
+            <!--<img src="../../../../image/find/repair/icon/fire_un.png" alt="">-->
+            <span class="btn-type-img"></span>
             <span>可燃气</span>
         </div>
-        <div class="btn-type">
-            <img src="../../../../image/find/repair/icon/lock_un.png" alt="">
+        <div type="4" class="btn-type" tapmode onclick="clickTypeImg(this)">
+            <!--<img src="../../../../image/find/repair/icon/lock_un.png" alt="">-->
+            <span class="btn-type-img"></span>
             <span>锁</span>
         </div>
-        <div class="btn-type">
-            <img src="../../../../image/find/repair/icon/other_un.png" alt="">
+        <div type="5" class="btn-type" tapmode onclick="clickTypeImg(this)">
+            <!--<img src="../../../../image/find/repair/icon/other_un.png" alt="">-->
+            <span class="btn-type-img"></span>
             <span>其他</span>
         </div>
     </div>
@@ -382,6 +440,7 @@
 </body>
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
 <script type="text/javascript" src="../../../../script/lCalendar.js"></script>
 <script>
 
@@ -389,15 +448,60 @@
 <script>
     var UIAlbumBrowser;
     apiready = function () {
+        initDefaultMsg();
         /**
          * 图片加载器
          */
         UIAlbumBrowser = api.require('UIAlbumBrowser');
         api.parseTapmode();
-        initBtnGroupClick();
         initStaticClick();
     };
 
+    function initDefaultMsg() {
+        api.showProgress({
+            title: '正在加载...'
+        });
+        var user = $api.getStorage(Static.USEROBJ);
+        var placeInfo = user.householdRoomList[0];
+        var place = [
+            placeInfo.communityName + placeInfo.zoneName,
+            placeInfo.unitName,
+            placeInfo.buildingId,
+            placeInfo.roomNum
+        ];
+        $api.val($api.dom('#place'), place.join('-'));
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/user/getDetail',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                values: {
+                    cellphone: $api.getStorage(Static.USEROBJ).cellphone
+                }
+            }
+        }, function (ret, err) {
+            api.hideProgress();
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    var obj = ret.object;
+                    $api.val($api.dom('#contacts'), obj.household.householdName);
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+        $api.val($api.dom('#phoneNum'), user.cellphone);
+    }
 
     /**
      * 初始化静态点击事件
@@ -411,9 +515,9 @@
 
         //初始化日期选择的时间段
         var startDate = new Date();
-        var startTime = [startDate.getFullYear(),startDate.getMonth()+1,startDate.getDate()];
-        var endTime = [startDate.getFullYear()+2,startDate.getMonth()+1,startDate.getDate()];
-        $api.attr($api.dom('#datetime-picker'),'data-lcalendar',startTime.join('-')+','+endTime.join('-'));
+        var startTime = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()];
+        var endTime = [startDate.getFullYear() + 2, startDate.getMonth() + 1, startDate.getDate()];
+        $api.attr($api.dom('#datetime-picker'), 'data-lcalendar', startTime.join('-') + ',' + endTime.join('-'));
 
         //最底部的时间选择控件
         var calendardatetime = new lCalendar();
@@ -426,22 +530,13 @@
     /**
      * 类型按钮组的点击事件
      */
-    function initBtnGroupClick() {
+    function clickTypeImg($this) {
         var btnGroup = $api.domAll('.btn-type-group .btn-type');
+        var $img = $api.dom($this, '.btn-type-img');
         for (var i = 0; i < btnGroup.length; i++) {
-            btnGroup[i].onclick = function () {
-                var $img = $api.dom(this, 'img');
-                var src = $api.attr($img, 'src').toString();
-                var isHave = src.lastIndexOf('_un');
-                if (isHave !== -1) {
-                    src = src.replace('_un', '');
-                } else {
-                    var number = src.lastIndexOf('.');
-                    src = src.substring(0, number) + '_un' + src.substring(number);
-                }
-                $api.attr($img, 'src', src);
-            }
+            $api.removeCls($api.dom(btnGroup[i], '.btn-type-img'), 'active');
         }
+        $api.addCls($img, 'active');
     }
 
 
@@ -624,10 +719,164 @@
         return res;
     }
 
+
     /**
      * 点击立即提交
      */
     function clickSubmit() {
-        // $api.append($api.dom('body'),'<div class="loading_more"></div>')
+        var user = $api.getStorage(Static.USEROBJ);
+        var communityCode = user.householdRoomList[0].communityCode;
+        var cellphone = user.cellphone;
+        var roomId = user.householdRoomList[0].roomId;
+        var roomNum = user.householdRoomList[0].roomNum;
+        var creatorUserId = user.id;
+
+        var content = $api.dom('#textInfo').value.trim();
+        var reportUser = $api.dom('#contacts').value.trim();
+        var reportCellphone = $api.dom('#phoneNum').value;
+        var appointmentTime = $api.dom('#datetime-picker').value;
+        var activeType = $api.dom('.btn-type-group .btn-type-img.active');
+        var $dom = activeType ? $api.closest(activeType, 'div') : false;
+        var maintainType;
+        if ($dom) {
+            maintainType = $api.attr($dom, 'type');
+        } else {
+            maintainType = 5;
+        }
+        var imgList = getImgList();
+
+        var isPass = checkSubmitInfo(reportUser, reportCellphone, content, appointmentTime);
+
+        appointmentTime = appointmentTime + ':00';
+
+        if (isPass) {
+            api.alert({
+                msg: {
+                    appointmentTime,
+                    content,
+                    reportCellphone,
+                    reportUser,
+                    maintainType,
+                    imgList
+                }
+            });
+            //提交报事报修
+            api.showProgress({
+                title: '正在提交'
+            });
+            //这里应该做提交
+            api.ajax({
+                url: Static.IP + '/api/app/communitywanli/userService/applyReportThingsRepair',
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    values: {
+                        communityCode,
+                        cellphone,
+                        roomId,
+                        roomNum,
+                        creatorUserId,
+                        content,
+                        reportUser,
+                        reportCellphone,
+                        appointmentTime,
+                        activeType,
+                        maintainType,
+                        mac: api.deviceId
+                    },
+                    files: {
+                        images: imgList
+                    }
+                }
+            }, function (ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    } else {
+                        // api.alert({msg:JSON.stringify(ret)});
+                        api.toast({
+                            msg: '申请报事报修成功！',
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                        setTimeout(function () {
+                            api.closeWin();
+                        }, 500);
+                    }
+                } else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+
+        }
+    }
+
+    function getImgList() {
+        var imgList = [];
+        var $imgList = $api.domAll('.select-img-group img');
+        api.alert({msg: JSON.stringify($imgList)});
+        for (var i = 0; i < $imgList.length; i++) {
+            var path = $api.attr($imgList[i], 'src');
+            if (path && path !== '../../../../image/applyKey/add.png') {
+                imgList.push(path);
+            }
+        }
+        return imgList;
+    }
+
+    /**
+     * 检查上传的信息
+     * @param reportUser
+     * @param reportCellphone
+     * @param content
+     * @param appointmentTime
+     * @returns {boolean} 通过还是没通过
+     */
+    function checkSubmitInfo(reportUser, reportCellphone, content, appointmentTime) {
+        if (reportUser.length > 9 || !/^[\u4E00-\u9FA5A-Za-z]+$/.test(reportUser)) {
+            api.toast({
+                msg: '您输入的名称不合法',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+
+        if (!reportCellphone || !(/^1[34578]\d{9}$/.test(reportCellphone))) {
+            api.toast({
+                msg: '您输入的联系人电话有误',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+
+        if (!content) {
+            api.toast({
+                msg: '请输入报事说明',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+
+        if (!appointmentTime) {
+            api.toast({
+                msg: '请选择预约时间',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+        return true;
     }
 </script>

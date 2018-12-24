@@ -400,6 +400,9 @@
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
+    apiready = function () {
+        var id = api.pageParam.id;
+    };
     function clickEvaluation() {
         api.openWin({
             name: 'evaluationWin',

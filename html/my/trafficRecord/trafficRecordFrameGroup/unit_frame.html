@@ -341,7 +341,9 @@
     //加载动画锁，避免重复加载
     var loadLock = false;
     //如果是第一次
-    var frist = true;
+    var first = true;
+    //请求锁
+    var ajaxLock = false;
 
     apiready = function () {
         var user = $api.getStorage(Static.USEROBJ);
@@ -361,57 +363,61 @@
 
 
     function initItem(callBack) {
-        var user = $api.getStorage(Static.USEROBJ);
-        //这是有房子的人
-        api.ajax({
-            url: Static.IP + '/api/app/communitywanli/passThrough/listAccessControlByHouseHoldId',
-            method: 'get',
-            dataType: 'json',
-            data: {
-                values: {
-                    pageNum: pageNum,
-                    pageSize: pageSize,
-                    type: 'M',
-                    cellphone: user.cellphone,
-                    communityCode: user.householdRoomList[0].communityCode,
-                    mac: api.deviceId
+        if (!ajaxLock) {
+            ajaxLock = true;
+            var user = $api.getStorage(Static.USEROBJ);
+            //这是有房子的人
+            api.ajax({
+                url: Static.IP + '/api/app/communitywanli/passThrough/listAccessControlByHouseHoldId',
+                method: 'get',
+                dataType: 'json',
+                data: {
+                    values: {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                        type: 'M',
+                        cellphone: user.cellphone,
+                        communityCode: user.householdRoomList[0].communityCode,
+                        mac: api.deviceId
+                    }
                 }
-            }
-        }, function (ret, err) {
-            // api.alert({msg:JSON.stringify(ret)});
-            callBack && callBack();
-            if (ret) {
-                if (!ret.resultStatus) {
+            }, function (ret, err) {
+                ajaxLock = false;
+                // api.alert({msg:JSON.stringify(ret)});
+                callBack && callBack();
+                if (ret) {
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    } else {
+                        if (ret.object.records && ret.object.records.length) {
+                            dataArr = dataArr.concat(ret.object.records);
+                            renderData(dataArr);
+                        } else {
+                            if (first) {
+                                $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+                            } else {
+                                api.toast({msg: '没有更多了呀'});
+                            }
+                        }
+                        first = false;
+                    }
+                } else {
                     api.toast({
-                        msg: ret.message,
+                        msg: err.msg,
                         duration: 3000,
                         location: 'bottom'
                     });
-                } else {
-                    if (ret.object.records && ret.object.records.length) {
-                        dataArr = dataArr.concat(ret.object.records);
-                        rederData(dataArr);
-                    } else {
-                        if (frist){
-                            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
-                        } else {
-                            api.toast({msg: '没有更多了呀'});
-                        }
-                    }
-                    frist = false;
                 }
-            } else {
-                api.toast({
-                    msg: err.msg,
-                    duration: 3000,
-                    location: 'bottom'
-                });
-            }
-        });
+            });
+        }
     }
 
 
-    function rederData(dataArr) {
+    function renderData(dataArr) {
         var list = dataArr;
         $api.dom('#app').innerHTML = '';
         if (list && list.length > 0) {

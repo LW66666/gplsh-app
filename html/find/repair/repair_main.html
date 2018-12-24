@@ -177,7 +177,7 @@
         api.setFrameGroupIndex({
             name: 'repairFrameGroup',
             scroll: true,
-            reload: true,
+            reload: false,
             index: isComplete
         });
     }
@@ -198,10 +198,17 @@
      * 点击我的报事
      */
     function clickMyRepair() {
-        api.openWin({
-            name:'addRepairWin',
-            url:'./addRepair/add_repair.html'
-        })
+        var user = $api.getStorage(Static.USEROBJ);
+        if (user.householdRoomList && user.householdRoomList[0] && user.householdRoomList[0].communityCode) {
+            //有房子的人，他可以报事报修
+            api.openWin({
+                name:'addRepairWin',
+                url:'./addRepair/add_repair.html'
+            })
+        } else {
+            //没房子的,友善的提醒
+            api.alert({msg:'您还没有申请报事的权限呢！'});
+        }
     }
 </script>
 </html>
