@@ -305,7 +305,7 @@
      */
     function rederData(dataArr) {
         var list = dataArr;
-        $api.dom('#app').innerHtml = '';
+        $api.dom('#app').innerHTML = '';
         if (list && list.length > 0) {
             var y = new Date().getFullYear().toString();
             var m = list[0].accessTime.substring(5, 7);
@@ -346,7 +346,7 @@
                 $timeNode.push('<i class="round round-nice"></i>');
                 $timeInfo.push('<div class="info-details">' +
                     '<div class="info-left">' +
-                    '<div>' + list[i].buildingName + list[i].unitName + '<img src="../../../../image/my/traffic/enter.png"/></div>' +
+                    '<div>' + list[i].buildingName + list[i].unitName + '<img src="'+caseEnterOutput(list[i].deviceName )+'"/></div>' +
                     '<div>' + list[i].communityName + list[i].zoneName + list[i].buildingName + list[i].unitName + '</div>' +
                     '</div>' +
                     '<img class="avatar" src="' + list[i].accessImgUrl + '"/>' +
@@ -457,6 +457,19 @@
         }
     }
 
+    function caseEnterOutput(deviceName) {
+        if (!deviceName) return;
+        var sub = deviceName.substring(deviceName.length - 1, deviceName.length);
+        switch (sub) {
+            case '进':
+                return '../../../../image/my/traffic/enter.png';
+            case '出':
+                return '../../../../image/my/traffic/out.png';
+            default:
+                return '../../../../image/my/traffic/enter.png';
+        }
+    }
+
     //显示加载
     function showLoad() {
         $api.dom('.loading_more').style.display = 'block';
@@ -466,4 +479,5 @@
     function hiddenLoad() {
         $api.dom('.loading_more').style.display = 'none';
     }
+
 </script>

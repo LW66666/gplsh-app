@@ -213,7 +213,6 @@
                 }
             }, function (ret, err) {
                 api.hideProgress();
-                api.alert({msg: JSON.stringify(ret)});
                 if (ret) {
                     if (!ret.resultStatus) {
                         api.toast({
