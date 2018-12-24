@@ -340,7 +340,7 @@
                     报事地点
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="place" disabled="disabled" type="text" value="保利香槟金1期-H2栋-1单元-3103"/>
+                    <input id="place" disabled="disabled" type="text" value=""/>
                 </div>
             </div>
         </li>
@@ -350,7 +350,7 @@
                     联系人
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="contacts" type="text" value="吕布"/>
+                    <input id="contacts" type="text" value=""/>
                 </div>
             </div>
         </li>
@@ -360,7 +360,7 @@
                     联系电话
                 </div>
                 <div class="aui-list-item-input">
-                    <input id="phoneNum" type="number" value="18170041111"/>
+                    <input id="phoneNum" type="number" value=""/>
                 </div>
             </div>
         </li>
@@ -750,16 +750,6 @@
         appointmentTime = appointmentTime + ':00';
 
         if (isPass) {
-            api.alert({
-                msg: {
-                    appointmentTime,
-                    content,
-                    reportCellphone,
-                    reportUser,
-                    maintainType,
-                    imgList
-                }
-            });
             //提交报事报修
             api.showProgress({
                 title: '正在提交'
@@ -823,7 +813,6 @@
     function getImgList() {
         var imgList = [];
         var $imgList = $api.domAll('.select-img-group img');
-        api.alert({msg: JSON.stringify($imgList)});
         for (var i = 0; i < $imgList.length; i++) {
             var path = $api.attr($imgList[i], 'src');
             if (path && path !== '../../../../image/applyKey/add.png') {
