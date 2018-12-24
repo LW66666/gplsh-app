@@ -317,12 +317,12 @@
 <section class="box">
     <div class="box-title">报事内容</div>
     <div class="box-title-small">
-        <span>开一张居住证明</span>
-        <span>2018-09-28 12:22:22</span>
+        <span id="content">开一张居住证明</span>
+        <span id="createTime">2018-09-28 12:22:22</span>
     </div>
     <div class="box-info">
-        <div>服务人员：<span>木子</span></div>
-        <div>联系电话：<span>18188886666</span></div>
+        <div>服务人员：<span id="receiver">木子</span></div>
+        <div>联系电话：<span id="receiverPhone">18188886666</span></div>
         <div>服务评价：
             <div class="img-list">
                 <img src="../../../../image/find/repair/star_blue.png">
@@ -401,12 +401,64 @@
 <script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
     apiready = function () {
-        var id = api.pageParam.id;
+        initInfo(api.pageParam.id);
     };
+
+    /**
+     * 初始化信息
+     * @param id 报事报修编号
+     */
+    function initInfo(id) {
+        api.showProgress({
+            title: '正在加载',
+            msg: '请稍后'
+        });
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/userService/getReportThingsRepairById',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                values: {
+                    reportThingsRepairId: id,
+                    mac: api.deviceId
+                }
+            }
+        }, function (ret, err) {
+            api.hideProgress();
+            // api.alert({msg: JSON.stringify(ret)});
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    var obj = ret.object;
+                    render(obj);
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+    }
+
     function clickEvaluation() {
         api.openWin({
             name: 'evaluationWin',
             url: '../evaluation/service_evaluation.html'
         })
+    }
+
+    /**
+     * 数据渲染在宽阔的草原上
+     * @param obj
+     */
+    function render(obj) {
+
     }
 </script>
