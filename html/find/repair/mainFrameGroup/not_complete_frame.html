@@ -339,7 +339,10 @@
     function clickRepairDetails(id) {
         api.openWin({
             name: 'repairDetailsWin',
-            url: '../repairDetails/repair_details.html'
+            url: '../repairDetails/repair_details.html',
+            pageParam:{
+                id:id
+            }
         })
     }
 

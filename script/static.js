@@ -1,4 +1,4 @@
-(function (window) {
+;(function (window) {
     //数据字典
     var Static = function Static() {
         return new Static.prototype.init();
