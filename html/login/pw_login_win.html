@@ -339,6 +339,7 @@
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/static.js"></script>
 <script>
     var pwStatus=false;
     apiready=function () {
@@ -537,6 +538,7 @@
                         duration: 3000,
                         location: 'top'
                     });
+                    new Static();
                     setTimeout(function () {
                         api.openWin({
                             name: 'index',

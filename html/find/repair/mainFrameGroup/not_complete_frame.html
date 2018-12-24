@@ -12,6 +12,98 @@
         body, html {
             position: relative;
             background-color: #fff;
+            font-size: 20px;
+        }
+
+        .com-list {
+            margin: 0 auto;
+            width: 94.44%;
+        }
+
+        .com-list .com-list-item {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            border: 1px #f5f5f5 solid;
+            border-radius: 10px;
+            margin-top: 11px;
+            margin-bottom: 12px;
+            -webkit-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
+            -moz-box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
+            box-shadow: 2px 2px 5px #f5f5f5, -2px -2px 5px #f8f8f8;
+        }
+
+        .com-list .com-list-item:active {
+            background-color: #f4f4f4;
+        }
+
+        .com-list-item .item-top img {
+            position: relative;
+            width: 9px;
+            height: 12px;
+            margin-right: 1px;
+            padding-left: 15px;
+        }
+
+        .com-list-item .item-top {
+            height: 40px;
+            font-size: .75rem;
+            line-height: 40px;
+            position: relative;
+            border-bottom: .5px solid #eeeeee;
+            box-sizing: border-box;
+            color: #999999;
+        }
+
+        .com-list-item .item-top > span:last-child {
+            position: absolute;
+            right: 20px;
+        }
+
+        .com-list-item .item-details {
+            overflow: hidden;
+            padding-left: 15px;
+        }
+
+        .com-list-item .item-details > * {
+            display: inline-block;
+            float: left;
+        }
+
+        .com-list-item .item-details img {
+            padding-top: 12px;
+            padding-right: 3px;
+            width: 17px;
+            height: 17px;
+        }
+
+        .com-list-item .item-details p {
+            width: calc(100% - 33px);
+            display: inline-block;
+            padding-top: 10px;
+            font-size: .75rem;
+            height: 2rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            color: #000000;
+        }
+
+        .com-list-item .item-time {
+            font-size: .625rem;
+            padding-top: 8px;
+            color: #999999;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .text-green {
+            color: #38cd7e;
+        }
+
+        .text-red {
+            color: #fd4242;
         }
 
         .empty-info {
@@ -25,7 +117,7 @@
         }
 
         .empty-info img {
-            width: 100%;
+            width: 70%;
         }
 
         .empty-info p {
@@ -34,18 +126,239 @@
             color: #888888;
             font-size: .75rem;
         }
+
+        .aui-hide {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
+<!--已完成-->
+<ul class="com-list" id="item-list">
+</ul>
 
-<div class="empty-info">
-    <img src="../../../../image/empty/not-set.png"/>
-    <p>
+<div class="empty-info aui-hide">
+    <img src="../../../../image/empty/not-apply.png"/>
+    <p id="emptyTip">
         亲，你还没有申请报事报修哦~
     </p>
 </div>
+<div class="loading_more"></div>
 </body>
+
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
+<script>
+    //页码
+    var pageNum = 1;
+    //每页条数
+    var pageSize = 20;
+    //页面数据存储的数组
+    var dataArr = [];
+    //加载动画锁，避免重复加载
+    var loadLock = false;
+    //如果是第一次
+    var frist = true;
+
+    apiready = function () {
+        var user = $api.getStorage(Static.USEROBJ);
+        if (user.householdRoomList && user.householdRoomList[0] && user.householdRoomList[0].communityCode) {
+            //有房子的人，他应该有这些代码
+            showLoad();
+            initItem(function () {
+                hiddenLoad();
+            });
+            fnInitEvent();
+        } else {
+            //没房子的,友善的提醒
+            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+            $api.text($api.dom('#emptyTip'), '天呐，您还木有添加住宅~');
+        }
+    };
+
+
+    function initItem(callBack) {
+        //这是有房子的人
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/userService/listReportThingsRepairByStatus',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                values: {
+                    pageNum: pageNum,
+                    pageSize: pageSize,
+                    cellphone: $api.getStorage(Static.USEROBJ).cellphone,
+                    status: 0,
+                    mac: api.deviceId
+                }
+            }
+        }, function (ret, err) {
+            // api.alert({msg: JSON.stringify(ret)});
+            callBack && callBack();
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    if (ret.object.records && ret.object.records.length) {
+                        dataArr = dataArr.concat(ret.object.records);
+                        rederData(dataArr);
+                    } else {
+                        if (frist) {
+                            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+                        } else {
+                            api.toast({msg: '没有更多了呀'});
+                        }
+                    }
+                    frist = false;
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+    }
+
+
+    function rederData(dataArr) {
+        var list = dataArr;
+        $api.dom('#item-list').innerHTML = '';
+        if (list && list.length > 0) {
+            var all = [];
+            for (var i = 0; i < list.length; i++) {
+                all.push(
+                    '<li class="com-list-item" tapmode onclick="clickRepairDetails(' + list[i].number + ')">\n' +
+                    '<div class="item-top">\n' +
+                    '<span>\n' +
+                    '<img src="../../../../image/find/repair/order_num.png"/>\n' +
+                    '<span>' + list[i].number + '</span>\n' +
+                    '</span>\n' +
+                    '<span class="text-green">\n' +
+                    '' + Static.getDictionByCode(list[i].status) + '\n' +
+                    '</span>\n' +
+                    '</div>\n' +
+                    '<div class="item-details">\n' +
+                    '<img src="'+getImgForMaintainType(list[i].maintainType)+'"/>\n' +
+                    '<p>' + list[i].content + '</p>' +
+                    '</div>\n' +
+                    '<div class="item-time">\n' +
+                    '<span>'+list[i].appointmentTime+'</span>\n' +
+                    '</div>\n' +
+                    '</li>'
+                );
+            }
+            $api.append($api.dom('#item-list'), all.join(''));
+        } else {
+            $api.removeCls($api.dom('.empty-info'), 'aui-hide');
+        }
+    }
+
+    /**
+     * 初始化页面监听事件
+     */
+    function fnInitEvent() {
+        api.parseTapmode();
+        /**上拉加载 */
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 0
+            }
+        }, function (ret, err) {
+            //页码+1，继续请求数据
+            //有4条数据以上时才开启持续加载
+            if (dataArr.length > 4 && !loadLock) {
+                loadLock = true;
+                showLoad();
+                pageNum += 1;
+                // TODO 上线把setTimeout去掉
+                setTimeout(function () {
+                    initItem(function () {
+                        hiddenLoad();
+                        //请求后的回调
+                        setTimeout(function () {
+                            loadLock = false;
+                        }, 1000);
+                    });
+                }, 2000)
+            }
+        });
+        /** 下拉刷新 */
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#eee',
+            images: [
+                'widget://image/logo.png'
+                // 'widget://image/refresh/dropdown1.png',
+                // 'widget://image/refresh/dropdown2.png',
+                // 'widget://image/refresh/dropdown3.png',
+                // 'widget://image/refresh/dropdown4.png',
+                // 'widget://image/refresh/dropdown5.png',
+                // 'widget://image/refresh/dropdown6.png'
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            }
+        }, function () {
+            //重置页码、页面数据，请求数据
+            pageNum = 1;
+            dataArr = [];
+            // TODO 上线把setTimeout去掉
+            setTimeout(function () {
+                initItem(function () {
+                    //请求后的回调
+                    api.refreshHeaderLoadDone();
+                });
+            }, 1000);
+        });
+    }
+
+    //显示加载
+    function showLoad() {
+        $api.dom('.loading_more').style.display = 'block';
+    }
+
+    //隐藏加载
+    function hiddenLoad() {
+        $api.dom('.loading_more').style.display = 'none';
+    }
+
+    /**
+     * 报事详情
+     */
+    function clickRepairDetails(id) {
+        api.openWin({
+            name: 'repairDetailsWin',
+            url: '../repairDetails/repair_details.html'
+        })
+    }
+
+    function getImgForMaintainType(num) {
+        if (num) num = parseInt(num);
+        //maintain_type 维修类型：1、水，2、电，3、可燃气，4、锁，5、其他
+        var suff = '../../../../image/find/repair/icon/';
+        switch (num) {
+            case 1:
+                return suff + 'water.png';
+            case 2:
+                return suff + 'electricity.png';
+            case 3:
+                return suff + 'fire.png';
+            case 4:
+                return suff + 'lock.png';
+            default:
+                return suff + 'other.png';
+        }
+    }
+</script>
+

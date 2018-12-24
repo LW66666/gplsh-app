@@ -379,7 +379,7 @@
             }
         }, function (ret, err) {
             //页码+1，继续请求数据
-            if (dataArr.length > 0 && !loadLock) {
+            if (dataArr.length > 5 && !loadLock) {
                 loadLock = true;
                 showLoad();
                 pageNum += 1;
