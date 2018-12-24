@@ -551,6 +551,9 @@
                             url: ret.object.icon_url
                         }, function(ret, err) {
                             var url = ret.url;
+                            if (!ret.status){
+                                url ="http://"+url;
+                            }
                             $api.setStorage("userHedUrl",url);
                         });
                     }

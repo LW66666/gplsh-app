@@ -31,6 +31,13 @@
             background: #fff;
             border: 5px solid rgba(255, 255, 255, .3);
         }
+        .info-top>i {
+            position: absolute;
+            font-size: 1em;
+            left: 50%;
+            bottom: 0%;
+            transform: translate(-50%, 0);
+        }
 
         .avatar-dec {
             margin-top: 50px;
@@ -112,6 +119,7 @@
 <body>
 <div class="info-top">
     <img class="avatar" src="../../../image/my/userInfo/header.png"/>
+    <i class="aui-iconfont aui-icon-camera"></i>
 </div>
 <div class="avatar-dec">
     <span>木子</span>
@@ -214,9 +222,6 @@
      * 设置用户基础信息
      */
     function setBaseUserInfo() {
-        var headUrl=($api.getStorage("userHeadUrl")==undefined)?"../../../image/login/header1.png":$api.getStorage("userHeadUrl");
-        $api.attr($api.dom(".avatar"),"src",headUrl);
-
         api.showProgress({
             title: '加载中',
             modal: false
@@ -260,10 +265,40 @@
                         var signature=(obj.user.signature=="")?"悄悄的我来了，什么也没留下":obj.user.signature;
                         var sexImg=(obj.user.gender==0)?"../../../image/my/female.png":"../../../image/my/male.png";
 
+                        user.nickname=obj.user.nickname;
+                        user.birthday=obj.user.birthday;
+                        user.profession=obj.user.profession;
+                        user.signature=obj.user.signature;
+                        user.signature=obj.user.signature;
+                        $api.setStorage("userObj", user);
+
                         $api.attr($api.dom(".avatar-dec>img"),"src",sexImg);
                         $api.text($api.dom(".text-ha"),signature);
                         $api.text($api.dom(".avatar-dec>span:nth-child(1)"),obj.user.nickname);
                         $api.text($api.dom(".item:nth-child(1)>div:nth-child(2)"),obj.user.cellphone);
+
+                        setTimeout(function () {
+                            api.imageCache({
+                                url: obj.user.icon_url
+                            }, function(ret, err) {
+                                var url = ret.url;
+                                if (!ret.status){
+                                    url ="http://"+url;
+                                }
+
+                                $api.setStorage("userHedUrl",url);
+                                $api.attr($api.dom(".avatar"),"src",url);
+
+                                setTimeout(function () {
+                                    api.execScript({
+                                        name: 'index',
+                                        frameName: 'frame3',
+                                        script: "window.location.reload()"
+                                    });
+                                },1000);
+                            });
+                        },100);
+
                         if (obj.community==undefined){
                             $api.text($api.dom(".item:nth-child(2)>div:nth-child(2)"),"暂无");
                             $api.text($api.dom(".item:nth-child(3)>div:nth-child(2)"),"暂无");
@@ -277,6 +312,7 @@
                                 +"-"+obj.householdRooms[0].roomNum);
                             $api.text($api.dom(".item:nth-child(5)>div:nth-child(2)"),obj.user.role);
                         }
+
                         if(obj.label.length==0){
                             $api.html($api.dom(".item:nth-child(8)>div:nth-child(2)"),"<span>暂无</span>");
                         }else {
@@ -329,7 +365,7 @@
                                     }
                                 });
                         }
-                        $api.text($api.dom(".item:nth-child(6)>div:nth-child(2)"),getConstellation(obj.user.birthday.split("-")[1],obj.user.birthday.split("-")[0]));
+                        $api.text($api.dom(".item:nth-child(6)>div:nth-child(2)"),obj.household.constellation);
                         $api.text($api.dom(".item:nth-child(7)>div:nth-child(2)"),obj.user.profession);
 
                     }
@@ -355,25 +391,7 @@
     }
 
     $api.addEvt($api.dom(".avatar"), 'click', function () {
-        console.log(selectImg())
-        // api.getPicture({
-        //     sourceType: 'camera',
-        //     encodingType: 'jpg',
-        //     mediaValue: 'pic',
-        //     destinationType: 'url',
-        //     allowEdit: true,
-        //     quality: 50,
-        //     targetWidth: 100,
-        //     targetHeight: 100,
-        //     saveToPhotoAlbum: false
-        // },
-        //     function(ret, err) {
-        //     if (ret) {
-        //         alert(JSON.stringify(ret));
-        //     } else {
-        //         alert(JSON.stringify(err));
-        //     }
-        // });
+        selectImg();
     });
 
     /**
@@ -402,17 +420,49 @@
                 }
             },
             animation: true,
-        }, function (ret) {
+        },
+            function (ret) {
+            if (ret.eventType=="cancel"){
+                api.toast({
+                    msg: "已取消选择图片",
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
             if (!ret.eventType) {
-                setImgPath(ret.originalPath);
-                return ret.originalPath;
+                api.openWin({
+                    name: 'clip_head_win',
+                    url: 'edit/clip_head_win.html',
+                    pageParam: {imgSrc: ret.originalPath},
+                    scrollEnabled:false
+                });
+                $api.attr($api.dom(".avatar"),"src",ret.originalPath)
+                return;
             }
             if (ret.eventType === 'nextStep') {
                 if (ret.list && ret.list.length > 0) {
-                    return ret.list[0].path;
+                    api.openWin({
+                        name: 'clip_head_win',
+                        url: 'edit/clip_head_win.html',
+                        pageParam: {imgSrc: ret.list[0].path},
+                        scrollEnabled:false
+                    });
+                    $api.attr($api.dom(".avatar"),"src",ret.list[0].path)
                 }
                 UIAlbumBrowser.closePicker();
             }
         });
+    }
+
+    function refresh() {
+        window.location.reload();
+    }
+
+    /**
+     * 打开图片裁剪页面
+     * @param imgSrc 图片地址
+     */
+    function openClipHead(imgSrc) {
+
     }
 </script>

@@ -184,7 +184,7 @@
             </div>
         </div>
         <div class="aui-row">
-            <span style="max-width: 5em;">李霞</span><span>先生</span>，<span>下午好！</span>
+            <span style="max-width: 6em;">李霞</span><span>先生</span>，<span>下午好！</span>
         </div>
         <div class=" aui-row">
             <div class="aui-col-xs-6 aui-text-left">
@@ -259,7 +259,8 @@
             accuracy: '100m',
             autoStop: true,
             filter: 1
-        }, function(ret, err) {
+        },
+            function(ret, err) {
             if (ret.status) {
                 map.getNameFromCoords({
                     lon: ret.lon,
@@ -335,7 +336,7 @@
             document.getElementById("topBox").setAttribute("style", "padding-top:20px");
         }
         var obj=$api.getStorage("userObj");
-        document.querySelector(".aui-row:nth-child(2)>span:nth-child(1)").innerHTML=obj.nickname;
+        document.querySelector(".aui-row:nth-child(2)>span:nth-child(1)").innerHTML=obj.nickname.substring(0,4)+"...";
         if (obj.gender==1){
             $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"先生");
         }else {

@@ -541,22 +541,24 @@
         var profession= $api.val($api.dom("#occupation"));//职业
         var signature= $api.val($api.dom("#autograph"));
         var constellation= $api.val($api.dom("#constellation"));
-        if (!pat.test(nickname)){
+        if (!pat.test(nickname) && nickname!=""){
             api.toast({
                 msg: "昵称中含有非法字符",
                 duration: 3000,
                 location: 'bottom'
             });
             checkStatus=false;
-        }else if (nickname.length>10){
+        }
+        else if (nickname.length>10){
             api.toast({
                 msg: "昵称过长",
                 duration: 3000,
                 location: 'bottom'
             });
             checkStatus=false;
-        } else {
-            if (!pat.test(profession)){
+        }
+        else {
+            if (!pat.test(profession) && profession!=""){
                 api.toast({
                     msg: "职业中含有非法字符",
                     duration: 3000,
@@ -571,7 +573,7 @@
                 });
                 checkStatus=false;
             }else {
-                if (!pat.test(signature)){
+                if (!pat.test(signature) && signature!=""){
                     api.toast({
                         msg: "签名中含有非法字符",
                         duration: 3000,
@@ -613,8 +615,6 @@
                     }
                 },
                 function (ret, err) {
-                    console.log(JSON.stringify(ret))
-                    console.log(JSON.stringify(err))
                     api.refreshHeaderLoadDone();
                     api.hideProgress();
                     if (ret!=""){
@@ -638,6 +638,12 @@
                                 msg: "保存成功",
                                 duration: 3000,
                                 location: 'bottom'
+                            });
+
+                            api.execScript({
+                                name: 'userInfoWin',
+                                frameName: 'user_info_frame',
+                                script: "refresh()"
                             });
                         }
                     }
