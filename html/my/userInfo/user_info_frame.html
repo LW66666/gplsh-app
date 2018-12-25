@@ -7,10 +7,16 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>用户信息预览的frame</title>
     <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>-->
     <style>
         body, html {
             background-color: #ffffff;
             font-size: 20px;
+        }
+
+        @font-face {
+            font-family: "aui_iconfont";
+            src: url('../../../css/aui-iconfont.ttf') format('truetype');
         }
 
         .info-top {
@@ -33,10 +39,33 @@
         }
         .info-top>i {
             position: absolute;
-            font-size: 1em;
             left: 50%;
-            bottom: 0%;
+            bottom: -40px;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
             transform: translate(-50%, 0);
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            font-family: "aui_iconfont" !important;
+            background: rgba(255,255,255,0.6);
+            z-index: 9;
+            font-size: 1em;
+            transition: background-color 0.2s,font-size 0.2s;
+        }
+        .info-top>i::before{
+            position: absolute;
+            left: 50%;
+            top:50% ;
+            transform: translate(-50%,-50%);
+            color: rgba(246,49,146,1);
+            content: "\e6cd";
+            transition: font-size 0.2s;
+        }
+        .info-top>i:active{
+            font-size: 1.5em;
+            background: rgba(255,255,255,0.8);
         }
 
         .avatar-dec {
@@ -118,8 +147,8 @@
 
 <body>
 <div class="info-top">
+    <i class="aui-iconfont aui-icon-camera" id="avatarCamera"></i>
     <img class="avatar" src="../../../image/my/userInfo/header.png"/>
-    <i class="aui-iconfont aui-icon-camera"></i>
 </div>
 <div class="avatar-dec">
     <span>木子</span>
@@ -390,7 +419,7 @@
         }
     }
 
-    $api.addEvt($api.dom(".avatar"), 'click', function () {
+    $api.addEvt($api.dom("#avatarCamera"), 'click', function () {
         selectImg();
     });
 
@@ -456,13 +485,5 @@
 
     function refresh() {
         window.location.reload();
-    }
-
-    /**
-     * 打开图片裁剪页面
-     * @param imgSrc 图片地址
-     */
-    function openClipHead(imgSrc) {
-
     }
 </script>
