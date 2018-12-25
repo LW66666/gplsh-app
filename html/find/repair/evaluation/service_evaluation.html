@@ -49,7 +49,7 @@
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
     <div class="aui-title">服务评价</div>
-    <div class="aui-pull-right aui-btn">
+    <div class="aui-pull-right aui-btn" tapmode onclick="clickSubmit()">
         提交
     </div>
 </header>
@@ -91,6 +91,7 @@
         api.openFrame({
             name: 'serviceEvaluationFrame',
             url: './service_evaluation_frame.html',
+            pageParam:api.pageParam,
             bgColor: '#ffffff',
             rect: {
                 x: 0,
@@ -100,6 +101,12 @@
             },
             bounces: true,
             overScrollMode: "scrolls"
+        });
+    }
+
+    function clickSubmit() {
+        api.sendEvent({
+            name: 'evaluationSubmit'
         });
     }
 

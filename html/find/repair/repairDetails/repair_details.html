@@ -48,7 +48,7 @@
 <script>
     apiready = function () {
         initLayout();
-        initFrameGroup();
+        initFrame();
         initAPIEvent();
     };
 
@@ -74,12 +74,13 @@
     /**
      * 初始化frameGroup
      */
-    function initFrameGroup() {
+    function initFrame() {
         var y = $api.dom('header').offsetHeight;
         api.openFrame({
             name: 'repairDetails',
             url: './repair_details_frame.html',
             pageParam: api.pageParam,
+            reload:true,
             bgColor: '#ffffff',
             rect: {
                 x: 0,

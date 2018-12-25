@@ -98,7 +98,7 @@
             padding-top: 14px;
         }
 
-        .box .box-title span:last-child{
+        .box .box-title span:last-child {
             position: absolute;
             right: 10px;
             white-space: nowrap;
@@ -106,7 +106,6 @@
             color: #7f7f7f;
             font-size: 0.6875rem;
         }
-
 
         .box .box-title::before {
             display: inline-block;
@@ -174,12 +173,14 @@
     <style>
         .time-line-group {
             padding: 12px 0 0;
+            overflow: hidden;
         }
 
         .time-line-group .item {
             position: relative;
-            overflow: hidden;
+            /*overflow: hidden;*/
             padding-bottom: 10px;
+            height: 70px;
             color: #474747;
         }
 
@@ -200,7 +201,7 @@
 
         .time-line-group .circle {
             position: relative;
-            /*top: .4125rem;*/
+            background-color: #fff;
             top: .6rem;
             vertical-align: top;
             width: 12px;
@@ -211,19 +212,26 @@
             border: 3px solid #4298fd;
         }
 
-        .time-line-group .circle::after {
+        .time-line-group .item:first-child .circle::after {
             position: relative;
             top: 15px;
             left: 1.76px;
             content: "";
             float: left;
             width: 2px;
-            height: 60px;
+            height: 900px;
             background-color: #a7a7a7;
         }
 
-        .time-line-group .circle.end::after {
-            display: none;
+        .time-line-group .item:last-child .circle::after {
+            position: relative;
+            top: 9px;
+            left: 1px;
+            content: "";
+            float: left;
+            width: 5px;
+            height: 900px;
+            background-color: #ffffff;
         }
 
         .time-line-group .item-inner {
@@ -237,6 +245,11 @@
 
         .time-line-group .item-inner > p {
             font-size: .625rem;
+        }
+
+        .time-line-group .item-inner .info {
+            position: relative;
+            top: 6px;
         }
 
         .time-line-group .item:first-child .item-time span:first-child {
@@ -345,61 +358,61 @@
 <section class="box" style="margin-top: 8px;">
     <div class="box-title">进度信息</div>
     <div class="time-line-group" id="lineGroup">
-        <div class="item">
-            <div class="item-time">
-                <span>09-26</span>
-                <span>10:30</span>
-            </div>
-            <i class="circle"></i>
-            <div class="item-inner">
-                <div>已处理</div>
-                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-time">
-                <span>09-26</span>
-                <span>10:30</span>
-            </div>
-            <i class="circle"></i>
-            <div class="item-inner">
-                <div>已处理</div>
-                <p>客服如来佛祖正在处理，联系电话<span class="text-red">18188886666</span></p>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-time">
-                <span>09-26</span>
-                <span>10:30</span>
-            </div>
-            <i class="circle"></i>
-            <div class="item-inner">
-                <div>已处理</div>
-                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-time">
-                <span>09-26</span>
-                <span>10:30</span>
-            </div>
-            <i class="circle"></i>
-            <div class="item-inner">
-                <div>已处理</div>
-                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-time">
-                <span>09-26</span>
-                <span>10:30</span>
-            </div>
-            <i class="circle end"></i>
-            <div class="item-inner">
-                <div>已处理</div>
-                <p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>
-            </div>
-        </div>
+        <!--<div class="item">-->
+        <!--<div class="item-time">-->
+        <!--<span>09-26</span>-->
+        <!--<span>10:30</span>-->
+        <!--</div>-->
+        <!--<i class="circle"></i>-->
+        <!--<div class="item-inner">-->
+        <!--<div>已处理</div>-->
+        <!--<p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item-time">-->
+        <!--<span>09-26</span>-->
+        <!--<span>10:30</span>-->
+        <!--</div>-->
+        <!--<i class="circle"></i>-->
+        <!--<div class="item-inner">-->
+        <!--<div>已处理</div>-->
+        <!--<p>客服如来佛祖正在处理，联系电话<span class="text-red">18188886666</span></p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item-time">-->
+        <!--<span>09-26</span>-->
+        <!--<span>10:30</span>-->
+        <!--</div>-->
+        <!--<i class="circle"></i>-->
+        <!--<div class="item-inner">-->
+        <!--<div>已处理</div>-->
+        <!--<p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item-time">-->
+        <!--<span>09-26</span>-->
+        <!--<span>10:30</span>-->
+        <!--</div>-->
+        <!--<i class="circle"></i>-->
+        <!--<div class="item-inner">-->
+        <!--<div>已处理</div>-->
+        <!--<p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item-time">-->
+        <!--<span>09-26</span>-->
+        <!--<span>10:30</span>-->
+        <!--</div>-->
+        <!--<i class="circle"></i>-->
+        <!--<div class="item-inner">-->
+        <!--&lt;!&ndash;<div>已处理</div>&ndash;&gt;-->
+        <!--<p class="info">客服如来佛祖已处理完成</p>-->
+        <!--</div>-->
+        <!--</div>-->
     </div>
 </section>
 </body>
@@ -453,11 +466,15 @@
         });
     }
 
+    /**
+     * 去评价
+     */
     function clickEvaluation($this) {
         if ($api.hasCls($this, 'btn-disable')) return;
         api.openWin({
             name: 'evaluationWin',
-            url: '../evaluation/service_evaluation.html'
+            url: '../evaluation/service_evaluation.html',
+            pageParam: api.pageParam
         })
 
     }
@@ -470,15 +487,16 @@
         $api.text($api.dom('#number'), obj.number);
         var index = getIndexCircleByStatus(obj.status);
         if (index === 4) {
-            $api.addCls('#evaluation', 'btn-disable');
-            $api.text($api.text('#evaluation'), '已评价');
+            var $dom = $api.dom('#evaluation');
+            $api.addCls($dom, 'btn-disable');
+            $api.text($dom, '已评价');
         }
         if (index > 2) {
             $api.text($api.dom('#processor'), obj.processor);
             $api.text($api.dom('#processorPhone'), obj.processorPhone);
             $api.dom('#evaluation').style.display = 'block';
             setStarGroupByEvaluateTotal(obj.evaluateTotal);
-        }else {
+        } else {
             $api.dom('#box-info').style.display = 'none';
         }
 
@@ -489,34 +507,53 @@
 
         //进度信息
         var $lineGroup = $api.dom('#lineGroup');
-        var groupItemArr = [];
-        //添加申请报事成功信息
-        groupItemArr.push({
-            date:obj.gmtCreate.substring(5,10),
-            time:obj.gmtCreate.substring(11,16),
-            // status:'',
-            content:'报事成功，正在处理中'
-        });
-        //等待处理
-        groupItemArr.push({
-            date:obj.gmtCreate.substring(5,10),
-            time:obj.gmtCreate.substring(11,16),
-            // status:'',
-            content:'您的报事等待处理'
-        });
+        var groupItemArr = [{
+            date: obj.gmtCreate.substring(5, 10),
+            time: obj.gmtCreate.substring(11, 16),
+            content: '报事成功，正在处理中'
+        }, {
+            date: obj.gmtCreate.substring(5, 10),
+            time: obj.gmtCreate.substring(11, 16),
+            content: '您的报事等待受理'
+        }];
 
-        //添加已处理信息
-        $api.append($lineGroup,[
-            '<div class="item"><div class="item-time">',
-            '<span>09-26</span><span>10:30</span>',
-            '</div>',
-            '<i class="circle end"></i>',
-            '<div class="item-inner">',
-            '<div>已处理</div>',
-            '<p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>',
-            '</div>',
-            '</div>'
-        ]);
+        if (index >= 1) {
+            groupItemArr.push({
+                date: obj.receiverTime.substring(5, 10),
+                time: obj.receiverTime.substring(11, 16),
+                status: '已受理',
+                content: '您的报事已受理，受理人是：' + obj.receiver
+            });
+        }
+        if (index >= 2) {
+            groupItemArr.push({
+                date: obj.processorStartTime.substring(5, 10),
+                time: obj.processorStartTime.substring(11, 16),
+                status: '正在处理',
+                content: obj.processor + ' 正在处理，联系电话：<span class="text-red">' + obj.processorPhone + '</span>'
+            });
+        }
+        if (index >= 3) {
+            groupItemArr.push({
+                date: obj.processorEndTime.substring(5, 10),
+                time: obj.processorEndTime.substring(11, 16),
+                status: '已处理',
+                content: obj.processor + '已处理完成，愿我们的十分努力换您的五星好评'
+            });
+        }
+        for (var j = groupItemArr.length - 1; j > -1; j--) {
+            $api.append($lineGroup, [
+                '<div class="item"><div class="item-time">',
+                '<span>' + groupItemArr[j].date + '</span><span>' + groupItemArr[j].time + '</span>',
+                '</div>',
+                '<i class="circle"></i>',
+                '<div class="item-inner">',
+                groupItemArr[j].status ? '<div>' + groupItemArr[j].status + '</div>' : '',
+                '<p class=' + (groupItemArr[j].status ? '' : 'info') + '>' + groupItemArr[j].content + '</p>',
+                '</div>',
+                '</div>'
+            ].join(''));
+        }
     }
 
     function setStarGroupByEvaluateTotal(evaluate) {
@@ -544,4 +581,5 @@
                 return 0;
         }
     }
+
 </script>

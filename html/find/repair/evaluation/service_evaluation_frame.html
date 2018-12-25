@@ -35,7 +35,7 @@
         font-size: .75rem;
         line-height: 1rem;
         outline: none;
-        resize:none;
+        resize: none;
     }
 
     .input-text-div .font-num {
@@ -86,7 +86,7 @@
 <div class="star-list">
     <div class="star-item">
         <span>响应速度</span>
-        <span class="star-group" result="0">
+        <span class="star-group" id="evaluateResponseSpeed" result="0">
             <img src="../../../../image/find/repair/star_ash.png">
             <img src="../../../../image/find/repair/star_ash.png">
             <img src="../../../../image/find/repair/star_ash.png">
@@ -96,7 +96,7 @@
     </div>
     <div class="star-item">
         <span>服务态度</span>
-        <span class="star-group" result="0">
+        <span class="star-group" id="evaluateServiceProfession" result="0">
             <img src="../../../../image/find/repair/star_ash.png">
             <img src="../../../../image/find/repair/star_ash.png">
             <img src="../../../../image/find/repair/star_ash.png">
@@ -106,7 +106,7 @@
     </div>
     <div class="star-item">
         <span>总体评价</span>
-        <span class="star-group" result="0">
+        <span class="star-group" id="evaluateTotal" result="0">
             <img src="../../../../image/find/repair/star_ash.png">
             <img src="../../../../image/find/repair/star_ash.png">
             <img src="../../../../image/find/repair/star_ash.png">
@@ -119,44 +119,145 @@
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
 <script>
-    document.getElementById("textInfo").oninput = function () {
-        var text = this.value;
-        $api.text(document.getElementById('textLen'), text.length)
+    apiready = function () {
+        initBindEvent();
+        initEvent();
     };
 
-    var starGroup = document.querySelectorAll('.star-group');
-    for (var i = 0; i < starGroup.length; i++) {
-        starGroup[i].onclick = function () {
-            var objLeft = this.offsetLeft;
-            var val = this.offsetParent;
-            while (val != null) {
-                objLeft += val.offsetLeft;
-                val = val.offsetParent;
-            }
-            //鼠标x位置
-            var mouseX = event.clientX + document.body.scrollLeft;
-            //计算点击的相对位置
-            var objX = mouseX - objLeft;
+    /**
+     * 点击提交的事件注册
+     */
+    function initEvent() {
+        api.addEventListener({
+            name: 'evaluationSubmit'
+        }, function (ret, err) {
+            //是时候该提交评价了呢
+            submitEvaluation();
+        });
+    }
 
-            var imgWidth = this.clientWidth / 5;
-            var blueStar = parseInt(objX / imgWidth) + 1;
-            if (objX < (imgWidth / 2)) {
-                //    这是零星
-                blueStar = 0;
-            }
-            $api.attr(this, 'result', blueStar);
-            var imgList = $api.domAll(this, 'img');
-            for (var k = 0; k < imgList.length; k++) {
-                if (k<blueStar){
-                    //设置成蓝星
-                    $api.attr(imgList[k],'src','../../../../image/find/repair/star_blue.png');
-                }else {
-                    //设置成灰星
-                    $api.attr(imgList[k],'src','../../../../image/find/repair/star_ash.png');
+    /**
+     * 提交评价
+     */
+    function submitEvaluation() {
+        var content = $api.val($api.dom('#textInfo')).trim();
+        var evaluateResponseSpeed = parseInt($api.attr($api.dom('#evaluateResponseSpeed'), 'result'));
+        var evaluateServiceProfession = parseInt($api.attr($api.dom('#evaluateServiceProfession'), 'result'));
+        var evaluateTotal = parseInt($api.attr($api.dom('#evaluateTotal'), 'result'));
+        if (!content) {
+            api.toast({
+                msg: '您还没有填写评价内容呢。',
+                duration: 3000,
+                location: 'bottom'
+            });
+            return;
+        }
+        if (!evaluateResponseSpeed || !evaluateServiceProfession || !evaluateTotal) {
+            api.toast({
+                msg: '客官，至少给一星吧。',
+                duration: 3000,
+                location: 'bottom'
+            });
+            return;
+        }
+
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/userService/evaluateReportThingsRepair',
+            method: 'patch',
+            dataType: 'json',
+            data: {
+                values: {
+                    cellphone: $api.getStorage(Static.USEROBJ).cellphone,
+                    applyReportId: api.pageParam.id,
+                    evaluateResponseAttitude: 0,
+                    evaluateResponseSpeed,
+                    evaluateServiceProfession,
+                    evaluateTotal,
+                    evaluateContent: content,
+                    mac: api.deviceId
                 }
             }
+        }, function (ret, err) {
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    // var obj = ret.object;
+                    api.toast({
+                        msg: '评价成功！',
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                    setTimeout(function () {
+                        api.openWin({
+                            name: 'repairDetailsWin',
+                            url: '../repairDetails/repair_details.html',
+                            pageParam: api.pageParam,
+                            reload: true
+                        });
+                        setTimeout(function () {
+                            api.closeWin();
+                        },500);
+                    }, 500);
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+    }
 
+    /**
+     * 不涉及业务的事件
+     */
+    function initBindEvent() {
+        document.getElementById("textInfo").oninput = function () {
+            var text = this.value;
+            $api.text(document.getElementById('textLen'), text.length)
         };
+
+        var starGroup = document.querySelectorAll('.star-group');
+        for (var i = 0; i < starGroup.length; i++) {
+            starGroup[i].onclick = function () {
+                var objLeft = this.offsetLeft;
+                var val = this.offsetParent;
+                while (val != null) {
+                    objLeft += val.offsetLeft;
+                    val = val.offsetParent;
+                }
+                //鼠标x位置
+                var mouseX = event.clientX + document.body.scrollLeft;
+                //计算点击的相对位置
+                var objX = mouseX - objLeft;
+
+                var imgWidth = this.clientWidth / 5;
+                var blueStar = parseInt(objX / imgWidth) + 1;
+                if (objX < (imgWidth / 2)) {
+                    //    这是零星
+                    blueStar = 0;
+                }
+                $api.attr(this, 'result', blueStar);
+                var imgList = $api.domAll(this, 'img');
+                for (var k = 0; k < imgList.length; k++) {
+                    if (k < blueStar) {
+                        //设置成蓝星
+                        $api.attr(imgList[k], 'src', '../../../../image/find/repair/star_blue.png');
+                    } else {
+                        //设置成灰星
+                        $api.attr(imgList[k], 'src', '../../../../image/find/repair/star_ash.png');
+                    }
+                }
+
+            };
+        }
     }
 </script>
