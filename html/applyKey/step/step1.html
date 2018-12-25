@@ -40,7 +40,7 @@
             padding: 0 18.5px 0 0 !important;
         }
 
-        header .aui-pull-right:active{
+        header .aui-pull-right:active {
             color: #0385c5;
         }
     </style>
@@ -105,7 +105,12 @@
      * 初始化API的事件接收
      */
     function initAPIEvent() {
-
+        //监听手机的返回按钮的点击
+        api.addEventListener({
+            name: 'keyback'
+        }, function (ret, err) {
+            goBack();
+        });
     }
 
     /**
@@ -123,6 +128,15 @@
      * 根据标签内携带自定义index属性
      */
     function goBack() {
-        api.closeWin();
+        api.confirm({
+            title: '确定要放弃本次申请吗？',
+            msg: '填写内容将会被清空！',
+            buttons: ['确定', '取消']
+        }, function (ret, err) {
+            var index = ret.buttonIndex;
+            if (index === 1) {
+                api.closeWin();
+            }
+        });
     }
 </script>

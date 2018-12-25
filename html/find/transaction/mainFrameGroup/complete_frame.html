@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>我的报事已完成</title>
+    <title>我的办理已完成</title>
     <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
 
     <style>
@@ -361,6 +361,8 @@
         if (list && list.length > 0) {
             var all = [];
             for (var i = 0; i < list.length; i++) {
+                var status = Static.getDictionByCode(list[i].status);
+                var color = (status === '已评价') ? 'text-green' : 'text-red';
                 all.push(
                     '<li class="com-list-item" tapmode onclick="clickTransactionDetails(' + list[i].id + ')">\n' +
                     '<div class="item-top">\n' +
@@ -368,16 +370,16 @@
                     '<img src="../../../../image/find/repair/order_num.png"/>\n' +
                     '<span>' + list[i].number + '</span>\n' +
                     '</span>\n' +
-                    '<span class="text-green">\n' +
+                    '<span class="' + color + '">\n' +
                     '' + Static.getDictionByCode(list[i].status) + '\n' +
                     '</span>\n' +
                     '</div>\n' +
                     '<div class="item-details">\n' +
-                    '<img src="'+getImgForMaintainType(list[i].type)+'"/>\n' +
+                    '<img src="' + getImgForMaintainType(list[i].type) + '"/>\n' +
                     '<p>' + list[i].content + '</p>' +
                     '</div>\n' +
                     '<div class="item-time">\n' +
-                    '<span>'+list[i].gmtCreate+'</span>\n' +
+                    '<span>' + list[i].gmtCreate + '</span>\n' +
                     '</div>\n' +
                     '</li>'
                 );
@@ -465,27 +467,43 @@
         api.openWin({
             name: 'transactionDetailsWin',
             url: '../transactionDetails/transaction_Details.html',
-            pageParam:{
-                id:id
+            pageParam: {
+                id: id
             }
         })
     }
 
-    function getImgForMaintainType(num) {
-        if (num) num = parseInt(num);
+    function getImgForMaintainType(type) {
+        if (type) type = parseInt(type);
         //maintain_type 维修类型：1、水，2、电，3、可燃气，4、锁，5、其他
-        var suff = '../../../../image/find/repair/icon/';
-        switch (num) {
-            case 1:
-                return suff + 'water.png';
-            case 2:
-                return suff + 'electricity.png';
-            case 3:
-                return suff + 'fire.png';
-            case 4:
-                return suff + 'lock.png';
+        var suff = '../../../../image/find/transaction/';
+        switch (type) {
+            //入住证明
+            case 'proof_accommodation':
+                return suff + '1.png';
+            //装修完工申请
+            case 'application_decoration_completion':
+                return suff + '2.png';
+            //大物件搬出申报
+            case 'big_out_declaration':
+                return suff + '3.png';
+            //装修许可证
+            case 'decoration_permit':
+                return suff + '4.png';
+                //装修出入证
+            case 'decoration_card':
+                return suff + '5.png';
+                //钥匙托管
+            case 'key_escrow':
+                return suff + '6.png';
+                //业主卡
+            case 'owner_card':
+                return suff + '7.png';
+                //其他
+            case 'business_handling_type_other':
+                return suff + '8.png';
             default:
-                return suff + 'other.png';
+                return suff + '8.png';
         }
     }
 </script>

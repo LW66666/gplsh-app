@@ -8,7 +8,6 @@
     <title>添加办理填写内容frame</title>
     <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../../css/lCalendar.css"/>
     <style>
         body, html {
             background: #fff;
@@ -175,12 +174,11 @@
             font-size: 0.6875rem;
         }
 
-       .text-h-right{
-           background: none;
-           color: #9d9d9d;
-           font-size: .625rem;
-       }
-
+        .text-h-right {
+            background: none;
+            color: #9d9d9d;
+            font-size: .625rem;
+        }
 
         .btn-submit {
             color: #ffffff;
@@ -241,7 +239,7 @@
                     报事地点
                 </div>
                 <div class="aui-list-item-input">
-                    <input disabled="disabled" type="text" value="保利香槟金1期-H2栋-1单元-3103"/>
+                    <input id="place" disabled="disabled" type="text" value=""/>
                 </div>
             </div>
         </li>
@@ -251,7 +249,7 @@
                     联系人
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="text" value="吕布"/>
+                    <input id="contacts" type="text" value=""/>
                 </div>
             </div>
         </li>
@@ -261,7 +259,7 @@
                     联系电话
                 </div>
                 <div class="aui-list-item-input">
-                    <input type="text" value="18170041111"/>
+                    <input id="phoneNum" type="text" value=""/>
                 </div>
             </div>
         </li>
@@ -313,13 +311,14 @@
 </body>
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
-<script type="text/javascript" src="../../../../script/lCalendar.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
 <script>
 
 </script>
 <script>
     var UIAlbumBrowser;
     apiready = function () {
+        initDefaultMsg();
         /**
          * 图片加载器
          */
@@ -329,9 +328,55 @@
         initPageParam(api.pageParam);
     };
 
+    function initDefaultMsg() {
+        api.showProgress({
+            title: '正在加载...'
+        });
+        var user = $api.getStorage(Static.USEROBJ);
+        var placeInfo = user.householdRoomList[0];
+        var place = [
+            placeInfo.communityName + placeInfo.zoneName,
+            placeInfo.unitName,
+            placeInfo.buildingId,
+            placeInfo.roomNum
+        ];
+        $api.val($api.dom('#place'), place.join('-'));
+        api.ajax({
+            url: Static.IP + '/api/app/communitywanli/user/getDetail',
+            method: 'get',
+            dataType: 'json',
+            data: {
+                values: {
+                    cellphone: $api.getStorage(Static.USEROBJ).cellphone
+                }
+            }
+        }, function (ret, err) {
+            api.hideProgress();
+            if (ret) {
+                if (!ret.resultStatus) {
+                    api.toast({
+                        msg: ret.message,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                } else {
+                    var obj = ret.object;
+                    $api.val($api.dom('#contacts'), obj.household.householdName);
+                }
+            } else {
+                api.toast({
+                    msg: err.msg,
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+        $api.val($api.dom('#phoneNum'), user.cellphone);
+    }
+
     function initPageParam(param) {
         var typeName = param.typeName;
-        $api.attr($api.dom('#transactionType'),'value',typeName);
+        $api.attr($api.dom('#transactionType'), 'value', typeName);
     }
 
     /**
@@ -473,7 +518,7 @@
         //更换选中了几张的数字
         checkSelectImgLength(len);
 
-        //闭包解决一切，垃圾apiCloud不支持let，不支持es6活不久
+        //闭包解决一切，垃圾apiCloud不支持let，不支持es6活不久,用babel又不行
         for (var i = 0; i < len; i++) {
             (function (i) {
                 UIAlbumBrowser.transPath({
@@ -511,8 +556,6 @@
         if (fn) {
             $api.text($api.dom('#imgLen'), fn($api.text($api.dom('#imgLen'))));
         }
-
-
         var res = [];
         var imgList = $api.domAll('.img-item img');
         for (var i = 0; i < imgList.length; i++) {
@@ -529,6 +572,126 @@
      * 点击立即提交
      */
     function clickSubmit() {
-        // $api.append($api.dom('body'),'<div class="loading_more"></div>')
+        var user = $api.getStorage(Static.USEROBJ);
+        var communityCode = user.householdRoomList[0].communityCode;
+        var cellphone = user.cellphone;
+        var roomId = user.householdRoomList[0].roomId;
+        var roomNum = user.householdRoomList[0].roomNum;
+        var creatorUserId = user.id;
+        var type = api.pageParam.typeCode;
+
+        var content = $api.dom('#textInfo').value.trim();
+        var contactPerson = $api.dom('#contacts').value.trim();
+        var contactCellphone = $api.dom('#phoneNum').value;
+
+        var imgList = getImgList();
+        var isPass = checkSubmitInfo(contactPerson, contactCellphone, content);
+        if (isPass) {
+            //提交我的办理
+            api.showProgress({
+                title: '正在提交'
+            });
+            //这里应该做提交
+            api.ajax({
+                url: Static.IP + '/api/app/communitywanli/userService/applyBusinessHandling',
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    values: {
+                        communityCode,
+                        cellphone,
+                        roomId,
+                        roomNum,
+                        creatorUserId,
+                        content,
+                        type,
+                        contactPerson,
+                        contactCellphone,
+                        mac: api.deviceId
+                    },
+                    files: {
+                        images: imgList
+                    }
+                }
+            }, function (ret, err) {
+                api.hideProgress();
+                if (ret) {
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    } else {
+                        // api.alert({msg:JSON.stringify(ret)});
+                        api.toast({
+                            msg: '申请办理成功！',
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                        setTimeout(function () {
+                            api.closeWin();
+                        }, 500);
+                    }
+                } else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+
+        }
+    }
+
+    function getImgList() {
+        var imgList = [];
+        var $imgList = $api.domAll('.select-img-group img');
+        for (var i = 0; i < $imgList.length; i++) {
+            var path = $api.attr($imgList[i], 'src');
+            if (path && path !== '../../../../image/applyKey/add.png') {
+                imgList.push(path);
+            }
+        }
+        return imgList;
+    }
+
+    /**
+     * 检查上传的信息
+     * @param reportUser
+     * @param reportCellphone
+     * @param content
+     * @param appointmentTime
+     * @returns {boolean} 通过还是没通过
+     */
+    function checkSubmitInfo(reportUser, reportCellphone, content, appointmentTime) {
+        if (reportUser.length > 9 || !/^[\u4E00-\u9FA5A-Za-z]+$/.test(reportUser)) {
+            api.toast({
+                msg: '您输入的名称不合法',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+
+        if (!reportCellphone || !(/^1[34578]\d{9}$/.test(reportCellphone))) {
+            api.toast({
+                msg: '您输入的联系人电话有误',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+
+        if (!content) {
+            api.toast({
+                msg: '请输入报事说明',
+                duration: 3000,
+                localhost: 'bottom'
+            });
+            return false;
+        }
+        return true;
     }
 </script>
