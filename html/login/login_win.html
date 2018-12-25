@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录win</title>
+    <style>
+        html{
+            overflow: hidden;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction:column;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
+        }
+
+        #header {
+            background: rgba(0, 0, 0, 0) !important;
+            width: 100%;
+            height: 104.5px;
+            padding-top: 73px;
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        #header>img {
+            width: 141.5px;
+            height: 31px;
+        }
+
+        section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 32.5px 0px;
+
+        }
+        section>.title{
+            position: relative;
+            display: flex;
+            border-bottom: solid 1px #5fb9ca;
+        }
+        section>.title>div {
+            flex: 1;
+            text-align: center;
+            height: 55px;
+            line-height: 55px;
+            color: #fff;
+            -webkit-transition: color 1s;
+            -moz-transition: color 1s;
+            -ms-transition: color 1s;
+            -o-transition: color 1s;
+            transition: color 1s;
+        }
+        section>.title>div:nth-child(2){
+            color: #00ffff;
+        }
+        section>.title>.bottomLine {
+            position: absolute;
+            flex: none;
+            bottom: -1px;
+            width: 50%;
+            height: 3px;
+            background: #00ffff;
+            transition: all 0.3s;
+            transform: translateX(100%);
+        }
+        section>.frameBox{
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<header>
+
+</header>
+<div id="header">
+    <img src="../../image/login/appName.png" alt="">
+</div>
+<section class="aui-content">
+    <div class="title">
+        <div>验证码登录</div>
+        <div>密码登录</div>
+        <div class="bottomLine">
+
+        </div>
+    </div>
+    <div class="frameBox">
+
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+    apiready=function () {
+        $api.fixStatusBar($api.dom('header'));//自适应沉浸式状态栏，不需要另外设置状态栏样式
+        api.parseTapmode();
+
+        //关闭之前的页面
+        api.closeWin({
+            name:"index"
+        });
+        setTimeout(function () {
+            api.closeWin({
+                name:"optionWin"
+            });
+        },300);
+        setTimeout(function () {
+            api.closeFrame({
+                name: 'optionFrame'
+            });
+        },600);
+        setTimeout(function () {
+            api.closeFrame({
+                name: 'frame3'
+            });
+        },600);
+
+        api.openFrameGroup({
+            name: 'loginGroup',
+            background: 'rgba(255,255,255,0)',
+            scrollEnabled: true,
+            rect: {
+                x: 0,
+                y: $api.offset($api.dom(".frameBox")).t,
+                w: 'auto',
+                h: $api.offset($api.dom(".frameBox")).h
+            },
+            index: 1,
+            frames:
+                [{
+                    name: 'code_login_win',
+                    url: 'code_login_win.html',
+                    bgColor: 'rgba(255,255,255,0)'
+                }, {
+                    name: 'pw_login_win',
+                    url: 'pw_login_win.html',
+                    bgColor: 'rgba(255,255,255,0)'
+                }]
+        },
+        function (ret, err) {
+            if (ret.index==1){
+                $api.dom("section>.title>div:nth-child(2)").style.color="#00ffff";
+                $api.dom("section>.title>div:nth-child(1)").style.color="#fff";
+                $api.css($api.dom(".bottomLine"),"transform: translateX(100%)")
+            }else {
+                $api.dom("section>.title>div:nth-child(1)").style.color="#00ffff";
+                $api.dom("section>.title>div:nth-child(2)").style.color="#fff";
+                $api.css($api.dom(".bottomLine"),"transform: translateX(0%)")
+            }
+        });
+
+        api.addEventListener({
+                name: 'keyback'
+            },
+            function(ret, err) {
+                api.closeWidget({
+                    id: 'A6098458444100',
+                    retData: {
+                        name: 'closeWidget'
+                    },
+                    silent:false,
+                    animation: {
+                        type: 'flip',
+                        subType: 'from_bottom',
+                        duration: 500
+                    }
+                });
+            });
+    }
+
+    $api.addEvt($api.dom("section>.title>div:nth-child(1)"), 'click', function () {
+        //do something
+        this.style.color="#00ffff";
+        $api.dom("section>.title>div:nth-child(2)").style.color="#fff";
+        $api.css($api.dom(".bottomLine"),"transform: translateX(0%)");
+        api.setFrameGroupIndex({
+            name: 'loginGroup',
+            index: 0,
+            scroll: true
+        });
+    });
+    $api.addEvt($api.dom("section>.title>div:nth-child(2)"), 'click', function () {
+        //do something
+        this.style.color="#00ffff";
+        $api.dom("section>.title>div:nth-child(1)").style.color="#fff";
+        $api.css($api.dom(".bottomLine"),"transform: translateX(100%)");
+        api.setFrameGroupIndex({
+            name: 'loginGroup',
+            index: 1,
+            scroll: true
+        });
+    });
+</script>
+</html>
