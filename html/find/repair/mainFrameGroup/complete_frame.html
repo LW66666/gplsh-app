@@ -360,6 +360,8 @@
         if (list && list.length > 0) {
             var all = [];
             for (var i = 0; i < list.length; i++) {
+                var status = Static.getDictionByCode(list[i].status);
+                var color = (status === '已评价')?'text-green':'text-red';
                 all.push(
                     '<li class="com-list-item" tapmode onclick="clickRepairDetails(' + list[i].id + ')">\n' +
                     '<div class="item-top">\n' +
@@ -367,8 +369,8 @@
                     '<img src="../../../../image/find/repair/order_num.png"/>\n' +
                     '<span>' + list[i].number + '</span>\n' +
                     '</span>\n' +
-                    '<span class="text-green">\n' +
-                    '' + Static.getDictionByCode(list[i].status) + '\n' +
+                    '<span class="'+color+'">\n' +
+                    '' + status + '\n' +
                     '</span>\n' +
                     '</div>\n' +
                     '<div class="item-details">\n' +
