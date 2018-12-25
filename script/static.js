@@ -47,6 +47,14 @@ Static.IP = 'http://192.168.1.222:9765';
 Static.USEROBJ = 'userObj';
 
 var user=$api.getStorage("userObj");
+if (user==undefined) {
+    setTimeout(function () {
+        api.openWin({
+            name: 'login_win',
+            url: 'widget://html/login/login_win.html'
+        });
+    },1000);
+}
 
 function relogin(ret){
     if (ret){
