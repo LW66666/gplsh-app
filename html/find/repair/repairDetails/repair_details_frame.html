@@ -83,7 +83,8 @@
             position: relative;
             width: 95%;
             box-sizing: border-box;
-            margin: 12.5px auto 0;
+            margin: 12.5px auto;
+            padding-bottom: 15px;
             border-radius: 10px;
             -webkit-box-shadow: 2px 2px 10px #efefef, -2px -2px 10px #efefef;
             -moz-box-shadow: 2px 2px 10px #efefef, -2px -2px 10px #efefef;
@@ -91,10 +92,21 @@
         }
 
         .box .box-title {
+            position: relative;
             font-size: 0.875rem;
             padding-left: 12px;
             padding-top: 14px;
         }
+
+        .box .box-title span:last-child{
+            position: absolute;
+            right: 10px;
+            white-space: nowrap;
+            text-align: right;
+            color: #7f7f7f;
+            font-size: 0.6875rem;
+        }
+
 
         .box .box-title::before {
             display: inline-block;
@@ -108,29 +120,16 @@
         }
 
         .box .box-title-small {
-            position: relative;
             padding-left: 15px;
+            padding-right: 10px;
             padding-top: 6px;
-        }
-
-        .box .box-title-small span:first-of-type {
             font-size: 0.75rem;
-            line-height: 0.75rem;
-        }
-
-        .box .box-title-small span:last-of-type {
-            position: absolute;
-            top: 0.68rem;
-            right: 13px;
-            color: #7f7f7f;
-            font-size: 0.6875rem;
-            line-height: 0.6875rem;
+            line-height: 0.85rem;
         }
 
         .box .box-info {
             padding-left: 15px;
             padding-top: 18px;
-            padding-bottom: 20px;
             font-size: 0.6875rem;
             color: #474747;
         }
@@ -155,6 +154,7 @@
 
         .btn-evaluation {
             position: absolute;
+            display: none;
             right: 20.5px;
             bottom: 30px;
             width: 70px;
@@ -173,7 +173,7 @@
     </style>
     <style>
         .time-line-group {
-            padding: 12px 0 15px;
+            padding: 12px 0 0;
         }
 
         .time-line-group .item {
@@ -267,6 +267,14 @@
         .text-red {
             color: #ff4747;
         }
+
+        .btn-disable {
+            background-color: #a5a5a5;
+        }
+
+        .btn-disable:active {
+            background-color: #a5a5a5;
+        }
     </style>
 </head>
 
@@ -274,7 +282,7 @@
 <div class="div-header">
     <div class="title">
         <span>报事单号：</span>
-        <span>Y18092614118736</span>
+        <span id="number"></span>
     </div>
     <div>
         <div class="group-circle">
@@ -284,7 +292,7 @@
             </div>
             <div class="line"></div>
             <div class="group-circle-item">
-                <i class="circle circle-active"></i>
+                <i class="circle"></i>
                 <span class="circle-detail">已受理</span>
             </div>
             <div class="line"></div>
@@ -315,17 +323,16 @@
 </div>
 
 <section class="box">
-    <div class="box-title">报事内容</div>
-    <div class="box-title-small">
-        <span id="content">开一张居住证明</span>
-        <span id="createTime">2018-09-28 12:22:22</span>
+    <div class="box-title"><span>报事内容 </span><span id="createTime"></span></div>
+    <div class="box-title-small" id="content">
+
     </div>
-    <div class="box-info">
-        <div>服务人员：<span id="receiver">木子</span></div>
-        <div>联系电话：<span id="receiverPhone">18188886666</span></div>
+    <div id="box-info" class="box-info">
+        <div>服务人员：<span id="processor"></span></div>
+        <div>联系电话：<span id="processorPhone"></span></div>
         <div>服务评价：
-            <div class="img-list">
-                <img src="../../../../image/find/repair/star_blue.png">
+            <div class="img-list" id="starGroup">
+                <img src="../../../../image/find/repair/star_ash.png">
                 <img src="../../../../image/find/repair/star_ash.png">
                 <img src="../../../../image/find/repair/star_ash.png">
                 <img src="../../../../image/find/repair/star_ash.png">
@@ -333,11 +340,11 @@
             </div>
         </div>
     </div>
-    <div class="btn-evaluation" tapmode onclick="clickEvaluation()">评价</div>
+    <div id="evaluation" class="btn-evaluation" tapmode onclick="clickEvaluation(this)">评价</div>
 </section>
 <section class="box" style="margin-top: 8px;">
     <div class="box-title">进度信息</div>
-    <div class="time-line-group">
+    <div class="time-line-group" id="lineGroup">
         <div class="item">
             <div class="item-time">
                 <span>09-26</span>
@@ -399,6 +406,7 @@
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
 <script>
     apiready = function () {
         initInfo(api.pageParam.id);
@@ -425,7 +433,6 @@
             }
         }, function (ret, err) {
             api.hideProgress();
-            // api.alert({msg: JSON.stringify(ret)});
             if (ret) {
                 if (!ret.resultStatus) {
                     api.toast({
@@ -434,8 +441,7 @@
                         location: 'bottom'
                     });
                 } else {
-                    var obj = ret.object;
-                    render(obj);
+                    render(ret.object);
                 }
             } else {
                 api.toast({
@@ -447,11 +453,13 @@
         });
     }
 
-    function clickEvaluation() {
+    function clickEvaluation($this) {
+        if ($api.hasCls($this, 'btn-disable')) return;
         api.openWin({
             name: 'evaluationWin',
             url: '../evaluation/service_evaluation.html'
         })
+
     }
 
     /**
@@ -459,6 +467,81 @@
      * @param obj
      */
     function render(obj) {
+        $api.text($api.dom('#number'), obj.number);
+        var index = getIndexCircleByStatus(obj.status);
+        if (index === 4) {
+            $api.addCls('#evaluation', 'btn-disable');
+            $api.text($api.text('#evaluation'), '已评价');
+        }
+        if (index > 2) {
+            $api.text($api.dom('#processor'), obj.processor);
+            $api.text($api.dom('#processorPhone'), obj.processorPhone);
+            $api.dom('#evaluation').style.display = 'block';
+            setStarGroupByEvaluateTotal(obj.evaluateTotal);
+        }else {
+            $api.dom('#box-info').style.display = 'none';
+        }
 
+        var element = $api.domAll('.group-circle .group-circle-item')[index];
+        $api.addCls($api.first(element, 'i'), 'circle-active');
+        $api.text($api.dom('#content'), obj.content);
+        $api.text($api.dom('#createTime'), obj.gmtCreate);
+
+        //进度信息
+        var $lineGroup = $api.dom('#lineGroup');
+        var groupItemArr = [];
+        //添加申请报事成功信息
+        groupItemArr.push({
+            date:obj.gmtCreate.substring(5,10),
+            time:obj.gmtCreate.substring(11,16),
+            // status:'',
+            content:'报事成功，正在处理中'
+        });
+        //等待处理
+        groupItemArr.push({
+            date:obj.gmtCreate.substring(5,10),
+            time:obj.gmtCreate.substring(11,16),
+            // status:'',
+            content:'您的报事等待处理'
+        });
+
+        //添加已处理信息
+        $api.append($lineGroup,[
+            '<div class="item"><div class="item-time">',
+            '<span>09-26</span><span>10:30</span>',
+            '</div>',
+            '<i class="circle end"></i>',
+            '<div class="item-inner">',
+            '<div>已处理</div>',
+            '<p>客服如来佛祖已处理完成，愿我们的十分努力换您的五星好评</p>',
+            '</div>',
+            '</div>'
+        ]);
+    }
+
+    function setStarGroupByEvaluateTotal(evaluate) {
+        if (!evaluate) return;
+        var all = $api.domAll('#starGroup img');
+        for (var i = 0; i < evaluate; i++) {
+            $api.attr(all[i], 'src', '../../../../image/find/repair/star_blue.png');
+        }
+    }
+
+    function getIndexCircleByStatus(status) {
+        var name = Static.getDictionByCode(status);
+        switch (name) {
+            case '报事成功':
+                return 0;
+            case '已受理':
+                return 1;
+            case '处理中':
+                return 2;
+            case '待评价':
+                return 3;
+            case '已评价':
+                return 4;
+            default:
+                return 0;
+        }
     }
 </script>
