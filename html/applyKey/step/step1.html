@@ -130,7 +130,7 @@
     function goBack() {
         api.confirm({
             title: '确定要放弃本次申请吗？',
-            msg: '填写内容将会被清空！',
+            msg: '填写内容将不被保存！',
             buttons: ['确定', '取消']
         }, function (ret, err) {
             var index = ret.buttonIndex;

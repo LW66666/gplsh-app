@@ -630,6 +630,10 @@
                             location: 'bottom'
                         });
                         setTimeout(function () {
+                            //给你全关了
+                            api.closeWin({
+                                name:'addTransactionWin'
+                            });
                             api.closeWin();
                         }, 500);
                     }
