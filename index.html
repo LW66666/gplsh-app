@@ -175,6 +175,7 @@
 </html>
 <script type="text/javascript" src="script/api.js"></script>
 <script type="text/javascript" src="script/aui-tab.js"></script>
+<script type="text/javascript" src="script/static.js"></script>
 <script type="text/javascript">
     apiready = function () {
         api.parseTapmode();
@@ -213,6 +214,19 @@
                     duration: 500
                 }
             });
+        });
+
+        //登录过期监听事件
+        api.addEventListener({
+            name: 'relogin'
+        }, function(ret, err) {
+            api.openWin({
+                name: 'login_win',
+                url: 'html/login/login_win.html',
+            });
+            console.log("重新登录")
+            $api.setStorage("phone",user.cellphone);
+            $api.rmStorage("userObj");
         });
     };
 

@@ -333,63 +333,65 @@
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
 
-        if ($api.getStorage("userObj")==undefined){
+        if ($api.getStorage("phone")!=undefined){
             $api.val($api.dom("#phone"),$api.getStorage("phone"));
-        }
-
-        var obj=$api.getStorage('userObj');
-        if (obj!=undefined){
-            var mac=api.deviceId;
-            var phone=obj.cellphone;
-            api.ajax({
-                    url: ip+'/api/app/communitywanli/login/haveLogin',
-                    method: 'get',
-                    timeout: 10,
-                    dataType: 'json',
-                    returnAll: false,
-                    data: {
-                        values:{
-                            cellphone: phone,
-                            mac:mac
+        }else {
+            $api.rmStorage("phone")
+            var obj=$api.getStorage('userObj');
+            if (obj!=undefined){
+                var mac=api.deviceId;
+                var phone=obj.cellphone;
+                api.ajax({
+                        url: ip+'/api/app/communitywanli/login/haveLogin',
+                        method: 'get',
+                        timeout: 10,
+                        dataType: 'json',
+                        returnAll: false,
+                        data: {
+                            values:{
+                                cellphone: phone,
+                                mac:mac
+                            }
                         }
-                    }
-                },
-                function (ret, err) {
-                    api.hideProgress();
-                    if (ret!=""){
-                        if (!ret.resultStatus) {
-                            api.toast({
-                                msg: "登录已过期，请重新登陆",
-                                duration: 4000,
-                                location: 'top'
-                            });
-                            setTimeout(function () {
-                                focusInput();
-                            },3000)
+                    },
+                    function (ret, err) {
+                        api.hideProgress();
+                        if (ret!=""){
+                            if (!ret.resultStatus) {
+                                api.toast({
+                                    msg: "登录已过期，请重新登陆",
+                                    duration: 4000,
+                                    location: 'top'
+                                });
+                                setTimeout(function () {
+                                    focusInput();
+                                },3000)
+                            }
+                            else {
+                                setTimeout(function () {
+                                    api.openWin({
+                                        name: 'index',
+                                        url: '../../index.html',
+                                        pageParam: {name: 'pageparamname'},
+                                        bgColor:"#fff",
+                                    });
+                                },1000);
+                            }
                         }
                         else {
-                            setTimeout(function () {
-                                api.openWin({
-                                    name: 'index',
-                                    url: '../../index.html',
-                                    pageParam: {name: 'pageparamname'},
-                                    bgColor:"#fff",
-                                });
-                            },1000);
+                            api.toast({
+                                msg: err.msg,
+                                duration: 3000,
+                                location: 'top'
+                            });
                         }
-                    }
-                    else {
-                        api.toast({
-                            msg: err.msg,
-                            duration: 3000,
-                            location: 'top'
-                        });
-                    }
-                });
-        }else{
-            setTimeout(function () {
-                // focusInput();
-            },3000)
+                    });
+            }
+            else{
+                setTimeout(function () {
+                    // focusInput();
+                },3000)
+            }
         }
 
         checkFromByType();

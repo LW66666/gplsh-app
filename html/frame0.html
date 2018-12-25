@@ -267,7 +267,7 @@
                     lat: ret.lat
                 }, function(ret, err) {
                     if (ret.status) {
-                        setWeather(ret.cityCode);
+                        setWeather(ret.city);
                         if (ret.city=="南昌市"){
                             var phone=user.cellphone;
                             var mac=api.deviceId;
@@ -281,12 +281,7 @@
                                 function (ret, err) {
                                     if (ret!=""){
                                         if (ret.message=="请重新登录") {
-                                            setTimeout(function () {
-                                                api.openWin({
-                                                    name: 'pw_login_win',
-                                                    url: 'login/pw_login_win.html',
-                                                });
-                                            },1000);
+                                            relogin(ret);
                                         }
                                         if (!ret.resultStatus) {
                                             api.toast({
@@ -485,19 +480,14 @@
                     values:{
                         cellphone: phone,
                         mac: mac,
-                        region:"nanchang"
+                        cityName:region.substring(0,2)
                     }
                 }
             },
             function (ret, err) {
                 if (ret!=""){
                     if (ret.message=="请重新登录") {
-                        setTimeout(function () {
-                            api.openWin({
-                                name: 'pw_login_win',
-                                url: 'login/pw_login_win.html',
-                            });
-                        },1000);
+                        relogin(ret);
                     }
                     if (!ret.resultStatus) {
                         api.toast({

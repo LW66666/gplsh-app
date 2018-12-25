@@ -201,6 +201,7 @@
 
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
+<script type="text/javascript" src="../../../../script/static.js"></script>
 <script>
     var user=$api.getStorage("userObj");
     var mac=$api.deviceId;
@@ -424,15 +425,8 @@
             function (ret, err) {
                 api.refreshHeaderLoadDone();
                 api.hideProgress();
+                relogin(ret);
                 if (ret!=""){
-                    if (ret.message=="请重新登录") {
-                        setTimeout(function () {
-                            api.openWin({
-                                name: 'pw_login_win',
-                                url: '../../login/pw_login_win.html',
-                            });
-                        },1000);
-                    }
                     if (!ret.resultStatus) {
                         api.toast({
                             msg: ret.message,
@@ -480,15 +474,8 @@
                                     }
                                 },
                                 function (ret, err) {
+                                    relogin(ret);
                                     if (ret!=""){
-                                        if (ret.message=="请重新登录") {
-                                            setTimeout(function () {
-                                                api.openWin({
-                                                    name: 'pw_login_win',
-                                                    url: '../../login/pw_login_win.html',
-                                                });
-                                            },1000);
-                                        }
                                         if (!ret.resultStatus) {
                                             api.toast({
                                                 msg: ret.message,
@@ -617,15 +604,8 @@
                 function (ret, err) {
                     api.refreshHeaderLoadDone();
                     api.hideProgress();
+                    relogin(ret);
                     if (ret!=""){
-                        if (ret.message=="请重新登录") {
-                            setTimeout(function () {
-                                api.openWin({
-                                    name: 'pw_login_win',
-                                    url: '../../login/pw_login_win.html',
-                                });
-                            },1000);
-                        }
                         if (!ret.resultStatus) {
                             api.toast({
                                 msg: ret.message,
