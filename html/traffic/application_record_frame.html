@@ -124,6 +124,7 @@
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/static.js"></script>
 <script>
     var user;
     var mac;
@@ -187,6 +188,7 @@
             },
             function (ret, err) {
                 api.hideProgress();
+                relogin(ret);
                 if (ret!=""){
                     if (!ret.resultStatus) {
                         api.toast({
@@ -194,14 +196,6 @@
                             duration: 3000,
                             location: 'bottom'
                         });
-                        if (ret.message=="请重新登录") {
-                            setTimeout(function () {
-                                api.openWin({
-                                    name: 'pw_login_win',
-                                    url: '../login/pw_login_win.html',
-                                });
-                            },1000);
-                        }
                     }
                     else {
                         var keyBox=document.querySelector(".keyWarp");

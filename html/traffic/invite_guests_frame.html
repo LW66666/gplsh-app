@@ -436,6 +436,7 @@
 </section>
 </body>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/static.js"></script>
 <script type="text/javascript" src="../../script/aui-dialog.js" ></script>
 <script>
     var mac;
@@ -579,15 +580,8 @@
                 },
                 function (ret, err) {
                     api.hideProgress();
+                    relogin(ret);
                     if (ret!=""){
-                        if (ret.message=="请重新登录") {
-                            setTimeout(function () {
-                                api.openWin({
-                                    name: 'pw_login_win',
-                                    url: '../login/pw_login_win.html',
-                                });
-                            },1000);
-                        }
                         if (!ret.resultStatus) {
                             api.toast({
                                 msg: ret.message,
@@ -635,7 +629,7 @@
     }
 
     /**
-     *复制钥匙嘛到剪贴板
+     *复制钥匙到剪贴板
      **/
     function copyKey() {
         var code=document.getElementById("keyCode").innerText;var clipBoard = api.require('clipBoard');
