@@ -17,7 +17,8 @@
             width: 100%;
             height: 100vh;
             box-sizing: border-box;
-            background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;
+            /*background: linear-gradient(to bottom, #2eaab9, #599ccb) no-repeat;*/
+            background: rgba(255,255,255,0) !important;
         }
         section {
             width: 100%;
@@ -25,7 +26,6 @@
             display: flex;
             box-sizing: border-box;
             flex-direction: column;
-            padding: 48px 0px 0px 0px;
         }
 
         section>.aui-row{
@@ -39,37 +39,6 @@
             position: relative;
         }
         section .aui-row:nth-child(1){
-            height: 131px;
-            padding: 7.5px 0 0;
-            position: relative;
-        }
-        section .aui-row:nth-child(1)>div {
-            position: relative;
-            height: 88px;
-            width: 88px;
-            border-radius: 50%;
-            margin: auto;
-            background: rgba(255,255,255,1);
-            -webkit-box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
-            -moz-box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
-            box-shadow: 0 0 0 6px rgba(255,255,255,0.3);
-        }
-        section .aui-row:nth-child(1)>div:nth-child(1):active{
-            -webkit-box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
-            -moz-box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
-            box-shadow: 0 0 0 6px rgba(255,255,255,0.5);
-        }
-        section .aui-row:nth-child(1) img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translate(-50%,-50%);
-            -moz-transform: translate(-50%,-50%);
-            -ms-transform: translate(-50%,-50%);
-            -o-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
-            width: 44.5px;
-            height: 44.5px;
         }
 
         .aui-row:nth-child(2) {
@@ -196,7 +165,7 @@
         .aui-row:nth-child(5)>div:nth-child(2){
             position: relative;
             width: 100%;
-            height: 87px;
+            height: 100px;
             display: flex;
             flex-direction: column;
         }
@@ -246,7 +215,7 @@
         }
         .aui-row:nth-child(5) i::before {
             position: absolute;
-            top: 50% !important;
+            top: 25% !important;
             left: 50% !important;
             -webkit-transform: translate(-50%,-50%);
             -moz-transform: translate(-50%,-50%);
@@ -260,6 +229,19 @@
             transform: translateY(-200%);
             color: #ffffff !important;
         }
+        .last {
+            position: absolute;
+            text-align: center;
+            font-size: 0.625rem;
+            color: #fff;
+            left: 50%;
+            bottom: 20%;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
@@ -270,9 +252,6 @@
 </div>
 <section class="aui-content">
     <div class="aui-row">
-        <div>
-            <img src="../../image/login/header1.png" alt="">
-        </div>
     </div>
     <div class="aui-row aui-list aui-form-list">
         <div class="aui-col-xs-12 aui-list-item">
@@ -326,12 +305,15 @@
             <div>
                 <div class="aui-text-center">
                     <i class="aui-iconfont aui-icon-qq" onclick="otherLogin(this)" data-type="qq" tapmode></i>
+                    <div class="last"></div>
                 </div>
                 <div class="aui-text-center">
                     <i class="aui-iconfont aui-icon-wechat" onclick="otherLogin(this)" data-type="wechat" tapmode></i>
+                    <div class="last"></div>
                 </div>
                 <div class="aui-text-center">
                     <i class="aui-iconfont aui-icon-weibo" onclick="otherLogin(this)" data-type="weibo" tapmode></i>
+                    <div class="last"></div>
                 </div>
             </div>
         </div>
@@ -351,25 +333,9 @@
             document.querySelector("body").setAttribute("style", "padding-top:20px");
         }
 
-        api.addEventListener({
-            name: 'keyback'
-        }, function(ret, err) {
-
-            api.closeWidget({
-                id: 'A6098458444100',
-                retData: {
-                    name: 'closeWidget'
-                },
-                silent:false,
-                animation: {
-                    type: 'flip',
-                    subType: 'from_bottom',
-                    duration: 500
-                }
-            });
-        });
-
-
+        if ($api.getStorage("userObj")==undefined){
+            $api.val($api.dom("#phone"),$api.getStorage("phone"));
+        }
 
         var obj=$api.getStorage('userObj');
         if (obj!=undefined){
@@ -539,6 +505,14 @@
                         location: 'top'
                     });
                     new Static();
+
+                    //刷新frame3（用户退出登录重新登录情况）
+                    api.execScript({
+                        name: 'index',
+                        framename:"frame3",
+                        script: 'window.location.reload()'
+                    });
+
                     setTimeout(function () {
                         api.openWin({
                             name: 'index',
@@ -547,7 +521,11 @@
                             bgColor:"#fff",
                         });
                     },1000)
+
+                    //缓存用户信息
                     $api.setStorage("userObj",ret.object);
+
+                    //缓存头像
                     if (ret.object.icon_url!=""){
                         api.imageCache({
                             url: ret.object.icon_url

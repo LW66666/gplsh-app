@@ -348,15 +348,12 @@
                                 duration: 4000,
                                 location: 'top'
                             });
-                            $api.rmStorage("userObj");
-                            api.closeWin({
-                                name:"index"
-                            });
+                            $api.setStorage("phone", $api.getStorage('userObj').cellphone);
                             setTimeout(function () {
-                                $api.rmStorage("userObj");
+                                $api.rmStorage("userObj")
                                 api.openWin({
-                                    name: 'pw_login_win',
-                                    url: '../../login/pw_login_win.html',
+                                    name: 'login_win',
+                                    url: '../../login/login_win.html',
                                     pageParam: {name: 'pageparamname'}
                                 });
                             },300)
