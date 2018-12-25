@@ -276,14 +276,14 @@
 <script src="../script/api.js"></script>
 <script>
     apiready = function () {
-        var user= $api.getStorage('userObj');console.log(user)
+        var user= $api.getStorage('userObj');
         var systemType = api.systemType;
         if (systemType === 'android') {
             document.querySelector("header").setAttribute("style", "padding-top:-25px");
         } else if (systemType === 'ios') {
             document.querySelector("header").setAttribute("style", "padding-top:-20px");
         }
-        var headUrl=($api.getStorage("userHeadUrl")==undefined)?"../image/login/header1.png":$api.getStorage("userHeadUrl");
+        var headUrl=($api.getStorage("userHeadUrl")==undefined)?"../image/login/header1.png":$api.getStorage("userHedUrl");
         document.querySelector(".header-bg .avatar > img").setAttribute("src",headUrl)
         document.querySelector(".nickname").innerHTML=user.nickname;
         document.querySelector(".phone").innerHTML=user.cellphone;

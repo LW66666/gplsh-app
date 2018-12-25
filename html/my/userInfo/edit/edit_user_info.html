@@ -42,6 +42,31 @@
             color: #367ace;
         }
 
+        #save::before {
+            position: absolute;
+            z-index: -9;
+            border-radius: 50%;
+            content: "";
+            width: 0px;
+            height: 0px;
+            background: #eeeeee;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            -webkit-transition: all .1s;
+            -moz-transition: all .1s;
+            -ms-transition: all .1s;
+            -o-transition: all .1s;
+            transition: all .1s;
+        }
+        #save:active::before{
+            width: 50px;
+            height: 50px;
+        }
     </style>
 </head>
 <body>
@@ -50,7 +75,7 @@
         <span class="aui-iconfont aui-icon-left"></span>
     </div>
     <div class="aui-title">我的资料</div>
-    <div class="aui-pull-right aui-btn">
+    <div class="aui-pull-right aui-btn" id="save">
         保存
     </div>
 </header>
@@ -59,6 +84,8 @@
 </html>
 <script type="text/javascript" src="../../../../script/api.js"></script>
 <script>
+    var user=$api.getStorage("userObj");
+    var mac=$api.deviceId;
     apiready = function () {
         initLayout();
         initFrameGroup();
@@ -70,7 +97,7 @@
      */
     function initLayout() {
         api.parseTapmode();
-//自适应沉浸式状态栏
+        //自适应沉浸式状态栏
         $api.fixStatusBar($api.dom('header'));
         api.setStatusBarStyle({
             style: 'dark'
@@ -108,7 +135,15 @@
      * 初始化API的事件接收
      */
     function initAPIEvent() {
-//监听事件
+
     }
+
+    $api.addEvt($api.dom("#save"), 'click', function () {
+        //do something
+        api.execScript({
+            frameName: 'editUserInfoFrame',
+            script: "saveUserInfo()"
+        });
+    });
 
 </script>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>裁剪头像</title>
+    <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../css/aui.css"/>
+    <style>
+        body, html {
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .aui-bar.aui-bar-light {
+            background: none;
+        }
+
+        .aui-bar {
+            background: #fff;
+            box-sizing: border-box;
+            height: 48px;
+            color: #000000;
+        }
+
+        .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #5d5d5d;
+        }
+
+        .aui-pull-right img {
+            height: .9rem;
+            width: .9rem;
+            margin-right:  .2rem;
+        }
+
+        #save::before {
+            position: absolute;
+            z-index: -9;
+            border-radius: 50%;
+            content: "";
+            width: 0px;
+            height: 0px;
+            background: #eeeeee;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            -webkit-transition: all .1s;
+            -moz-transition: all .1s;
+            -ms-transition: all .1s;
+            -o-transition: all .1s;
+            transition: all .1s;
+        }
+        #save:active::before {
+            width: 45px;
+            height: 45px;
+        }
+
+        section{
+            padding-bottom:25px;
+            flex: 1;
+            background: #797979;
+        }
+    </style>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav aui-bar-light">
+    <div class="aui-pull-left aui-btn" tapmode onclick="goBack()">
+        <span class="aui-iconfont aui-icon-left"></span>
+    </div>
+    <div class="aui-pull-right aui-btn" tapmode id="save" tapmode onclick="saveHead()">
+        保存
+    </div>
+</header>
+<!--<section>-->
+<!--</section>-->
+</body>
+</html>
+<script type="text/javascript" src="../../../../script/api.js"></script>
+<script>
+    var imgSrc="";
+    var FNImageClip;
+    var user=$api.getStorage("userObj");
+    var mac=$api.deviceId;
+    var fs;
+    apiready = function () {
+        FNImageClip = api.require('FNImageClip');
+        imgSrc=api.pageParam.imgSrc;
+        fs = api.require('fs');
+        initLayout();
+    };
+
+    /**
+     * 初始化布局
+     */
+    function initLayout() {
+        api.parseTapmode();
+        //自适应沉浸式状态栏
+        $api.fixStatusBar($api.dom('header'));
+        api.setStatusBarStyle({
+            style: 'dark'
+        });
+        FNImageClip.open({
+            rect: {
+                x: 0,
+                y: $api.offset($api.dom("header")).h,
+                w: "100%",
+                h: api.winHeight - $api.offset($api.dom("header")).h,
+            },
+            srcPath: imgSrc,
+            style: {
+                mask: '#888',
+                clip: {
+                    w: 150,
+                    h: 150,
+                    x: api.winWidth/2-75,
+                    y: (api.winHeight - $api.offset($api.dom("header")).h)/2-75,
+                    borderColor: '#0f0',
+                    borderWidth: 1,
+                    appearance: 'rectangle'
+                }
+            },
+            fixedOn: api.frameName
+        }, function(ret, err) {
+            if (ret) {
+                api.toast({
+                    msg: "裁剪框之外可放大、缩小、拖动，拖动裁剪框可调整高宽",
+                    duration: 10000,
+                    location: 'bottom'
+                });
+            } else {
+
+            }
+        });
+    }
+
+    /**
+     * 点击返回事件
+     */
+    function goBack() {
+        api.closeWin();
+    }
+
+    /**
+     * 修改头像
+     */
+    function saveHead() {
+        var src="fs://imageClip/" + new Date().getTime()+".png";
+        FNImageClip.save({
+            destPath: src,
+            copyToAlbum: false,
+            quality: 1
+        }, function(ret, err) {
+            if (ret) {
+                api.showProgress({
+                    title: '上传头像中',
+                    modal: false
+                });
+                var phone=user.cellphone;
+                var locationSrc=ret.destPath;
+                api.ajax({
+                        url: ip+'/api/app/communitywanli/login/updateUserIco',
+                        method: 'post',
+                        timeout: 10,
+                        dataType: 'json',
+                        returnAll: false,
+                        data: {
+                            values:{
+                                cellphone: phone,
+                                mac: mac,
+                            },
+                            files:{image:locationSrc}
+                        }
+                    },
+                    function (ret, err) {
+                        api.hideProgress();
+                        if (ret!=""){
+                            if (ret.message=="请重新登录") {
+                                setTimeout(function () {
+                                    api.openWin({
+                                        name: 'pw_login_win',
+                                        url: '../../login/pw_login_win.html',
+                                    });
+                                },1000);
+                            }
+                            if (!ret.resultStatus) {
+                                api.toast({
+                                    msg: ret.message,
+                                    duration: 3000,
+                                    location: 'bottom'
+                                });
+                            }
+                            else {
+                                api.toast({
+                                    msg: "头像上传成功",
+                                    duration: 3000,
+                                    location: 'bottom'
+                                });
+                                setTimeout(function () {
+                                    goBack();
+                                },1000);
+
+                                api.execScript({
+                                    name: 'userInfoWin',
+                                    frameName: 'user_info_frame',
+                                    script: "refresh()"
+                                });
+                            }
+                        }
+                        else {
+                            api.toast({
+                                msg: err.msg,
+                                duration: 3000,
+                                location: 'bottom'
+                            });
+                        }
+                    });
+            } else {
+                api.toast({
+                    msg: "保存图片失败",
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+        });
+    }
+</script>

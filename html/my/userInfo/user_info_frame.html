@@ -7,10 +7,16 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>用户信息预览的frame</title>
     <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>-->
     <style>
         body, html {
             background-color: #ffffff;
             font-size: 20px;
+        }
+
+        @font-face {
+            font-family: "aui_iconfont";
+            src: url('../../../css/aui-iconfont.ttf') format('truetype');
         }
 
         .info-top {
@@ -28,7 +34,38 @@
             width: 90px;
             height: 90px;
             border-radius: 50%;
+            background: #fff;
             border: 5px solid rgba(255, 255, 255, .3);
+        }
+        .info-top>i {
+            position: absolute;
+            left: 50%;
+            bottom: -40px;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            transform: translate(-50%, 0);
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            font-family: "aui_iconfont" !important;
+            background: rgba(255,255,255,0.6);
+            z-index: 9;
+            font-size: 1em;
+            transition: background-color 0.2s,font-size 0.2s;
+        }
+        .info-top>i::before{
+            position: absolute;
+            left: 50%;
+            top:50% ;
+            transform: translate(-50%,-50%);
+            color: rgba(246,49,146,1);
+            content: "\e6cd";
+            transition: font-size 0.2s;
+        }
+        .info-top>i:active{
+            font-size: 1.5em;
+            background: rgba(255,255,255,0.8);
         }
 
         .avatar-dec {
@@ -110,6 +147,7 @@
 
 <body>
 <div class="info-top">
+    <i class="aui-iconfont aui-icon-camera" id="avatarCamera"></i>
     <img class="avatar" src="../../../image/my/userInfo/header.png"/>
 </div>
 <div class="avatar-dec">
@@ -170,24 +208,32 @@
 </html>
 <script type="text/javascript" src="../../../script/api.js"></script>
 <script>
+    var user=$api.getStorage("userObj");
+    var mac=$api.deviceId;
     apiready = function () {
-        initStaticEvent();
+        api.parseTapmode();
+
+        setBaseUserInfo();
+
         api.setCustomRefreshHeaderInfo({
             bgColor: '#3ea6be',
             images: [
                 'widget://image/my/header_refresh.jpg'
             ],
             tips: {
-                pull: '',
-                threshold: '',
-                load: ''
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
             }
         }, function () {
             //这只是隐藏了白色背景，没有运用其下来刷新的功能
-            api.refreshHeaderLoadDone()
+            setBaseUserInfo();
         });
     };
 
+    /**
+     * 标签上色
+     * */
     function initStaticEvent() {
         //给标签上色
         var colorArr = ['#4298fd', '#c39bfc', '#f1a68e', '#fe8294', '#fe76bc', '#899efa', '#8de25a'];
@@ -199,5 +245,245 @@
             }
             $tagList[i].style.color = colorArr[i];
         }
+    }
+
+    /**
+     * 设置用户基础信息
+     */
+    function setBaseUserInfo() {
+        api.showProgress({
+            title: '加载中',
+            modal: false
+        });
+
+        var phone=user.cellphone;
+        api.ajax({
+                url: ip+'/api/app/communitywanli/user/getDetail',
+                method: 'get',
+                timeout: 10,
+                dataType: 'json',
+                returnAll: false,
+                data: {
+                    values:{
+                        cellphone: phone,
+                        mac:mac
+                    }
+                }
+            },
+            function (ret, err) {
+                api.refreshHeaderLoadDone()
+                api.hideProgress();
+                if (ret!=""){
+                    if (ret.message=="请重新登录") {
+                        setTimeout(function () {
+                            api.openWin({
+                                name: 'pw_login_win',
+                                url: '../../login/pw_login_win.html',
+                            });
+                        },1000);
+                    }
+                    if (!ret.resultStatus) {
+                        api.toast({
+                            msg: ret.message,
+                            duration: 3000,
+                            location: 'bottom'
+                        });
+                    }
+                    else {
+                        var obj=ret.object;
+                        var signature=(obj.user.signature=="")?"悄悄的我来了，什么也没留下":obj.user.signature;
+                        var sexImg=(obj.user.gender==0)?"../../../image/my/female.png":"../../../image/my/male.png";
+
+                        user.nickname=obj.user.nickname;
+                        user.birthday=obj.user.birthday;
+                        user.profession=obj.user.profession;
+                        user.signature=obj.user.signature;
+                        user.signature=obj.user.signature;
+                        $api.setStorage("userObj", user);
+
+                        $api.attr($api.dom(".avatar-dec>img"),"src",sexImg);
+                        $api.text($api.dom(".text-ha"),signature);
+                        $api.text($api.dom(".avatar-dec>span:nth-child(1)"),obj.user.nickname);
+                        $api.text($api.dom(".item:nth-child(1)>div:nth-child(2)"),obj.user.cellphone);
+
+                        setTimeout(function () {
+                            api.imageCache({
+                                url: obj.user.icon_url
+                            }, function(ret, err) {
+                                var url = ret.url;
+                                if (!ret.status){
+                                    url ="http://"+url;
+                                }
+
+                                $api.setStorage("userHedUrl",url);
+                                $api.attr($api.dom(".avatar"),"src",url);
+
+                                setTimeout(function () {
+                                    api.execScript({
+                                        name: 'index',
+                                        frameName: 'frame3',
+                                        script: "window.location.reload()"
+                                    });
+                                },1000);
+                            });
+                        },100);
+
+                        if (obj.community==undefined){
+                            $api.text($api.dom(".item:nth-child(2)>div:nth-child(2)"),"暂无");
+                            $api.text($api.dom(".item:nth-child(3)>div:nth-child(2)"),"暂无");
+                            $api.text($api.dom(".item:nth-child(4)>div:nth-child(2)"),"暂无");
+                            $api.text($api.dom(".item:nth-child(5)>div:nth-child(2)"),"暂无");
+                        }else {
+                            $api.text($api.dom(".item:nth-child(2)>div:nth-child(2)"),obj.household.householdName);
+                            $api.text($api.dom(".item:nth-child(3)>div:nth-child(2)"),obj.community.provinceName+obj.community.cityName);
+                            $api.text($api.dom(".item:nth-child(4)>div:nth-child(2)"),obj.householdRooms[0].communityName+"-"+
+                                obj.householdRooms[0].zoneName+"-"+obj.householdRooms[0].buildingName+"-"+obj.householdRooms[0].unitName
+                                +"-"+obj.householdRooms[0].roomNum);
+                            $api.text($api.dom(".item:nth-child(5)>div:nth-child(2)"),obj.user.role);
+                        }
+
+                        if(obj.label.length==0){
+                            $api.html($api.dom(".item:nth-child(8)>div:nth-child(2)"),"<span>暂无</span>");
+                        }else {
+                            api.ajax({
+                                    url: ip+'/api/app/communitywanli/label/listLabelByUserId',
+                                    method: 'get',
+                                    timeout: 10,
+                                    dataType: 'json',
+                                    returnAll: false,
+                                    data: {
+                                        values:{
+                                            cellphone: phone,
+                                            mac:mac
+                                        }
+                                    }
+                                },
+                                function (ret, err) {
+                                    if (ret!=""){
+                                        if (ret.message=="请重新登录") {
+                                            setTimeout(function () {
+                                                api.openWin({
+                                                    name: 'pw_login_win',
+                                                    url: '../../login/pw_login_win.html',
+                                                });
+                                            },1000);
+                                        }
+                                        if (!ret.resultStatus) {
+                                            api.toast({
+                                                msg: ret.message,
+                                                duration: 3000,
+                                                location: 'bottom'
+                                            });
+                                        }
+                                        else {
+                                            var html="";
+                                            var objArr=ret.object;
+                                            for(var obj of objArr){
+                                                html+="<span>"+obj.name+"</span>";
+                                            }
+                                            $api.html($api.dom(".item:nth-child(8)>div:nth-child(2)"),html);
+                                            initStaticEvent();
+                                        }
+                                    }
+                                    else {
+                                        api.toast({
+                                            msg: err.msg,
+                                            duration: 3000,
+                                            location: 'bottom'
+                                        });
+                                    }
+                                });
+                        }
+                        $api.text($api.dom(".item:nth-child(6)>div:nth-child(2)"),obj.household.constellation);
+                        $api.text($api.dom(".item:nth-child(7)>div:nth-child(2)"),obj.user.profession);
+
+                    }
+                }
+                else {
+                    api.toast({
+                        msg: err.msg,
+                        duration: 3000,
+                        location: 'bottom'
+                    });
+                }
+            });
+
+
+        /**
+         * 月日获取星座
+         */
+        function getConstellation(m, d) {
+            var s = "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
+            var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+            return s.substr(m * 2 - (d < arr[m - 1] ? 2 : 0), 2)+'座';
+        }
+    }
+
+    $api.addEvt($api.dom("#avatarCamera"), 'click', function () {
+        selectImg();
+    });
+
+    /**
+     * 选择图片
+     */
+    function selectImg() {
+        var UIAlbumBrowser = api.require('UIAlbumBrowser');
+        UIAlbumBrowser.imagePicker({
+            max: 1,
+            styles: {
+                bg: '#000000',
+                mark: {
+                    position: 'top_right',
+                    size: 20
+                },
+                nav: {
+                    bg: '#000000',
+                    cancelColor: '#fff',
+                    cancelSize: 16,
+                    nextStepColor: '#7fff00',
+                    nextStepSize: 16
+                },
+                thumbnail: { //（可选项）返回的缩略图配置，**建议本图片不要设置过大** 若已有缩略图，则使用已有的缩略图。若要重新生成缩略图，可先调用清除缓存接口api.clearCache()。
+                    w: 100, //（可选项）数字类型；返回的缩略图的宽；默认：原图的宽度
+                    h: 100 //（可选项）数字类型；返回的缩略图的宽；默认：原图的高度
+                }
+            },
+            animation: true,
+        },
+            function (ret) {
+            if (ret.eventType=="cancel"){
+                api.toast({
+                    msg: "已取消选择图片",
+                    duration: 3000,
+                    location: 'bottom'
+                });
+            }
+            if (!ret.eventType) {
+                api.openWin({
+                    name: 'clip_head_win',
+                    url: 'edit/clip_head_win.html',
+                    pageParam: {imgSrc: ret.originalPath},
+                    scrollEnabled:false
+                });
+                $api.attr($api.dom(".avatar"),"src",ret.originalPath)
+                return;
+            }
+            if (ret.eventType === 'nextStep') {
+                if (ret.list && ret.list.length > 0) {
+                    api.openWin({
+                        name: 'clip_head_win',
+                        url: 'edit/clip_head_win.html',
+                        pageParam: {imgSrc: ret.list[0].path},
+                        scrollEnabled:false
+                    });
+                    $api.attr($api.dom(".avatar"),"src",ret.list[0].path)
+                }
+                UIAlbumBrowser.closePicker();
+            }
+        });
+    }
+
+    function refresh() {
+        window.location.reload();
     }
 </script>

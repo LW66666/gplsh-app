@@ -5,7 +5,6 @@
     <meta name="viewport"
           content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <meta-data name="com.baidu.lbsapi.API_KEY" value="VsPvNudlwsN7lNZElhyhNdnIXkM5puNN" />
     <title>通行</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css"/>
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
@@ -185,16 +184,16 @@
             </div>
         </div>
         <div class="aui-row">
-            <span>李霞</span><span>先生</span>，<span>下午好！</span>
+            <span style="max-width: 6em;">李霞</span><span>先生</span>，<span>下午好！</span>
         </div>
         <div class=" aui-row">
             <div class="aui-col-xs-6 aui-text-left">
                 <h1>
-                    20
+                    <span>20</span>
                     <small>℃</small>
                 </h1>
                 <h2>
-                    <img src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt="" style="display: inline-block;">
+                    <img id="weather" src="../image/traffic/cloudy.png" width="20.5px" height="15px" alt="" style="display: inline-block;">
                     <span style="padding-right: 15px;">阴</span>
                     <span>空气优</span>
                 </h2>
@@ -204,7 +203,7 @@
                 <h2>
                     <span>星期一</span>
                     <span class="aui-dot"></span>
-                    限行<span>2</span>和<span>4</span>
+                    <span id="limit">限行2和4</span>
                 </h2>
             </div>
         </div>
@@ -248,36 +247,87 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/static.js"></script>
 <script>
+    //待解决，天气传入参数为城市编号，空气质量添加上去
     var remindStatus = true;
     var user= $api.getStorage('userObj');
     apiready = function () {
-        var bMap = api.require('bMap');
-        bMap.getLocation({
+        setTime();
+
+        //加载百度地图
+        var map = api.require('bMap');
+        map.getLocation({
             accuracy: '100m',
             autoStop: true,
             filter: 1
         },
             function(ret, err) {
             if (ret.status) {
-                console.log(JSON.stringify(ret));
-                bMap.getNameFromCoords({
-                    lon: 116.384767,
-                    lat: 39.989539
+                map.getNameFromCoords({
+                    lon: ret.lon,
+                    lat: ret.lat
                 }, function(ret, err) {
-                    console.log(JSON.stringify(ret));
                     if (ret.status) {
-                        alert(JSON.stringify(ret));
+                        setWeather(ret.cityCode);
+                        if (ret.city=="南昌市"){
+                            var phone=user.cellphone;
+                            var mac=api.deviceId;
+                            api.ajax({
+                                    url: ip+'/api/app/communitywanli/passThrough/getRestrictionsPassNum',
+                                    method: 'get',
+                                    timeout: 10,
+                                    dataType: 'json',
+                                    returnAll: false,
+                                },
+                                function (ret, err) {
+                                    if (ret!=""){
+                                        if (ret.message=="请重新登录") {
+                                            setTimeout(function () {
+                                                api.openWin({
+                                                    name: 'pw_login_win',
+                                                    url: 'login/pw_login_win.html',
+                                                });
+                                            },1000);
+                                        }
+                                        if (!ret.resultStatus) {
+                                            api.toast({
+                                                msg: ret.message,
+                                                duration: 3000,
+                                                location: 'bottom'
+                                            });
+                                        }
+                                        else {
+                                            var obj=ret.object;
+                                            if (obj.status=="不限行"){
+                                                $api.text($api.dom("#limit"),"不限行")
+                                            }else {
+                                                $api.text($api.dom("#limit"),"限行"+obj.status.split("为")[1].split("和")[0]+"和"+obj.status.split("为")[1].split("和")[1])
+                                            }
+                                        }
+                                    }else {
+                                        api.toast({
+                                            msg: err.msg,
+                                            duration: 3000,
+                                            location: 'bottom'
+                                        });
+                                    }
+                                });
+                        }else {
+                            $api.text($api.dom(".boxTop .aui-row:nth-child(3) h2>span:nth-child(2)"),"")
+                        }
+                    }else {
+                        api.toast({
+                            msg: "网络错误",
+                            duration: 3000,
+                            location: 'bottom'
+                        });
                     }
                 });
             } else {
-                console.log(err.code);
+                alert(err.code);
             }
-        })
+        });
 
         api.parseTapmode();
-
-        setTime();
-        setWeather("nanchang");
 
         var systemType = api.systemType;
         if (systemType == "android") {
@@ -286,7 +336,7 @@
             document.getElementById("topBox").setAttribute("style", "padding-top:20px");
         }
         var obj=$api.getStorage("userObj");
-        document.querySelector(".aui-row:nth-child(2)>span:nth-child(1)").innerHTML=obj.nickname;
+        document.querySelector(".aui-row:nth-child(2)>span:nth-child(1)").innerHTML=obj.nickname.substring(0,4)+"...";
         if (obj.gender==1){
             $api.text($api.dom(".aui-row:nth-child(2)>span:nth-child(2)"),"先生");
         }else {
@@ -418,6 +468,10 @@
         }
     }
 
+    /**
+     * 设置天气
+     * @param region 城市编号
+     */
     function setWeather(region) {
         var phone=user.cellphone;
         var mac=api.deviceId;
@@ -431,29 +485,40 @@
                     values:{
                         cellphone: phone,
                         mac: mac,
-                        region:region
+                        region:"nanchang"
                     }
                 }
             },
             function (ret, err) {
-            console.log(JSON.stringify(ret))
                 if (ret!=""){
+                    if (ret.message=="请重新登录") {
+                        setTimeout(function () {
+                            api.openWin({
+                                name: 'pw_login_win',
+                                url: 'login/pw_login_win.html',
+                            });
+                        },1000);
+                    }
                     if (!ret.resultStatus) {
                         api.toast({
                             msg: ret.message,
                             duration: 3000,
-                            location: 'top'
+                            location: 'bottom'
                         });
                     }
                     else {
                         var obj=ret.object;
-
+                        document.getElementById("weather").setAttribute("src",obj.weatherImg);
+                        $api.text($api.dom("#weather+span"),obj.weather);
+                        $api.text($api.dom("#weather+span+span"),obj.weather);
+                        $api.text($api.dom(".boxTop .aui-row:nth-child(3) h1>span"),obj.temp);
                     }
-                }else {
+                }
+                else {
                     api.toast({
                         msg: err.msg,
                         duration: 3000,
-                        location: 'top'
+                        location: 'bottom'
                     });
                 }
             });
